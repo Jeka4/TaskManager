@@ -13,5 +13,9 @@ namespace TaskManager
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            TaskManagerPresenter taskManagerPresenter = new TaskManagerPresenter();
+        }
     }
 }
