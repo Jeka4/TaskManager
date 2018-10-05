@@ -55,7 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BDUserTask.cs" />
+    <Compile Include="DataModel.cs" />
+    <Compile Include="IDataModel.cs" />
+    <Compile Include="IMainWindow.cs" />
+    <Compile Include="ITaskManagerPresenter.cs" />
     <Compile Include="TaskManagerPresenter.cs" />
+    <Compile Include="UserTask.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
