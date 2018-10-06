@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskManager
 {
-    public class DataModel : IDataModel
+    public class DataModel : LinqToDB.Data.DataConnection, IDataModel
     {
 
     }
