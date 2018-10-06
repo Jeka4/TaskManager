@@ -24,12 +24,12 @@ namespace TaskManager
             _mainWindow.Show();
         }
 
-        public void AddTask(UserTask task)
+        public void AddTask(UserTaskView task)
         {
             throw new NotImplementedException();
         }
 
-        public void EditTask(UserTask task)
+        public void EditTask(UserTaskView task)
         {
             throw new NotImplementedException();
         }
@@ -39,12 +39,12 @@ namespace TaskManager
             throw new NotImplementedException();
         }
 
-        public List<UserTask> LoadAllTasks()
+        public List<UserTaskView> LoadAllTasks()
         {
             throw new NotImplementedException();
         }
 
-        public List<UserTask> LoadTasksOfDay(DateTime day)
+        public List<UserTaskView> LoadTasksOfDay(DateTime day)
         {
             throw new NotImplementedException();
         }
