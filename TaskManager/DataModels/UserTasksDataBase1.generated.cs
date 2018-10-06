@@ -14,22 +14,22 @@ using LinqToDB.Mapping;
 namespace DataModels
 {
 	/// <summary>
-	/// Database       : UserTasksDB
-	/// Data Source    : UserTasksDB
+	/// Database       : UserTasks
+	/// Data Source    : UserTasks
 	/// Server Version : 3.14.2
 	/// </summary>
-	public partial class UserTasksDBDB : LinqToDB.Data.DataConnection
+	public partial class UserTasksDB : LinqToDB.Data.DataConnection
 	{
 		public ITable<NotifyDate> NotifyDates { get { return this.GetTable<NotifyDate>(); } }
 		public ITable<TaskDate>   TaskDates   { get { return this.GetTable<TaskDate>(); } }
 		public ITable<UserTask>   UserTasks   { get { return this.GetTable<UserTask>(); } }
 
-		public UserTasksDBDB()
+		public UserTasksDB()
 		{
 			InitDataContext();
 		}
 
-		public UserTasksDBDB(string configuration)
+		public UserTasksDB(string configuration)
 			: base(configuration)
 		{
 			InitDataContext();

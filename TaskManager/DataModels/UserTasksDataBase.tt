@@ -36,7 +36,7 @@
 
 	NamespaceName = "DataModels";
 
-	LoadSQLiteMetadata(@".\DataModels\", "UserTasksDB.sqlite");
+	LoadSQLiteMetadata(@".\DataModels\", "UserTasks.sqlite");
 //	LoadSQLiteMetadata(string connectionString);
 
 	GenerateModel();
