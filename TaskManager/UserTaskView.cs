@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace TaskManager
 {
-    public class BDUserTask
+    public enum TaskPriority { Low, Medium, High } //Undef?
+
+    public class UserTaskView
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Priority { get; set; }
-        public string TaskDate { get; set; }
-        public string NotifyDate { get; set; }
+        public TaskPriority Priority { get; set; }
+        public DateTime TaskDate { get; set; }
+        public DateTime NotifyDate { get; set; }
     }
 }
