@@ -8,6 +8,10 @@ using DataModels;
 
 namespace TaskManager
 {
+    public enum SortType { AscendingPriority, DescendingPriority }
+
+    public enum FilterType { All, LowPriority, MediumPriority, HighPriority }
+
     public class DataModel : IDataModel
     {
         public List<UserTask> GetAllTasks()
@@ -57,6 +61,16 @@ namespace TaskManager
                 tasks = query.ToList();
             }
             return tasks;
+        }
+
+        public void SortBy(SortType sort)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void FilterBy(FilterType filter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

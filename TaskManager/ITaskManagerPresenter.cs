@@ -13,7 +13,5 @@ namespace TaskManager
         void EditTask(UserTaskView task);
         List<UserTaskView> LoadTasksOfDay(DateTime day);
         List<UserTaskView> LoadAllTasks();
-        void SortBy(SortType sort); //Перечисление
-        void FilterBy(FilterType filter); //Переичсление
     }
 }

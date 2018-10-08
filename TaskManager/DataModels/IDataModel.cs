@@ -11,5 +11,7 @@ namespace TaskManager
     {
         List<UserTask> GetAllTasks();
         List<UserTask> GetTasksOfDay(DateTime date);
+        void SortBy(SortType sort); //Перечисление
+        void FilterBy(FilterType filter); //Переичсление
     }
 }
