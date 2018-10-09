@@ -22,6 +22,10 @@ namespace TaskManager
     {
         private ITaskManagerPresenter _presenter;
 
+        private SecondWindow _addOrEditTaskWindow;
+
+        private ThirdWindow _tasksManagerWindow;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,6 +34,41 @@ namespace TaskManager
         public void BindPresenter(ITaskManagerPresenter presenter)
         {
             _presenter = presenter;
+        }
+
+        public void SetUserTasksToTasksList(List<UserTaskView> tasks)
+        {
+            TaskList.ItemsSource = tasks;
+        }
+
+        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var calendar = sender as Calendar;
+
+            if(calendar.SelectedDate.HasValue)
+            {
+                TaskList.ItemsSource = _presenter.LoadTasksOfDay(calendar.SelectedDate.Value);
+            }
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonControl_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

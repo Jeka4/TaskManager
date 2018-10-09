@@ -38,7 +38,7 @@ namespace TaskManager
             return tasks;
         }
 
-        public List<UserTask> GetTasksOfDay(DateTime date) //Использовать DateTime? + дублирование кода
+        public List<UserTask> GetTasksOfDay(string date) //Использовать DateTime? + дублирование кода
         {
             List<UserTask> tasks = new List<UserTask>();
             using (var db = new UserTasksDB())
@@ -46,7 +46,7 @@ namespace TaskManager
                 var query = from t in db.UserTasks
                             from d in db.TaskDates.Where(q => q.Id == t.TaskDateID).DefaultIfEmpty() //?????
                             from n in db.NotifyDates.Where(q => q.Id == t.NotifyDateID).DefaultIfEmpty()
-                            where d.Date == date.ToShortDateString()
+                            where d.Date == date
                             select new UserTask
                             {
                                 Name = t.Name,

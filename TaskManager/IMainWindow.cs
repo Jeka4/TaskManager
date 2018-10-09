@@ -10,5 +10,6 @@ namespace TaskManager
     {
         void Show();
         void BindPresenter(ITaskManagerPresenter presenter);
+        void SetUserTasksToTasksList(List<UserTaskView> tasks);
     }
 }

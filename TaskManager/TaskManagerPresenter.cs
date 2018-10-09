@@ -18,10 +18,11 @@ namespace TaskManager
             _dataModel = dataModel;
 
             _mainWindow.BindPresenter(this);
+            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(DateTime.Now));
             _mainWindow.Show();
 
             //Test
-            LoadAllTasks();
+            //LoadAllTasks();
         }
 
         public void AddTask(UserTaskView task)
@@ -58,9 +59,25 @@ namespace TaskManager
 
         public List<UserTaskView> LoadTasksOfDay(DateTime day)
         {
-            List<UserTask> tasks = _dataModel.GetTasksOfDay(new DateTime(2018, 10, 6));
+            List<UserTask> tasks = _dataModel.GetTasksOfDay(day.ToShortDateString());
 
-            return null;
+            List<UserTaskView> tasksForView = new List<UserTaskView>();
+
+            foreach (var task in tasks)
+            {
+                tasksForView.Add(
+                    new UserTaskView
+                    {
+                        Id = task.Id,
+                        Name = task.Name,
+                        Description = task.Description,
+                        Priority = TaskPriority.High, //
+                        TaskDate = DateTime.Parse(task.TaskDate.Date),
+                        NotifyDate = DateTime.Parse(task.NotifyDate.Date)
+                    });
+            }
+
+            return tasksForView;
         }
 
         public void RemoveTask(int id)

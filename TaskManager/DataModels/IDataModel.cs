@@ -10,7 +10,7 @@ namespace TaskManager
     public interface IDataModel
     {
         List<UserTask> GetAllTasks();
-        List<UserTask> GetTasksOfDay(DateTime date);
+        List<UserTask> GetTasksOfDay(string date);
         void SortBy(SortType sort); //Перечисление
         void FilterBy(FilterType filter); //Переичсление
     }
