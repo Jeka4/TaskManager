@@ -72,17 +72,17 @@
       <DependentUpon>UserTasksDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\IDataModel.cs" />
-    <Compile Include="IMainWindow.cs" />
-    <Compile Include="ITaskManagerPresenter.cs" />
-    <Compile Include="TaskManagerPresenter.cs" />
-	<Compile Include="ThirdWindow.xaml.cs">
-      <DependentUpon>ThirdWindow.xaml</DependentUpon>
+    <Compile Include="Views\IMainWindow.cs" />
+    <Compile Include="Presenters\ITaskManagerPresenter.cs" />
+    <Compile Include="Presenters\TaskManagerPresenter.cs" />
+    <Compile Include="Views\TasksManagerWindow.xaml.cs">
+      <DependentUpon>TasksManagerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserTaskView.cs" />
-    <Compile Include="SecondWindow.xaml.cs">
-      <DependentUpon>SecondWindow.xaml</DependentUpon>
+    <Compile Include="Views\UserTaskView.cs" />
+    <Compile Include="Views\EditTaskWindow.xaml.cs">
+      <DependentUpon>EditTaskWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -90,15 +90,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SecondWindow.xaml">
+    <Page Include="Views\EditTaskWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ThirdWindow.xaml">
+    <Page Include="Views\TasksManagerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +171,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
