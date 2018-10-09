@@ -72,9 +72,11 @@
       <DependentUpon>UserTasksDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\IDataModel.cs" />
+    <Compile Include="Views\IEditTaskWindow.cs" />
     <Compile Include="Views\IMainWindow.cs" />
     <Compile Include="Presenters\ITaskManagerPresenter.cs" />
     <Compile Include="Presenters\TaskManagerPresenter.cs" />
+    <Compile Include="Views\ITasksManagerWindow.cs" />
     <Compile Include="Views\TasksManagerWindow.xaml.cs">
       <DependentUpon>TasksManagerWindow.xaml</DependentUpon>
     </Compile>
