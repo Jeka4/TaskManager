@@ -22,13 +22,13 @@ namespace TaskManager
     {
         private ITaskManagerPresenter _presenter;
 
-        private IEditTaskWindow _EditTaskWindow;
+        private IEditTaskWindow _editTaskWindow;
 
         private ITasksManagerWindow _tasksManagerWindow;
 
         public MainWindow(IEditTaskWindow editTaskWindow, ITasksManagerWindow tasksManagerWindow)
         {
-            _EditTaskWindow = editTaskWindow;
+            _editTaskWindow = editTaskWindow;
             _tasksManagerWindow = tasksManagerWindow;
 
             InitializeComponent();
