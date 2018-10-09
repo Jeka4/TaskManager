@@ -81,6 +81,7 @@ namespace DataModels
 		[Column("priority"),     NotNull              ] public string Priority     { get; set; } // text(max)
 		[Column("taskDateID"),   NotNull              ] public long   TaskDateID   { get; set; } // integer
 		[Column("notifyDateID"), NotNull              ] public long   NotifyDateID { get; set; } // integer
+		[Column("notifed"),      NotNull              ] public long   Notifed      { get; set; } // integer
 
 		#region Associations
 
