@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataModels;
 
 namespace TaskManager
 {
-    public enum SortType { AscendingPriority, DescendingPriority }
-
-    public enum FilterType { All, LowPriority, MediumPriority, HighPriority }
-
     public class TaskManagerPresenter : ITaskManagerPresenter
     {
         private IMainWindow _mainWindow;
@@ -22,6 +19,9 @@ namespace TaskManager
 
             _mainWindow.BindPresenter(this);
             _mainWindow.Show();
+
+            //Test
+            LoadAllTasks();
         }
 
         public void AddTask(UserTaskView task)
@@ -34,27 +34,36 @@ namespace TaskManager
             throw new NotImplementedException();
         }
 
-        public void FilterBy(FilterType filter)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<UserTaskView> LoadAllTasks()
         {
-            throw new NotImplementedException();
+            List<UserTask> tasks = _dataModel.GetAllTasks();
+
+            List<UserTaskView> tasksForView = new List<UserTaskView>();
+
+            foreach (var task in tasks)
+            {
+                tasksForView.Add(
+                    new UserTaskView {
+                        Id = task.Id,
+                        Name = task.Name,
+                        Description = task.Description,
+                        Priority = TaskPriority.High, //
+                        TaskDate = DateTime.Parse(task.TaskDate.Date),
+                        NotifyDate = DateTime.Parse(task.NotifyDate.Date)
+                    });
+            }
+
+            return tasksForView;
         }
 
         public List<UserTaskView> LoadTasksOfDay(DateTime day)
         {
-            throw new NotImplementedException();
+            List<UserTask> tasks = _dataModel.GetTasksOfDay(new DateTime(2018, 10, 6));
+
+            return null;
         }
 
         public void RemoveTask(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SortBy(SortType sort)
         {
             throw new NotImplementedException();
         }
