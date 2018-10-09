@@ -17,7 +17,7 @@ namespace TaskManager
     /// <summary>
     /// Логика взаимодействия для Window1.xaml
     /// </summary>
-    public partial class EditTaskWindow : Window
+    public partial class EditTaskWindow : Window, IEditTaskWindow
     {
         public EditTaskWindow()
         {
