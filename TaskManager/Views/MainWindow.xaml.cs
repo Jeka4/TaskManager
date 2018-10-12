@@ -21,7 +21,13 @@ namespace TaskManager.Views
     /// </summary>
     public partial class MainWindow : Window, IMainWindow
     {
-        private ITaskManagerPresenter _presenter;
+        public bool TaskSelected { get; private set; }
+
+        public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
+
+        public event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged = delegate { };
+
+        public event EventHandler SelectionListUpdated = delegate { };
 
         private IEditTaskWindow _editTaskWindow;
 
@@ -31,13 +37,8 @@ namespace TaskManager.Views
         {
             _editTaskWindow = editTaskWindow;
             _tasksManagerWindow = tasksManagerWindow;
-
+            
             InitializeComponent();
-        }
-
-        public void BindPresenter(ITaskManagerPresenter presenter)
-        {
-            _presenter = presenter;
         }
 
         public void SetUserTasksToTasksList(List<UserTaskView> tasks)
@@ -49,10 +50,8 @@ namespace TaskManager.Views
         {
             var calendar = sender as Calendar;
 
-            if(calendar.SelectedDate.HasValue)
-            {
-                TaskList.ItemsSource = _presenter.LoadTasksOfDay(calendar.SelectedDate.Value);
-            }
+            if(calendar != null && calendar.SelectedDate.HasValue)
+                CurrentCalendarDateChanged(this, new TaskDateEventArg(calendar.SelectedDate.Value));
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)

@@ -19,12 +19,17 @@ namespace TaskManager.Presenters
             _mainWindow = mainWindow;
             _dataModel = dataModel;
 
-            _mainWindow.BindPresenter(this);
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(DateTime.Now));
+            _mainWindow.CurrentCalendarDateChanged += mainWindow_CurrentCalendarDateChanged;
             _mainWindow.Show();
 
             //Test
             //LoadAllTasks();
+        }
+
+        private void mainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)
+        {
+            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(e.Date));
         }
 
         public void AddTask(UserTaskView task)
