@@ -5,6 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using TaskManager.Views;
+using TaskManager.DataModels;
+using TaskManager.Presenters;
 
 namespace TaskManager
 {
@@ -15,10 +18,7 @@ namespace TaskManager
     {
         public App()
         {
-            IEditTaskWindow editTaskWindow = new EditTaskWindow();
-            ITasksManagerWindow tasksManagerWindow = new TasksManagerWindow();
-            IMainWindow mainWindow = new MainWindow(editTaskWindow, tasksManagerWindow);
-
+            IMainWindow mainWindow = new MainWindow();
             IDataModel dataModel = new DataModel();
             
             ITaskManagerPresenter taskManagerPresenter = new TaskManagerPresenter(mainWindow, dataModel);

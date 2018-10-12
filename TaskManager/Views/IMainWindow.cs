@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TaskManager.Presenters;
 
-namespace TaskManager
+namespace TaskManager.Views
 {
     public interface IMainWindow
     {
+        bool TaskSelected { get; }
         void Show();
-        void BindPresenter(ITaskManagerPresenter presenter);
         void SetUserTasksToTasksList(List<UserTaskView> tasks);
+        event EventHandler<UserTaskEventArgs> UserTaskUpdated;
+        event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged;
+        event EventHandler SelectionListUpdated;
     }
 }

@@ -12,31 +12,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaskManager.Presenters;
 
-namespace TaskManager
+namespace TaskManager.Views
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window, IMainWindow
     {
-        private ITaskManagerPresenter _presenter;
+        public bool TaskSelected { get; private set; }
+
+        public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
+
+        public event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged = delegate { };
+
+        public event EventHandler SelectionListUpdated = delegate { };
 
         private IEditTaskWindow _editTaskWindow;
 
         private ITasksManagerWindow _tasksManagerWindow;
 
-        public MainWindow(IEditTaskWindow editTaskWindow, ITasksManagerWindow tasksManagerWindow)
+        public MainWindow()
         {
-            _editTaskWindow = editTaskWindow;
-            _tasksManagerWindow = tasksManagerWindow;
-
             InitializeComponent();
-        }
-
-        public void BindPresenter(ITaskManagerPresenter presenter)
-        {
-            _presenter = presenter;
         }
 
         public void SetUserTasksToTasksList(List<UserTaskView> tasks)
@@ -48,10 +47,8 @@ namespace TaskManager
         {
             var calendar = sender as Calendar;
 
-            if(calendar.SelectedDate.HasValue)
-            {
-                TaskList.ItemsSource = _presenter.LoadTasksOfDay(calendar.SelectedDate.Value);
-            }
+            if(calendar != null && calendar.SelectedDate.HasValue)
+                CurrentCalendarDateChanged(this, new TaskDateEventArg(calendar.SelectedDate.Value));
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)

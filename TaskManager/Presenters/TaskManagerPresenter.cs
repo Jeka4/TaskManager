@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataModels;
+using TaskManager.Views;
+using TaskManager.DataModels;
 
-namespace TaskManager
+namespace TaskManager.Presenters
 {
     public class TaskManagerPresenter : ITaskManagerPresenter
     {
@@ -17,12 +19,24 @@ namespace TaskManager
             _mainWindow = mainWindow;
             _dataModel = dataModel;
 
-            _mainWindow.BindPresenter(this);
+            _dataModel.TasksDBUpdated += dataModel_TasksDBUpdated;
+
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(DateTime.Now));
+            _mainWindow.CurrentCalendarDateChanged += mainWindow_CurrentCalendarDateChanged;
             _mainWindow.Show();
 
             //Test
             //LoadAllTasks();
+        }
+
+        private void dataModel_TasksDBUpdated(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void mainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)
+        {
+            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(e.Date));
         }
 
         public void AddTask(UserTaskView task)
@@ -31,6 +45,11 @@ namespace TaskManager
         }
 
         public void EditTask(UserTaskView task)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveTask(int id)
         {
             throw new NotImplementedException();
         }
@@ -78,11 +97,6 @@ namespace TaskManager
             }
 
             return tasksForView;
-        }
-
-        public void RemoveTask(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

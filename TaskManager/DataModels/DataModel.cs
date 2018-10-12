@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using LinqToDB;
 using DataModels;
 
-namespace TaskManager
+namespace TaskManager.DataModels
 {
     public enum SortType { AscendingPriority, DescendingPriority }
 
@@ -14,6 +14,8 @@ namespace TaskManager
 
     public class DataModel : IDataModel
     {
+        public event EventHandler TasksDBUpdated;
+
         public List<UserTask> GetAllTasks()
         {
             List<UserTask> tasks = new List<UserTask>();

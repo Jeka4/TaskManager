@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TaskManager
+namespace TaskManager.Views
 {
     /// <summary>
     /// Логика взаимодействия для ThirdWindow.xaml

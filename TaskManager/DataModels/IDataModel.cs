@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataModels;
 
-namespace TaskManager
+namespace TaskManager.DataModels
 {
     public interface IDataModel
     {
@@ -13,5 +13,6 @@ namespace TaskManager
         List<UserTask> GetTasksOfDay(string date);
         void SortBy(SortType sort); //Перечисление
         void FilterBy(FilterType filter); //Переичсление
+        event EventHandler TasksDBUpdated;
     }
 }
