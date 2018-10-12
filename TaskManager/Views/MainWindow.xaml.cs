@@ -33,11 +33,8 @@ namespace TaskManager.Views
 
         private ITasksManagerWindow _tasksManagerWindow;
 
-        public MainWindow(IEditTaskWindow editTaskWindow, ITasksManagerWindow tasksManagerWindow)
+        public MainWindow()
         {
-            _editTaskWindow = editTaskWindow;
-            _tasksManagerWindow = tasksManagerWindow;
-            
             InitializeComponent();
         }
 

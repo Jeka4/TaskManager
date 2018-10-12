@@ -18,10 +18,7 @@ namespace TaskManager
     {
         public App()
         {
-            IEditTaskWindow editTaskWindow = new EditTaskWindow();
-            ITasksManagerWindow tasksManagerWindow = new TasksManagerWindow();
-            IMainWindow mainWindow = new MainWindow(editTaskWindow, tasksManagerWindow);
-
+            IMainWindow mainWindow = new MainWindow();
             IDataModel dataModel = new DataModel();
             
             ITaskManagerPresenter taskManagerPresenter = new TaskManagerPresenter(mainWindow, dataModel);
