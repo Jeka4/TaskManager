@@ -21,12 +21,19 @@ namespace TaskManager.Presenters
 
             _dataModel.TasksDBUpdated += dataModel_TasksDBUpdated;
 
+            _mainWindow.EnableEditRemoveControls(false);
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(DateTime.Now));
             _mainWindow.CurrentCalendarDateChanged += mainWindow_CurrentCalendarDateChanged;
+            _mainWindow.SelectionListUpdated += mainWindow_SelectionListUpdated;
             _mainWindow.Show();
 
             //Test
             //LoadAllTasks();
+        }
+
+        private void mainWindow_SelectionListUpdated(object sender, EventArgs e)
+        {
+            _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);
         }
 
         private void dataModel_TasksDBUpdated(object sender, EventArgs e)

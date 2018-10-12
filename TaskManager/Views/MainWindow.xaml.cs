@@ -43,7 +43,23 @@ namespace TaskManager.Views
             TaskList.ItemsSource = tasks;
         }
 
-        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        public void EnableEditRemoveControls(bool enable)
+        {
+            buttonEdit.IsEnabled = enable;
+            buttonDelete.IsEnabled = enable;
+        }
+
+        private void TaskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listBox = sender as ListBox;
+
+            if (listBox != null)
+                TaskSelected = listBox.SelectedItem != null ? true : false;
+
+            SelectionListUpdated(this, new EventArgs());
+        }
+
+        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e) //Использовать e?
         {
             var calendar = sender as Calendar;
 
@@ -53,7 +69,7 @@ namespace TaskManager.Views
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
