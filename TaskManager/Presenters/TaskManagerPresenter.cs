@@ -19,12 +19,19 @@ namespace TaskManager.Presenters
             _mainWindow = mainWindow;
             _dataModel = dataModel;
 
+            _dataModel.TasksDBUpdated += dataModel_TasksDBUpdated;
+
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(DateTime.Now));
             _mainWindow.CurrentCalendarDateChanged += mainWindow_CurrentCalendarDateChanged;
             _mainWindow.Show();
 
             //Test
             //LoadAllTasks();
+        }
+
+        private void dataModel_TasksDBUpdated(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void mainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)
@@ -38,6 +45,11 @@ namespace TaskManager.Presenters
         }
 
         public void EditTask(UserTaskView task)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveTask(int id)
         {
             throw new NotImplementedException();
         }
@@ -85,11 +97,6 @@ namespace TaskManager.Presenters
             }
 
             return tasksForView;
-        }
-
-        public void RemoveTask(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

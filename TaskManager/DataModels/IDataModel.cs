@@ -13,5 +13,6 @@ namespace TaskManager.DataModels
         List<UserTask> GetTasksOfDay(string date);
         void SortBy(SortType sort); //Перечисление
         void FilterBy(FilterType filter); //Переичсление
+        event EventHandler TasksDBUpdated;
     }
 }

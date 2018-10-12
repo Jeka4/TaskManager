@@ -14,6 +14,8 @@ namespace TaskManager.DataModels
 
     public class DataModel : IDataModel
     {
+        public event EventHandler TasksDBUpdated;
+
         public List<UserTask> GetAllTasks()
         {
             List<UserTask> tasks = new List<UserTask>();
