@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using LinqToDB;
 using DataModels;
 
-namespace TaskManager
+namespace TaskManager.DataModels
 {
     public enum SortType { AscendingPriority, DescendingPriority }
 

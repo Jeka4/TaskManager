@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataModels;
+using TaskManager.Views;
+using TaskManager.DataModels;
 
-namespace TaskManager
+namespace TaskManager.Presenters
 {
     public class TaskManagerPresenter : ITaskManagerPresenter
     {

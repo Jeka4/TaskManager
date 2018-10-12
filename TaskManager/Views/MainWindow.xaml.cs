@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaskManager.Presenters;
 
-namespace TaskManager
+namespace TaskManager.Views
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml

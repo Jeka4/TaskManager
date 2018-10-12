@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataModels;
 
-namespace TaskManager
+namespace TaskManager.DataModels
 {
     public interface IDataModel
     {

@@ -5,6 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using TaskManager.Views;
+using TaskManager.DataModels;
+using TaskManager.Presenters;
 
 namespace TaskManager
 {
