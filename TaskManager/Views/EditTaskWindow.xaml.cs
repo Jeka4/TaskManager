@@ -25,5 +25,10 @@ namespace TaskManager.Views
 
             grid.DataContext = task;
         }
+
+        private void buttonAdd2_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
     }
 }
