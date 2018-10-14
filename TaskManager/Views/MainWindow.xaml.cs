@@ -69,7 +69,10 @@ namespace TaskManager.Views
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            
+            UserTaskView task = new UserTaskView();
+
+            IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
+            editTaskWindow.ShowDialog();
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)

@@ -8,6 +8,6 @@ namespace TaskManager.Views
 {
     public interface IEditTaskWindow
     {
-        void Show();
+        bool? ShowDialog();
     }
 }
