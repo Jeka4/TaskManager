@@ -16,5 +16,12 @@ namespace TaskManager.Views
         public TaskPriority Priority { get; set; }
         public DateTime TaskDate { get; set; }
         public DateTime NotifyDate { get; set; }
+        public IEnumerable<string> PriorityTypes
+        {
+            get
+            {
+                return Enum.GetNames(typeof(TaskPriority)).AsEnumerable();
+            }
+        }
     }
 }
