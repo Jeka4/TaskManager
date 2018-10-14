@@ -16,6 +16,14 @@ namespace TaskManager.DataModels
     {
         public event EventHandler TasksDBUpdated;
 
+        public void AddTask(UserTask task)
+        {
+            using (var db = new UserTasksDB())
+            {
+                
+            }
+        }
+
         public List<UserTask> GetAllTasks()
         {
             List<UserTask> tasks = new List<UserTask>();
