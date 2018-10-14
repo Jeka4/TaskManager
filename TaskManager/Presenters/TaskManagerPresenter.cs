@@ -25,10 +25,16 @@ namespace TaskManager.Presenters
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(DateTime.Now));
             _mainWindow.CurrentCalendarDateChanged += mainWindow_CurrentCalendarDateChanged;
             _mainWindow.SelectionListUpdated += mainWindow_SelectionListUpdated;
+            _mainWindow.UserTaskAdded += mainWindow_UserTaskAdded;
             _mainWindow.Show();
 
             //Test
             //LoadAllTasks();
+        }
+
+        private void mainWindow_UserTaskAdded(object sender, UserTaskEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void mainWindow_SelectionListUpdated(object sender, EventArgs e)
