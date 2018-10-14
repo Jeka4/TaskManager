@@ -11,6 +11,7 @@ namespace TaskManager.Views
         void SetUserTasksToTasksList(List<UserTaskView> tasks);
         void EnableEditRemoveControls(bool enable);
         event EventHandler<UserTaskEventArgs> UserTaskUpdated;
+        event EventHandler<UserTaskEventArgs> UserTaskAdded;
         event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged;
         event EventHandler SelectionListUpdated;
     }

@@ -25,6 +25,8 @@ namespace TaskManager.Views
 
         public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
 
+        public event EventHandler<UserTaskEventArgs> UserTaskAdded = delegate { };
+
         public event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged = delegate { };
 
         public event EventHandler SelectionListUpdated = delegate { };
@@ -71,8 +73,16 @@ namespace TaskManager.Views
         {
             UserTaskView task = new UserTaskView();
 
+            task.TaskDate = DateTime.Now;
+            task.NotifyDate = DateTime.Now;
+
             IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
-            editTaskWindow.ShowDialog();
+            bool? dialogResult = editTaskWindow.ShowDialog();
+
+            if(dialogResult == true)
+            {
+                UserTaskAdded(this, new UserTaskEventArgs(task));
+            }
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
