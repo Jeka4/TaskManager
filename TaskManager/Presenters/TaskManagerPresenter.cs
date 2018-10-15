@@ -22,7 +22,7 @@ namespace TaskManager.Presenters
             _dataModel.TasksDBUpdated += dataModel_TasksDBUpdated;
 
             _mainWindow.EnableEditRemoveControls(false);
-            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(DateTime.Now));
+            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateSelected));
             _mainWindow.CurrentCalendarDateChanged += mainWindow_CurrentCalendarDateChanged;
             _mainWindow.SelectionListUpdated += mainWindow_SelectionListUpdated;
             _mainWindow.UserTaskAdded += mainWindow_UserTaskAdded;
@@ -44,7 +44,7 @@ namespace TaskManager.Presenters
 
         private void dataModel_TasksDBUpdated(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
+            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateSelected));
         }
 
         private void mainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)

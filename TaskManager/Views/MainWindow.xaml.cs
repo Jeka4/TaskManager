@@ -23,6 +23,8 @@ namespace TaskManager.Views
     {
         public bool TaskSelected { get; private set; }
 
+        public DateTime DateSelected { get; private set; }
+
         public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
 
         public event EventHandler<UserTaskEventArgs> UserTaskAdded = delegate { };
@@ -38,6 +40,8 @@ namespace TaskManager.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            DateSelected = DateTime.Now;
         }
 
         public void SetUserTasksToTasksList(List<UserTaskView> tasks)
@@ -65,8 +69,11 @@ namespace TaskManager.Views
         {
             var calendar = sender as Calendar;
 
-            if(calendar != null && calendar.SelectedDate.HasValue)
-                CurrentCalendarDateChanged(this, new TaskDateEventArg(calendar.SelectedDate.Value));
+            if (calendar != null && calendar.SelectedDate.HasValue)
+            {
+                DateSelected = calendar.SelectedDate.Value;
+                CurrentCalendarDateChanged(this, new TaskDateEventArg(DateSelected));
+            }
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
