@@ -90,7 +90,21 @@ namespace TaskManager.Views
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (TaskSelected == false)
+                return;
 
+            UserTaskView task = TaskList.SelectedItem as UserTaskView;
+
+            if (task == null)
+                return;
+
+            IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
+            bool? dialogResult = editTaskWindow.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                UserTaskUpdated(this, new UserTaskEventArgs(task));
+            }
         }
 
         private void buttonDelete_Click(object sender, RoutedEventArgs e)

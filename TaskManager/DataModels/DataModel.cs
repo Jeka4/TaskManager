@@ -44,6 +44,34 @@ namespace TaskManager.DataModels
             TasksDBUpdated(this, new EventArgs());
         }
 
+        public void UpdateTask(UserTask task)
+        {
+            using (var db = new UserTasksDB())
+            {
+                db.BeginTransaction(System.Data.IsolationLevel.Serializable);
+
+                task.TaskDateID = (from d in db.TaskDates
+                                   where d.Date == task.TaskDate.Date
+                                   select d.Id).FirstOrDefault();
+
+                task.NotifyDateID = (from d in db.NotifyDates
+                                     where d.Date == task.NotifyDate.Date
+                                     select d.Id).FirstOrDefault();
+
+                if (task.TaskDateID == 0)
+                    task.TaskDateID = db.InsertWithInt64Identity(task.TaskDate);
+
+                if (task.NotifyDateID == 0)
+                    task.NotifyDateID = db.InsertWithInt64Identity(task.NotifyDate);
+
+                db.Update(task);
+
+                db.CommitTransaction();
+            }
+
+            TasksDBUpdated(this, new EventArgs());
+        }
+
         public List<UserTask> GetAllTasks()
         {
             List<UserTask> tasks = new List<UserTask>();
@@ -54,6 +82,7 @@ namespace TaskManager.DataModels
                             from n in db.NotifyDates.Where(q => q.Id == t.NotifyDateID).DefaultIfEmpty()
                             select new UserTask //Можно расширить класс, добавив конструктор с TaskDate, NotifyDate
                             {
+                                Id = t.Id,
                                 Name = t.Name,
                                 Description = t.Description,
                                 Priority = t.Priority,
@@ -79,6 +108,7 @@ namespace TaskManager.DataModels
                             where d.Date == date
                             select new UserTask
                             {
+                                Id = t.Id,
                                 Name = t.Name,
                                 Description = t.Description,
                                 Priority = t.Priority,
