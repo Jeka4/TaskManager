@@ -131,8 +131,8 @@ namespace TaskManager.Presenters
                         Name = task.Name,
                         Description = task.Description,
                         Priority = TaskPriority.High, //
-                        TaskDate = DateTime.Parse(task.TaskDate.Date),
-                        NotifyDate = DateTime.Parse(task.NotifyDate.Date)
+                        TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                        NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)
                     });
             }
 
@@ -154,8 +154,8 @@ namespace TaskManager.Presenters
                         Name = task.Name,
                         Description = task.Description,
                         Priority = TaskPriority.High, //
-                        TaskDate = DateTime.Parse(task.TaskDate.Date),
-                        NotifyDate = DateTime.Parse(task.NotifyDate.Date)
+                        TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                        NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
                     });
             }
 
