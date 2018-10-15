@@ -34,7 +34,7 @@ namespace TaskManager.Presenters
 
         private void mainWindow_UserTaskAdded(object sender, UserTaskEventArgs e)
         {
-            throw new NotImplementedException();
+            AddTask(e.UserTaskView);
         }
 
         private void mainWindow_SelectionListUpdated(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace TaskManager.Presenters
 
         private void dataModel_TasksDBUpdated(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void mainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)
@@ -54,7 +54,22 @@ namespace TaskManager.Presenters
 
         public void AddTask(UserTaskView task)
         {
-            throw new NotImplementedException();
+            if (task == null)
+                return;
+
+            UserTask userTask = new UserTask
+            {
+                Id = task.Id,
+                Name = task.Name,
+                Description = task.Description,
+                Priority = task.Priority.ToString(),
+                Notifed = 0
+            };
+
+            userTask.TaskDate = new TaskDate { Date = task.TaskDate.ToShortDateString() };
+            userTask.NotifyDate = new NotifyDate { Date = task.NotifyDate.ToShortDateString() };
+
+            _dataModel.AddTask(userTask);
         }
 
         public void EditTask(UserTaskView task)
