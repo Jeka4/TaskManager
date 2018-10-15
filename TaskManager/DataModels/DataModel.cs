@@ -14,14 +14,34 @@ namespace TaskManager.DataModels
 
     public class DataModel : IDataModel
     {
-        public event EventHandler TasksDBUpdated;
+        public event EventHandler TasksDBUpdated = delegate { };
 
         public void AddTask(UserTask task)
         {
             using (var db = new UserTasksDB())
             {
-                
+                db.BeginTransaction(System.Data.IsolationLevel.Serializable);
+
+                task.TaskDateID = (from d in db.TaskDates
+                                    where d.Date == task.TaskDate.Date
+                                    select d.Id).FirstOrDefault();
+
+                task.NotifyDateID = (from d in db.NotifyDates
+                                   where d.Date == task.NotifyDate.Date
+                                   select d.Id).FirstOrDefault();
+
+                if (task.TaskDateID == 0)
+                    db.Insert(task.TaskDate);
+
+                if (task.NotifyDateID == 0)
+                    db.Insert(task.NotifyDate);
+
+                db.Insert(task);
+
+                db.CommitTransaction();
             }
+
+            TasksDBUpdated(this, new EventArgs());
         }
 
         public List<UserTask> GetAllTasks()
