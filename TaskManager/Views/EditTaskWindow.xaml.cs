@@ -19,9 +19,16 @@ namespace TaskManager.Views
     /// </summary>
     public partial class EditTaskWindow : Window, IEditTaskWindow
     {
-        public EditTaskWindow()
+        public EditTaskWindow(UserTaskView task)
         {
             InitializeComponent();
+
+            grid.DataContext = task;
+        }
+
+        private void buttonAdd2_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

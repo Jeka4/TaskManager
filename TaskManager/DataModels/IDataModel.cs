@@ -9,6 +9,9 @@ namespace TaskManager.DataModels
 {
     public interface IDataModel
     {
+        void AddTask(UserTask task);
+        void UpdateTask(UserTask task);
+        void DeleteTask(UserTask task);
         List<UserTask> GetAllTasks();
         List<UserTask> GetTasksOfDay(string date);
         void SortBy(SortType sort); //Перечисление

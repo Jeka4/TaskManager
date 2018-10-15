@@ -21,17 +21,42 @@ namespace TaskManager.Presenters
 
             _dataModel.TasksDBUpdated += dataModel_TasksDBUpdated;
 
-            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(DateTime.Now));
+            _mainWindow.EnableEditRemoveControls(false);
+            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateSelected));
             _mainWindow.CurrentCalendarDateChanged += mainWindow_CurrentCalendarDateChanged;
+            _mainWindow.SelectionListUpdated += mainWindow_SelectionListUpdated;
+            _mainWindow.UserTaskAdded += mainWindow_UserTaskAdded;
+            _mainWindow.UserTaskUpdated += mainWindow_UserTaskUpdated;
+            _mainWindow.UserTaskDeleted += mainWindow_UserTaskDeleted;
             _mainWindow.Show();
 
             //Test
             //LoadAllTasks();
         }
 
+        private void mainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
+        {
+            RemoveTask(e.UserTaskView);
+        }
+
+        private void mainWindow_UserTaskUpdated(object sender, UserTaskEventArgs e)
+        {
+            EditTask(e.UserTaskView);
+        }
+
+        private void mainWindow_UserTaskAdded(object sender, UserTaskEventArgs e)
+        {
+            AddTask(e.UserTaskView);
+        }
+
+        private void mainWindow_SelectionListUpdated(object sender, EventArgs e)
+        {
+            _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);
+        }
+
         private void dataModel_TasksDBUpdated(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateSelected));
         }
 
         private void mainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)
@@ -41,17 +66,55 @@ namespace TaskManager.Presenters
 
         public void AddTask(UserTaskView task)
         {
-            throw new NotImplementedException();
+            if (task == null)
+                return;
+
+            UserTask userTask = new UserTask
+            {
+                Id = task.Id,
+                Name = task.Name,
+                Description = task.Description,
+                Priority = task.Priority.ToString(),
+                Notifed = 0
+            };
+
+            userTask.TaskDate = new TaskDate { Date = task.TaskDate.ToShortDateString() };
+            userTask.NotifyDate = new NotifyDate { Date = task.NotifyDate.ToShortDateString() };
+
+            _dataModel.AddTask(userTask);
         }
 
         public void EditTask(UserTaskView task)
         {
-            throw new NotImplementedException();
+            if (task == null)
+                return;
+
+            UserTask userTask = new UserTask
+            {
+                Id = task.Id,
+                Name = task.Name,
+                Description = task.Description,
+                Priority = task.Priority.ToString(),
+                Notifed = 0
+            };
+
+            userTask.TaskDate = new TaskDate { Date = task.TaskDate.ToShortDateString() };
+            userTask.NotifyDate = new NotifyDate { Date = task.NotifyDate.ToShortDateString() };
+
+            _dataModel.UpdateTask(userTask);
         }
 
-        public void RemoveTask(int id)
+        public void RemoveTask(UserTaskView task)
         {
-            throw new NotImplementedException();
+            if (task == null)
+                return;
+
+            UserTask userTask = new UserTask
+            {
+                Id = task.Id
+            };
+
+            _dataModel.DeleteTask(userTask);
         }
 
         public List<UserTaskView> LoadAllTasks()
@@ -68,8 +131,8 @@ namespace TaskManager.Presenters
                         Name = task.Name,
                         Description = task.Description,
                         Priority = TaskPriority.High, //
-                        TaskDate = DateTime.Parse(task.TaskDate.Date),
-                        NotifyDate = DateTime.Parse(task.NotifyDate.Date)
+                        TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                        NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)
                     });
             }
 
@@ -91,8 +154,8 @@ namespace TaskManager.Presenters
                         Name = task.Name,
                         Description = task.Description,
                         Priority = TaskPriority.High, //
-                        TaskDate = DateTime.Parse(task.TaskDate.Date),
-                        NotifyDate = DateTime.Parse(task.NotifyDate.Date)
+                        TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                        NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
                     });
             }
 
