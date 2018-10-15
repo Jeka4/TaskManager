@@ -31,10 +31,10 @@ namespace TaskManager.DataModels
                                    select d.Id).FirstOrDefault();
 
                 if (task.TaskDateID == 0)
-                    db.Insert(task.TaskDate);
+                    task.TaskDateID = db.InsertWithInt64Identity(task.TaskDate);
 
                 if (task.NotifyDateID == 0)
-                    db.Insert(task.NotifyDate);
+                    task.NotifyDateID = db.InsertWithInt64Identity(task.NotifyDate);
 
                 db.Insert(task);
 
