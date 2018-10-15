@@ -126,5 +126,11 @@ namespace TaskManager.Views
         {
 
         }
+
+        private void Calendar_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null && Mouse.Captured is System.Windows.Controls.Primitives.CalendarItem)
+                Mouse.Capture(null);
+        }
     }
 }

@@ -43,7 +43,8 @@
                   Grid.Column="4"
                   Grid.Row="2" 
                   HorizontalAlignment="Left"
-                  SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
+                  SelectedDatesChanged="Calendar_SelectedDatesChanged"
+                  PreviewMouseUp="Calendar_PreviewMouseUp"/>
             <ListBox x:Name="TaskList" SelectionChanged="TaskList_SelectionChanged" HorizontalContentAlignment="Stretch" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4">
             <ListBox.ItemTemplate>
                 <DataTemplate>
