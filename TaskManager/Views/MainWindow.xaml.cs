@@ -33,10 +33,6 @@ namespace TaskManager.Views
 
         public event EventHandler SelectionListUpdated = delegate { };
 
-        private IEditTaskWindow _editTaskWindow;
-
-        private ITasksManagerWindow _tasksManagerWindow;
-
         public MainWindow()
         {
             InitializeComponent();
