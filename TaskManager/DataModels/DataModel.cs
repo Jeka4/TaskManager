@@ -72,6 +72,22 @@ namespace TaskManager.DataModels
             TasksDBUpdated(this, new EventArgs());
         }
 
+        public void DeleteTask(UserTask task)
+        {
+            using (var db = new UserTasksDB())
+            {
+                db.BeginTransaction(System.Data.IsolationLevel.Serializable);
+
+                db.Delete(task);
+
+                //Необходима очистка других таблиц
+
+                db.CommitTransaction();
+            }
+
+            TasksDBUpdated(this, new EventArgs());
+        }
+
         public List<UserTask> GetAllTasks()
         {
             List<UserTask> tasks = new List<UserTask>();

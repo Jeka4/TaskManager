@@ -7,7 +7,7 @@ namespace TaskManager.Presenters
     public interface ITaskManagerPresenter //Заглушки
     {
         void AddTask(UserTaskView task);
-        void RemoveTask(int id);
+        void RemoveTask(UserTaskView task);
         void EditTask(UserTaskView task);
         List<UserTaskView> LoadTasksOfDay(DateTime day);
         List<UserTaskView> LoadAllTasks();

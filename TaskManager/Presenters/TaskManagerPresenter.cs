@@ -26,11 +26,17 @@ namespace TaskManager.Presenters
             _mainWindow.CurrentCalendarDateChanged += mainWindow_CurrentCalendarDateChanged;
             _mainWindow.SelectionListUpdated += mainWindow_SelectionListUpdated;
             _mainWindow.UserTaskAdded += mainWindow_UserTaskAdded;
-            _mainWindow.UserTaskUpdated += mainWindow_UserTaskUpdated; ;
+            _mainWindow.UserTaskUpdated += mainWindow_UserTaskUpdated;
+            _mainWindow.UserTaskDeleted += mainWindow_UserTaskDeleted;
             _mainWindow.Show();
 
             //Test
             //LoadAllTasks();
+        }
+
+        private void mainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
+        {
+            RemoveTask(e.UserTaskView);
         }
 
         private void mainWindow_UserTaskUpdated(object sender, UserTaskEventArgs e)
@@ -98,9 +104,17 @@ namespace TaskManager.Presenters
             _dataModel.UpdateTask(userTask);
         }
 
-        public void RemoveTask(int id)
+        public void RemoveTask(UserTaskView task)
         {
-            throw new NotImplementedException();
+            if (task == null)
+                return;
+
+            UserTask userTask = new UserTask
+            {
+                Id = task.Id
+            };
+
+            _dataModel.DeleteTask(userTask);
         }
 
         public List<UserTaskView> LoadAllTasks()

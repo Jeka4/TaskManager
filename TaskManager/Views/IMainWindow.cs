@@ -13,6 +13,7 @@ namespace TaskManager.Views
         void EnableEditRemoveControls(bool enable);
         event EventHandler<UserTaskEventArgs> UserTaskUpdated;
         event EventHandler<UserTaskEventArgs> UserTaskAdded;
+        event EventHandler<UserTaskEventArgs> UserTaskDeleted;
         event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged;
         event EventHandler SelectionListUpdated;
     }

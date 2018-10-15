@@ -29,6 +29,8 @@ namespace TaskManager.Views
 
         public event EventHandler<UserTaskEventArgs> UserTaskAdded = delegate { };
 
+        public event EventHandler<UserTaskEventArgs> UserTaskDeleted = delegate { };
+
         public event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged = delegate { };
 
         public event EventHandler SelectionListUpdated = delegate { };
@@ -109,7 +111,15 @@ namespace TaskManager.Views
 
         private void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (TaskSelected == false)
+                return;
 
+            UserTaskView task = TaskList.SelectedItem as UserTaskView;
+
+            if (task == null)
+                return;
+
+            UserTaskDeleted(this, new UserTaskEventArgs(task));
         }
 
         private void buttonControl_Click(object sender, RoutedEventArgs e)
