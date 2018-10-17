@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataModels;
 using TaskManager.Views;
 using TaskManager.DataModels;
+using TaskManager.Components;
 
 namespace TaskManager.Presenters
 {
@@ -13,11 +14,13 @@ namespace TaskManager.Presenters
     {
         private IMainWindow _mainWindow;
         private IDataModel _dataModel;
+        private readonly IDateConverter _dateConverter;
 
-        public TaskManagerPresenter(IMainWindow mainWindow, IDataModel dataModel)
+        public TaskManagerPresenter(IMainWindow mainWindow, IDataModel dataModel, IDateConverter dateConverter)
         {
             _mainWindow = mainWindow;
             _dataModel = dataModel;
+            _dateConverter = dateConverter;
 
             _dataModel.TasksDBUpdated += dataModel_TasksDBUpdated;
 
@@ -75,8 +78,8 @@ namespace TaskManager.Presenters
                 IsNotified = 0
             };
 
-            userTask.TaskDate = task.TaskDate.ToString("dd.MM.yyyy");
-            userTask.NotifyDate = task.NotifyDate.ToString("dd.MM.yyyy");
+            userTask.TaskDate = _dateConverter.ConvertDateToString(task.TaskDate);
+            userTask.NotifyDate = _dateConverter.ConvertDateToString(task.NotifyDate);
 
             _dataModel.AddTask(userTask);
         }
@@ -95,8 +98,8 @@ namespace TaskManager.Presenters
                 IsNotified = 0
             };
 
-            userTask.TaskDate = task.TaskDate.ToString("dd.MM.yyyy");
-            userTask.NotifyDate = task.NotifyDate.ToString("dd.MM.yyyy");
+            userTask.TaskDate = _dateConverter.ConvertDateToString(task.TaskDate);
+            userTask.NotifyDate = _dateConverter.ConvertDateToString(task.NotifyDate);
 
             _dataModel.UpdateTask(userTask);
         }
@@ -129,8 +132,8 @@ namespace TaskManager.Presenters
                             Name = task.Name,
                             Description = task.Description,
                             Priority = TaskPriority.High, //
-                            TaskDate = DateTime.ParseExact(task.TaskDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                            NotifyDate = DateTime.ParseExact(task.NotifyDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                            TaskDate = _dateConverter.ParseDateToString(task.TaskDate),
+                            NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate)
                         });
                 }
                 return tasksForView;
@@ -143,7 +146,7 @@ namespace TaskManager.Presenters
 
         public List<UserTaskView> LoadTasksOfDay(DateTime day)
         {
-            List<UserTask> tasks = _dataModel.GetTasksOfDay(day.ToString("dd.MM.yyyy"));
+            List<UserTask> tasks = _dataModel.GetTasksOfDay(_dateConverter.ConvertDateToString(day));
 
             List<UserTaskView> tasksForView = new List<UserTaskView>();
 
@@ -158,9 +161,9 @@ namespace TaskManager.Presenters
                             Name = task.Name,
                             Description = task.Description,
                             Priority = TaskPriority.High, //
-                            TaskDate = DateTime.ParseExact(task.TaskDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                            NotifyDate = DateTime.ParseExact(task.NotifyDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                        });
+                            TaskDate = _dateConverter.ParseDateToString(task.TaskDate),
+                            NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate)
+                });
                 }
                 return tasksForView;
             }
