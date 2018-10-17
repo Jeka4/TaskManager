@@ -19,9 +19,7 @@ namespace TaskManager.DataModels
         public void AddTask(UserTask task)
         {
             using (var db = new UserTasksDB())
-            {
                 db.Insert(task);
-            }
 
             TasksDBUpdated(this, new EventArgs());
         }
@@ -29,9 +27,7 @@ namespace TaskManager.DataModels
         public void UpdateTask(UserTask task)
         {
             using (var db = new UserTasksDB())
-            {
                 db.Update(task);
-            }
 
             TasksDBUpdated(this, new EventArgs());
         }
@@ -39,9 +35,7 @@ namespace TaskManager.DataModels
         public void DeleteTask(UserTask task)
         {
             using (var db = new UserTasksDB())
-            {
                 db.Delete(task);
-            }
 
             TasksDBUpdated(this, new EventArgs());
         }
