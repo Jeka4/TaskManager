@@ -72,11 +72,11 @@ namespace TaskManager.Presenters
                 Name = task.Name,
                 Description = task.Description,
                 Priority = task.Priority.ToString(),
-                Notifed = 0
+                IsNotified = 0
             };
 
-            userTask.TaskDate = new TaskDate { Date = task.TaskDate.ToString("dd.MM.yyyy") };
-            userTask.NotifyDate = new NotifyDate { Date = task.NotifyDate.ToString("dd.MM.yyyy") };
+            userTask.TaskDate = task.TaskDate.ToString("dd.MM.yyyy");
+            userTask.NotifyDate = task.NotifyDate.ToString("dd.MM.yyyy");
 
             _dataModel.AddTask(userTask);
         }
@@ -92,11 +92,11 @@ namespace TaskManager.Presenters
                 Name = task.Name,
                 Description = task.Description,
                 Priority = task.Priority.ToString(),
-                Notifed = 0
+                IsNotified = 0
             };
 
-            userTask.TaskDate = new TaskDate { Date = task.TaskDate.ToString("dd.MM.yyyy") };
-            userTask.NotifyDate = new NotifyDate { Date = task.NotifyDate.ToString("dd.MM.yyyy") };
+            userTask.TaskDate = task.TaskDate.ToString("dd.MM.yyyy");
+            userTask.NotifyDate = task.NotifyDate.ToString("dd.MM.yyyy");
 
             _dataModel.UpdateTask(userTask);
         }
@@ -129,8 +129,8 @@ namespace TaskManager.Presenters
                             Name = task.Name,
                             Description = task.Description,
                             Priority = TaskPriority.High, //
-                            TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                            NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                            TaskDate = DateTime.ParseExact(task.TaskDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                            NotifyDate = DateTime.ParseExact(task.NotifyDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)
                         });
                 }
                 return tasksForView;
@@ -158,8 +158,8 @@ namespace TaskManager.Presenters
                             Name = task.Name,
                             Description = task.Description,
                             Priority = TaskPriority.High, //
-                            TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                            NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                            TaskDate = DateTime.ParseExact(task.TaskDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                            NotifyDate = DateTime.ParseExact(task.NotifyDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
                         });
                 }
                 return tasksForView;
