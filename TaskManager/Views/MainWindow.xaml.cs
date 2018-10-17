@@ -58,7 +58,7 @@ namespace TaskManager.Views
             var listBox = sender as ListBox;
 
             if (listBox != null)
-                TaskSelected = listBox.SelectedItem != null ? true : false;
+                TaskSelected = listBox.SelectedItem != null;
 
             SelectionListUpdated(this, new EventArgs());
         }
