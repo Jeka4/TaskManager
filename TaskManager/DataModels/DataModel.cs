@@ -20,25 +20,7 @@ namespace TaskManager.DataModels
         {
             using (var db = new UserTasksDB())
             {
-                db.BeginTransaction(System.Data.IsolationLevel.Serializable);
-
-                task.TaskDateID = (from d in db.TaskDates
-                                    where d.Date == task.TaskDate.Date
-                                    select d.Id).FirstOrDefault();
-
-                task.NotifyDateID = (from d in db.NotifyDates
-                                   where d.Date == task.NotifyDate.Date
-                                   select d.Id).FirstOrDefault();
-
-                if (task.TaskDateID == 0)
-                    task.TaskDateID = db.InsertWithInt64Identity(task.TaskDate);
-
-                if (task.NotifyDateID == 0)
-                    task.NotifyDateID = db.InsertWithInt64Identity(task.NotifyDate);
-
                 db.Insert(task);
-
-                db.CommitTransaction();
             }
 
             TasksDBUpdated(this, new EventArgs());
@@ -48,25 +30,7 @@ namespace TaskManager.DataModels
         {
             using (var db = new UserTasksDB())
             {
-                db.BeginTransaction(System.Data.IsolationLevel.Serializable);
-
-                task.TaskDateID = (from d in db.TaskDates
-                                   where d.Date == task.TaskDate.Date
-                                   select d.Id).FirstOrDefault();
-
-                task.NotifyDateID = (from d in db.NotifyDates
-                                     where d.Date == task.NotifyDate.Date
-                                     select d.Id).FirstOrDefault();
-
-                if (task.TaskDateID == 0)
-                    task.TaskDateID = db.InsertWithInt64Identity(task.TaskDate);
-
-                if (task.NotifyDateID == 0)
-                    task.NotifyDateID = db.InsertWithInt64Identity(task.NotifyDate);
-
                 db.Update(task);
-
-                db.CommitTransaction();
             }
 
             TasksDBUpdated(this, new EventArgs());
@@ -76,13 +40,7 @@ namespace TaskManager.DataModels
         {
             using (var db = new UserTasksDB())
             {
-                db.BeginTransaction(System.Data.IsolationLevel.Serializable);
-
                 db.Delete(task);
-
-                //Необходима очистка других таблиц
-
-                db.CommitTransaction();
             }
 
             TasksDBUpdated(this, new EventArgs());
@@ -94,18 +52,14 @@ namespace TaskManager.DataModels
             using (var db = new UserTasksDB())
             {
                 var query = from t in db.UserTasks
-                            from d in db.TaskDates.Where(q => q.Id == t.TaskDateID).DefaultIfEmpty() //?????
-                            from n in db.NotifyDates.Where(q => q.Id == t.NotifyDateID).DefaultIfEmpty()
                             select new UserTask //Можно расширить класс, добавив конструктор с TaskDate, NotifyDate
                             {
                                 Id = t.Id,
                                 Name = t.Name,
                                 Description = t.Description,
                                 Priority = t.Priority,
-                                TaskDateID = t.TaskDateID,
-                                TaskDate = d,
-                                NotifyDateID = t.NotifyDateID,
-                                NotifyDate = n
+                                TaskDate = t.TaskDate,
+                                NotifyDate = t.NotifyDate,
                             };
 
                 tasks = query.ToList();
@@ -119,19 +73,15 @@ namespace TaskManager.DataModels
             using (var db = new UserTasksDB())
             {
                 var query = from t in db.UserTasks
-                            from d in db.TaskDates.Where(q => q.Id == t.TaskDateID).DefaultIfEmpty() //?????
-                            from n in db.NotifyDates.Where(q => q.Id == t.NotifyDateID).DefaultIfEmpty()
-                            where d.Date == date
+                            where t.TaskDate == date
                             select new UserTask
                             {
                                 Id = t.Id,
                                 Name = t.Name,
                                 Description = t.Description,
                                 Priority = t.Priority,
-                                TaskDateID = t.TaskDateID,
-                                TaskDate = d,
-                                NotifyDateID = t.NotifyDateID,
-                                NotifyDate = n
+                                TaskDate = t.TaskDate,
+                                NotifyDate = t.NotifyDate,
                             };
 
                 tasks = query.ToList();
