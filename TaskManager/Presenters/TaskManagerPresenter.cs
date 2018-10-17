@@ -64,7 +64,7 @@ namespace TaskManager.Presenters
         public void AddTask(UserTaskView task)
         {
             if (task == null)
-                return;
+                throw new NullTaskException();
 
             UserTask userTask = new UserTask
             {
@@ -84,7 +84,7 @@ namespace TaskManager.Presenters
         public void EditTask(UserTaskView task)
         {
             if (task == null)
-                return;
+                throw new NullTaskException();
 
             UserTask userTask = new UserTask
             {
@@ -104,7 +104,7 @@ namespace TaskManager.Presenters
         public void RemoveTask(UserTaskView task)
         {
             if (task == null)
-                return;
+                throw new NullTaskException();
 
             UserTask userTask = new UserTask
             {
@@ -119,21 +119,26 @@ namespace TaskManager.Presenters
             List<UserTask> tasks = _dataModel.GetAllTasks();
 
             List<UserTaskView> tasksForView = new List<UserTaskView>();
-
-            foreach (var task in tasks)
+            try
             {
-                tasksForView.Add(
-                    new UserTaskView {
-                        Id = task.Id,
-                        Name = task.Name,
-                        Description = task.Description,
-                        Priority = TaskPriority.High, //
-                        TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                        NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)
-                    });
+                foreach (var task in tasks)
+                {
+                    tasksForView.Add(
+                        new UserTaskView {
+                            Id = task.Id,
+                            Name = task.Name,
+                            Description = task.Description,
+                            Priority = TaskPriority.High, //
+                            TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                            NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                        });
+                }
+                return tasksForView;
             }
-
-            return tasksForView;
+            catch
+            {
+                throw new MappingTaskException();
+            }
         }
 
         public List<UserTaskView> LoadTasksOfDay(DateTime day)
@@ -142,21 +147,27 @@ namespace TaskManager.Presenters
 
             List<UserTaskView> tasksForView = new List<UserTaskView>();
 
-            foreach (var task in tasks)
+            try
             {
-                tasksForView.Add(
-                    new UserTaskView
-                    {
-                        Id = task.Id,
-                        Name = task.Name,
-                        Description = task.Description,
-                        Priority = TaskPriority.High, //
-                        TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                        NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                    });
+                foreach (var task in tasks)
+                {
+                    tasksForView.Add(
+                        new UserTaskView
+                        {
+                            Id = task.Id,
+                            Name = task.Name,
+                            Description = task.Description,
+                            Priority = TaskPriority.High, //
+                            TaskDate = DateTime.ParseExact(task.TaskDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                            NotifyDate = DateTime.ParseExact(task.NotifyDate.Date, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                        });
+                }
+                return tasksForView;
             }
-
-            return tasksForView;
+            catch
+            {
+                throw new MappingTaskException();
+            }
         }
     }
 }
