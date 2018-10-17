@@ -65,6 +65,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Components\DateConverter.cs" />
+    <Compile Include="Components\IDateConverter.cs" />
     <Compile Include="DataModels\DataModel.cs" />
     <Compile Include="DataModels\UserTasksDataBase1.generated.cs">
       <AutoGen>True</AutoGen>
