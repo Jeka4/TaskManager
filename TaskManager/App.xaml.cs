@@ -8,6 +8,7 @@ using System.Windows;
 using TaskManager.Views;
 using TaskManager.DataModels;
 using TaskManager.Presenters;
+using TaskManager.Components;
 
 namespace TaskManager
 {
@@ -20,8 +21,9 @@ namespace TaskManager
         {
             IMainWindow mainWindow = new MainWindow();
             IDataModel dataModel = new DataModel();
+            IDateConverter dateConverter = new DateConverter("dd.MM.yyyy");
             
-            ITaskManagerPresenter taskManagerPresenter = new TaskManagerPresenter(mainWindow, dataModel);
+            ITaskManagerPresenter taskManagerPresenter = new TaskManagerPresenter(mainWindow, dataModel, dateConverter);
         }
     }
 }
