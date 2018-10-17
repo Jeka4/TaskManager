@@ -29,9 +29,6 @@ namespace TaskManager.Presenters
             _mainWindow.UserTaskUpdated += mainWindow_UserTaskUpdated;
             _mainWindow.UserTaskDeleted += mainWindow_UserTaskDeleted;
             _mainWindow.Show();
-
-            //Test
-            //LoadAllTasks();
         }
 
         private void mainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
@@ -78,8 +75,8 @@ namespace TaskManager.Presenters
                 Notifed = 0
             };
 
-            userTask.TaskDate = new TaskDate { Date = task.TaskDate.ToShortDateString() };
-            userTask.NotifyDate = new NotifyDate { Date = task.NotifyDate.ToShortDateString() };
+            userTask.TaskDate = new TaskDate { Date = task.TaskDate.ToString("dd.MM.yyyy") };
+            userTask.NotifyDate = new NotifyDate { Date = task.NotifyDate.ToString("dd.MM.yyyy") };
 
             _dataModel.AddTask(userTask);
         }
@@ -98,8 +95,8 @@ namespace TaskManager.Presenters
                 Notifed = 0
             };
 
-            userTask.TaskDate = new TaskDate { Date = task.TaskDate.ToShortDateString() };
-            userTask.NotifyDate = new NotifyDate { Date = task.NotifyDate.ToShortDateString() };
+            userTask.TaskDate = new TaskDate { Date = task.TaskDate.ToString("dd.MM.yyyy") };
+            userTask.NotifyDate = new NotifyDate { Date = task.NotifyDate.ToString("dd.MM.yyyy") };
 
             _dataModel.UpdateTask(userTask);
         }
@@ -141,7 +138,7 @@ namespace TaskManager.Presenters
 
         public List<UserTaskView> LoadTasksOfDay(DateTime day)
         {
-            List<UserTask> tasks = _dataModel.GetTasksOfDay(day.ToShortDateString());
+            List<UserTask> tasks = _dataModel.GetTasksOfDay(day.ToString("dd.MM.yyyy"));
 
             List<UserTaskView> tasksForView = new List<UserTaskView>();
 
