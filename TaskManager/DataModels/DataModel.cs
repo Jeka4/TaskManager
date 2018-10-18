@@ -54,6 +54,7 @@ namespace TaskManager.DataModels
                                 Priority = t.Priority,
                                 TaskDate = t.TaskDate,
                                 NotifyDate = t.NotifyDate,
+                                IsNotified = t.IsNotified
                             };
 
                 tasks = query.ToList();
@@ -76,6 +77,7 @@ namespace TaskManager.DataModels
                                 Priority = t.Priority,
                                 TaskDate = t.TaskDate,
                                 NotifyDate = t.NotifyDate,
+                                IsNotified = t.IsNotified
                             };
 
                 tasks = query.ToList();

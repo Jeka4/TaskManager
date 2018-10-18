@@ -133,7 +133,8 @@ namespace TaskManager.Presenters
                             Description = task.Description,
                             Priority = TaskPriority.High, //
                             TaskDate = _dateConverter.ParseDateToString(task.TaskDate),
-                            NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate)
+                            NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate),
+                            isNotified = Convert.ToBoolean(task.IsNotified) 
                         });
                 }
                 return tasksForView;
@@ -162,8 +163,9 @@ namespace TaskManager.Presenters
                             Description = task.Description,
                             Priority = TaskPriority.High, //
                             TaskDate = _dateConverter.ParseDateToString(task.TaskDate),
-                            NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate)
-                });
+                            NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate),
+                            isNotified = Convert.ToBoolean(task.IsNotified)
+                        });
                 }
                 return tasksForView;
             }
