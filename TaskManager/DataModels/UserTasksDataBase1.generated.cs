@@ -10,7 +10,7 @@ using System.Linq;
 using LinqToDB;
 using LinqToDB.Mapping;
 
-namespace DataModels
+namespace TaskManager.DataModels
 {
 	/// <summary>
 	/// Database       : UserTasks

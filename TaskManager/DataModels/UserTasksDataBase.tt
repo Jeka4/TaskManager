@@ -34,7 +34,7 @@
 		5. See more at https://github.com/linq2db/t4models
 	*/
 
-	NamespaceName = "DataModels";
+	NamespaceName = "TaskManager.DataModels";
 
 	LoadSQLiteMetadata(Host.ResolvePath("."), "UserTasks.sqlite");
 //	LoadSQLiteMetadata(string connectionString);
