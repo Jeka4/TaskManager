@@ -138,9 +138,9 @@ namespace TaskManager.Presenters
                 }
                 return tasksForView;
             }
-            catch
+            catch(Exception ex)
             {
-                throw new MappingTaskException();
+                throw new MappingTaskException(ex.Message, ex);
             }
         }
 
@@ -167,9 +167,9 @@ namespace TaskManager.Presenters
                 }
                 return tasksForView;
             }
-            catch
+            catch(Exception ex)
             {
-                throw new MappingTaskException();
+                throw new MappingTaskException(ex.Message, ex);
             }
         }
     }

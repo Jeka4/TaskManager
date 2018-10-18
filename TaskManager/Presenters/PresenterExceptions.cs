@@ -9,12 +9,12 @@ namespace TaskManager.Presenters
     public class NullTaskException : Exception
     {
         public NullTaskException() { }
-        public NullTaskException(string message) : base(message) { }
+        public NullTaskException(string message, Exception ex) : base(message, ex) { }
     }
 
     public class MappingTaskException : Exception
     {
         public MappingTaskException() { }
-        public MappingTaskException(string message) : base(message) { }
+        public MappingTaskException(string message, Exception ex) : base(message, ex) { }
     }
 }
