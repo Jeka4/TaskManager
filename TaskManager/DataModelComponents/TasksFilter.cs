@@ -1,4 +1,5 @@
 ﻿using DataModels;
+using System;
 using System.Linq;
 using TaskManager.DataModels;
 
@@ -8,6 +9,9 @@ namespace TaskManager.DataModelComponents
     {
         public void Filter(IQueryable<UserTask> query, FilterType filter)
         {
+            if (query == null)
+                throw new ArgumentException("Query is null");
+
             switch(filter)
             {
                 case FilterType.HighPriority:
