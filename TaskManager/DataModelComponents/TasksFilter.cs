@@ -4,11 +4,22 @@ using TaskManager.DataModels;
 
 namespace TaskManager.DataModelComponents
 {
-    class TasksFilter : ITaskFilter
+    public class TasksFilter : ITaskFilter
     {
-        public IQueryable<UserTask> Filter(IQueryable<UserTask> query, FilterType filter)
+        public void Filter(IQueryable<UserTask> query, FilterType filter)
         {
-            return null;
+            switch(filter)
+            {
+                case FilterType.HighPriority:
+                    query = query.Where(t => t.Priority == TaskPriority.High.ToString());
+                    break;
+                case FilterType.MediumPriority:
+                    query = query.Where(t => t.Priority == TaskPriority.Medium.ToString());
+                    break;
+                case FilterType.LowPriority:
+                    query = query.Where(t => t.Priority == TaskPriority.Low.ToString());
+                    break;
+            }
         }
     }
 }

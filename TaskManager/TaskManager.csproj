@@ -77,6 +77,8 @@
       <DependentUpon>UserTasksDataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModels\IDataModel.cs" />
+    <Compile Include="PresenterComponents\IPriorityConverter.cs" />
+    <Compile Include="PresenterComponents\PriorityConverter.cs" />
     <Compile Include="Presenters\PresenterExceptions.cs" />
     <Compile Include="Views\IEditTaskWindow.cs" />
     <Compile Include="Views\IMainWindow.cs" />

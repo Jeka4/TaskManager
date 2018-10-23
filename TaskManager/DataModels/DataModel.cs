@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LinqToDB;
 using DataModels;
 using TaskManager.DataModelComponents;
@@ -12,6 +10,17 @@ namespace TaskManager.DataModels
     public class DataModel : IDataModel
     {
         public event EventHandler TasksDBUpdated = delegate { };
+
+        private FilterType _filterType = FilterType.All;
+
+        private SortType _sortType = SortType.AscendingPriority;
+
+        private readonly ITaskFilter _taskFilter;
+
+        public DataModel(ITaskFilter taskFilter)
+        {
+            _taskFilter = taskFilter;
+        }
 
         public void AddTask(UserTask task)
         {
@@ -54,6 +63,8 @@ namespace TaskManager.DataModels
                                 IsNotified = t.IsNotified
                             };
 
+                _taskFilter.Filter(query, _filterType);
+
                 tasks = query.ToList();
             }
             return tasks;
@@ -77,6 +88,8 @@ namespace TaskManager.DataModels
                                 IsNotified = t.IsNotified
                             };
 
+                _taskFilter.Filter(query, _filterType);
+
                 tasks = query.ToList();
             }
             return tasks;
@@ -89,7 +102,7 @@ namespace TaskManager.DataModels
 
         public void FilterBy(FilterType filter)
         {
-            throw new NotImplementedException();
+            _filterType = filter;
         }
     }
 }

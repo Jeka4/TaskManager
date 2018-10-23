@@ -4,8 +4,8 @@ using TaskManager.DataModels;
 
 namespace TaskManager.DataModelComponents
 {
-    interface ITaskFilter
+    public interface ITaskFilter
     {
-        IQueryable<UserTask> Filter(IQueryable<UserTask> query, FilterType filter);
+        void Filter(IQueryable<UserTask> query, FilterType filter);
     }
 }
