@@ -5,13 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using LinqToDB;
 using DataModels;
+using TaskManager.DataModelComponents;
 
 namespace TaskManager.DataModels
 {
-    public enum SortType { AscendingPriority, DescendingPriority }
-
-    public enum FilterType { All, LowPriority, MediumPriority, HighPriority }
-
     public class DataModel : IDataModel
     {
         public event EventHandler TasksDBUpdated = delegate { };

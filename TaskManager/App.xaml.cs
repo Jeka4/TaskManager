@@ -8,7 +8,7 @@ using System.Windows;
 using TaskManager.Views;
 using TaskManager.DataModels;
 using TaskManager.Presenters;
-using TaskManager.Components;
+using TaskManager.PresenterComponents;
 
 namespace TaskManager
 {

@@ -14,8 +14,8 @@ namespace TaskManager.DataModels
         void DeleteTask(UserTask task);
         List<UserTask> GetAllTasks();
         List<UserTask> GetTasksOfDay(string date);
-        void SortBy(SortType sort); //Перечисление
-        void FilterBy(FilterType filter); //Переичсление
+        void SortBy(SortType sort);
+        void FilterBy(FilterType filter);
         event EventHandler TasksDBUpdated;
     }
 }
