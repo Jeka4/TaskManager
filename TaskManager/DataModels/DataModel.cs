@@ -45,16 +45,7 @@ namespace TaskManager.DataModels
             using (var db = new UserTasksDB())
             {
                 var query = from t in db.UserTasks
-                            select new UserTask //Можно расширить класс, добавив конструктор с TaskDate, NotifyDate
-                            {
-                                Id = t.Id,
-                                Name = t.Name,
-                                Description = t.Description,
-                                Priority = t.Priority,
-                                TaskDate = t.TaskDate,
-                                NotifyDate = t.NotifyDate,
-                                IsNotified = t.IsNotified
-                            };
+                            select t;
 
                 tasks = query.ToList();
             }
@@ -68,16 +59,7 @@ namespace TaskManager.DataModels
             {
                 var query = from t in db.UserTasks
                             where t.TaskDate == date
-                            select new UserTask
-                            {
-                                Id = t.Id,
-                                Name = t.Name,
-                                Description = t.Description,
-                                Priority = t.Priority,
-                                TaskDate = t.TaskDate,
-                                NotifyDate = t.NotifyDate,
-                                IsNotified = t.IsNotified
-                            };
+                            select t;
 
                 tasks = query.ToList();
             }
