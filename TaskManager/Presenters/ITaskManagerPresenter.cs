@@ -4,7 +4,7 @@ using TaskManager.Views;
 
 namespace TaskManager.Presenters
 {
-    public interface ITaskManagerPresenter //Заглушки
+    public interface ITaskManagerPresenter
     {
         void AddTask(UserTaskView task);
         void RemoveTask(UserTaskView task);
