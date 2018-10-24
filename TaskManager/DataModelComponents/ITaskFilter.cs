@@ -1,5 +1,4 @@
-﻿using DataModels;
-using System.Linq;
+﻿using System.Linq;
 using TaskManager.DataModels;
 
 namespace TaskManager.DataModelComponents

@@ -1,7 +1,7 @@
-﻿using DataModels;
-using System;
+﻿using System;
 using System.Linq;
 using TaskManager.Components;
+using TaskManager.DataModels;
 
 namespace TaskManager.DataModelComponents
 {

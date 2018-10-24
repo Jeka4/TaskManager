@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataModels;
 using TaskManager.DataModelComponents;
 
 namespace TaskManager.DataModels
