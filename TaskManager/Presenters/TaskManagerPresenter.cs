@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DataModels;
 using TaskManager.Views;
 using TaskManager.DataModels;
-using TaskManager.Components;
+using TaskManager.PresenterComponents;
 
 namespace TaskManager.Presenters
 {
@@ -15,12 +15,14 @@ namespace TaskManager.Presenters
         private IMainWindow _mainWindow;
         private IDataModel _dataModel;
         private readonly IDateConverter _dateConverter;
+        private readonly IPriorityConverter _priorityConverter;
 
-        public TaskManagerPresenter(IMainWindow mainWindow, IDataModel dataModel, IDateConverter dateConverter)
+        public TaskManagerPresenter(IMainWindow mainWindow, IDataModel dataModel, IDateConverter dateConverter, IPriorityConverter priorityConverter)
         {
             _mainWindow = mainWindow;
             _dataModel = dataModel;
             _dateConverter = dateConverter;
+            _priorityConverter = priorityConverter;
 
             _dataModel.TasksDBUpdated += dataModel_TasksDBUpdated;
 
@@ -74,7 +76,7 @@ namespace TaskManager.Presenters
                 Id = task.Id,
                 Name = task.Name,
                 Description = task.Description,
-                Priority = task.Priority.ToString(),
+                Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
                 IsNotified = 0
             };
 
@@ -94,7 +96,7 @@ namespace TaskManager.Presenters
                 Id = task.Id,
                 Name = task.Name,
                 Description = task.Description,
-                Priority = task.Priority.ToString(),
+                Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
                 IsNotified = 0
             };
 
@@ -127,19 +129,20 @@ namespace TaskManager.Presenters
                 foreach (var task in tasks)
                 {
                     tasksForView.Add(
-                        new UserTaskView {
+                        new UserTaskView
+                        {
                             Id = task.Id,
                             Name = task.Name,
                             Description = task.Description,
-                            Priority = TaskPriority.High, //
+                            Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
                             TaskDate = _dateConverter.ParseDateToString(task.TaskDate),
                             NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate),
-                            isNotified = Convert.ToBoolean(task.IsNotified) 
+                            isNotified = Convert.ToBoolean(task.IsNotified)
                         });
                 }
                 return tasksForView;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new MappingTaskException(ex.Message, ex);
             }
@@ -161,7 +164,7 @@ namespace TaskManager.Presenters
                             Id = task.Id,
                             Name = task.Name,
                             Description = task.Description,
-                            Priority = TaskPriority.High, //
+                            Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
                             TaskDate = _dateConverter.ParseDateToString(task.TaskDate),
                             NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate),
                             isNotified = Convert.ToBoolean(task.IsNotified)
@@ -169,7 +172,7 @@ namespace TaskManager.Presenters
                 }
                 return tasksForView;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new MappingTaskException(ex.Message, ex);
             }

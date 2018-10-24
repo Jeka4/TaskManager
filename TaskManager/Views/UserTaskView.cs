@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Components;
 
 namespace TaskManager.Views
 {
-    public enum TaskPriority { Low, Medium, High } //Undef?
-
     public class UserTaskView
     {
         public long Id { get; set; }

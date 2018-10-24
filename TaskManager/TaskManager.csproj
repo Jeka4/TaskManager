@@ -65,9 +65,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Components\DateConverter.cs" />
-    <Compile Include="Components\IDateConverter.cs" />
+    <Compile Include="Components\TaskPriority.cs" />
+    <Compile Include="DataModelComponents\SortType.cs" />
+    <Compile Include="PresenterComponents\DateConverter.cs" />
+    <Compile Include="PresenterComponents\IDateConverter.cs" />
+    <Compile Include="DataModelComponents\ITaskFilter.cs" />
+    <Compile Include="DataModelComponents\TasksFilter.cs" />
     <Compile Include="DataModels\DataModel.cs" />
+    <Compile Include="DataModelComponents\FilterType.cs" />
     <Compile Include="DataModels\UserTasksDataBase1.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -76,6 +81,8 @@
     <Compile Include="DataModels\IDataModel.cs" />
     <Compile Include="Presenters\NullTaskException.cs" />
     <Compile Include="Presenters\MappingTaskException.cs" />
+    <Compile Include="PresenterComponents\IPriorityConverter.cs" />
+    <Compile Include="PresenterComponents\PriorityConverter.cs" />
     <Compile Include="Views\IEditTaskWindow.cs" />
     <Compile Include="Views\IMainWindow.cs" />
     <Compile Include="Presenters\ITaskManagerPresenter.cs" />

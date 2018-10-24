@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataModels;
+using TaskManager.DataModelComponents;
 
 namespace TaskManager.DataModels
 {
@@ -14,8 +12,8 @@ namespace TaskManager.DataModels
         void DeleteTask(UserTask task);
         List<UserTask> GetAllTasks();
         List<UserTask> GetTasksOfDay(string date);
-        void SortBy(SortType sort); //Перечисление
-        void FilterBy(FilterType filter); //Переичсление
+        void SortBy(SortType sort);
+        void FilterBy(FilterType filter);
         event EventHandler TasksDBUpdated;
     }
 }
