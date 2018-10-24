@@ -1,7 +1,7 @@
 ﻿using DataModels;
 using System;
 using System.Linq;
-using TaskManager.DataModels;
+using TaskManager.Components;
 
 namespace TaskManager.DataModelComponents
 {
@@ -10,7 +10,7 @@ namespace TaskManager.DataModelComponents
         public void Filter(IQueryable<UserTask> query, FilterType filter)
         {
             if (query == null)
-                throw new ArgumentException("Query is null");
+                throw new ArgumentNullException("Query is null");
 
             switch(filter)
             {

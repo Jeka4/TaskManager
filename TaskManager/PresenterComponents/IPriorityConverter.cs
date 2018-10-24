@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using view = TaskManager.Views;
+using TaskManager.Components;
 
 namespace TaskManager.PresenterComponents
 {
     public interface IPriorityConverter
     {
-        string ConvertToModelPriority(view.TaskPriority priority);
+        string ConvertToModelPriority(TaskPriority priority);
 
-        view.TaskPriority ConvertToViewPriority(string priority);
+        TaskPriority ConvertToViewPriority(string priority);
     }
 }
