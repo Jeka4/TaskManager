@@ -88,12 +88,12 @@
     <Compile Include="Presenters\ITaskManagerPresenter.cs" />
     <Compile Include="Presenters\TaskManagerPresenter.cs" />
     <Compile Include="Views\ITasksManagerWindow.cs" />
-    <Compile Include="Views\TaskDateEventArg.cs" />
+    <Compile Include="ViewComponents\TaskDateEventArg.cs" />
     <Compile Include="Views\TasksManagerWindow.xaml.cs">
       <DependentUpon>TasksManagerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserTaskEventArgs.cs" />
-    <Compile Include="Views\UserTaskView.cs" />
+    <Compile Include="ViewComponents\UserTaskEventArgs.cs" />
+    <Compile Include="ViewComponents\UserTaskView.cs" />
     <Compile Include="Views\EditTaskWindow.xaml.cs">
       <DependentUpon>EditTaskWindow.xaml</DependentUpon>
     </Compile>
