@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using TaskManager.ViewComponents;
 
 namespace TaskManager.Views
 {
@@ -64,23 +65,24 @@ namespace TaskManager.Views
             }
         }
 
-        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            UserTaskView task = new UserTaskView();
-
-            task.TaskDate = DateTime.Now;
-            task.NotifyDate = DateTime.Now;
+            UserTaskView task = new UserTaskView()
+            {
+                TaskDate = DateTime.Now,
+                NotifyDate = DateTime.Now
+            };
 
             IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
             bool? dialogResult = editTaskWindow.ShowDialog();
 
-            if(dialogResult == true)
+            if (dialogResult == true)
             {
                 UserTaskAdded(this, new UserTaskEventArgs(task));
             }
         }
 
-        private void buttonEdit_Click(object sender, RoutedEventArgs e)
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
         {
             if (TaskSelected == false)
                 return;
@@ -99,7 +101,7 @@ namespace TaskManager.Views
             }
         }
 
-        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
             if (TaskSelected == false)
                 return;
@@ -112,7 +114,7 @@ namespace TaskManager.Views
             UserTaskDeleted(this, new UserTaskEventArgs(task));
         }
 
-        private void buttonControl_Click(object sender, RoutedEventArgs e)
+        private void ButtonControl_Click(object sender, RoutedEventArgs e)
         {
 
         }

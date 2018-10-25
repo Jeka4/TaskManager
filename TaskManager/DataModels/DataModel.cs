@@ -17,7 +17,7 @@ namespace TaskManager.DataModels
         private readonly ITaskFilter _taskFilter;
 
         public DataModel(ITaskFilter taskFilter)
-    {
+        {
             _taskFilter = taskFilter;
         }
 
@@ -50,8 +50,7 @@ namespace TaskManager.DataModels
             List<UserTask> tasks = new List<UserTask>();
             using (var db = new UserTasksDB())
             {
-                var query = from t in db.UserTasks
-                            select t;
+                var query = db.UserTasks;
 
                 _taskFilter.Filter(query, _filterType);
 
@@ -60,14 +59,12 @@ namespace TaskManager.DataModels
             return tasks;
         }
 
-        public List<UserTask> GetTasksOfDay(string date) //Использовать DateTime? + дублирование кода
+        public List<UserTask> GetTasksOfDay(string date)
         {
             List<UserTask> tasks = new List<UserTask>();
             using (var db = new UserTasksDB())
             {
-                var query = from t in db.UserTasks
-                            where t.TaskDate == date
-                            select t;
+                var query = db.UserTasks.Where(t => t.TaskDate == date);
 
                 _taskFilter.Filter(query, _filterType);
 
