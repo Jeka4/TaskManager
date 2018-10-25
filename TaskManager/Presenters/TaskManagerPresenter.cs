@@ -21,44 +21,44 @@ namespace TaskManager.Presenters
             _dateConverter = dateConverter;
             _priorityConverter = priorityConverter;
 
-            _dataModel.TasksDBUpdated += dataModel_TasksDBUpdated;
+            _dataModel.TasksDBUpdated += DataModel_TasksDBUpdated;
 
             _mainWindow.EnableEditRemoveControls(false);
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateSelected));
-            _mainWindow.CurrentCalendarDateChanged += mainWindow_CurrentCalendarDateChanged;
-            _mainWindow.SelectionListUpdated += mainWindow_SelectionListUpdated;
-            _mainWindow.UserTaskAdded += mainWindow_UserTaskAdded;
-            _mainWindow.UserTaskUpdated += mainWindow_UserTaskUpdated;
-            _mainWindow.UserTaskDeleted += mainWindow_UserTaskDeleted;
+            _mainWindow.CurrentCalendarDateChanged += MainWindow_CurrentCalendarDateChanged;
+            _mainWindow.SelectionListUpdated += MainWindow_SelectionListUpdated;
+            _mainWindow.UserTaskAdded += MainWindow_UserTaskAdded;
+            _mainWindow.UserTaskUpdated += MainWindow_UserTaskUpdated;
+            _mainWindow.UserTaskDeleted += MainWindow_UserTaskDeleted;
             _mainWindow.Show();
         }
 
-        private void mainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
+        private void MainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
         {
             RemoveTask(e.UserTaskView);
         }
 
-        private void mainWindow_UserTaskUpdated(object sender, UserTaskEventArgs e)
+        private void MainWindow_UserTaskUpdated(object sender, UserTaskEventArgs e)
         {
             EditTask(e.UserTaskView);
         }
 
-        private void mainWindow_UserTaskAdded(object sender, UserTaskEventArgs e)
+        private void MainWindow_UserTaskAdded(object sender, UserTaskEventArgs e)
         {
             AddTask(e.UserTaskView);
         }
 
-        private void mainWindow_SelectionListUpdated(object sender, EventArgs e)
+        private void MainWindow_SelectionListUpdated(object sender, EventArgs e)
         {
             _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);
         }
 
-        private void dataModel_TasksDBUpdated(object sender, EventArgs e)
+        private void DataModel_TasksDBUpdated(object sender, EventArgs e)
         {
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateSelected));
         }
 
-        private void mainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)
+        private void MainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)
         {
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(e.Date));
         }
