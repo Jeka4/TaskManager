@@ -19,7 +19,7 @@ namespace TaskManager.ViewComponents
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return _type.GetMembers().SelectMany(member => member.GetCustomAttributes(typeof(DescriptionAttribute), true)
+            return _type.GetFields().SelectMany(member => member.GetCustomAttributes(typeof(DescriptionAttribute), true)
                                                                  .Cast<DescriptionAttribute>())
                                                                  .Skip(1)
                                                                  .Select(x => x.Description)
