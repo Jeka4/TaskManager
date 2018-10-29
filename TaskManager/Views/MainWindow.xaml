@@ -19,10 +19,10 @@
             <RowDefinition Height="0.1*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Button x:Name="buttonAdd" Click="buttonAdd_Click" Grid.Column="0" Grid.Row="0" Content="Добавить"></Button>
-        <Button x:Name="buttonEdit" Click="buttonEdit_Click" Grid.Column="1" Grid.Row="0" Content="Редактировать"></Button>
-        <Button x:Name="buttonDelete" Click="buttonDelete_Click" Grid.Column="2" Grid.Row="0" Content="Удалить"></Button>
-        <Button x:Name="buttonControl" Click="buttonControl_Click" Grid.Column="3" Grid.Row="0" Content="Управление"></Button>
+        <Button x:Name="buttonAdd" Click="ButtonAdd_Click" Grid.Column="0" Grid.Row="0" Content="Добавить"></Button>
+        <Button x:Name="buttonEdit" Click="ButtonEdit_Click" Grid.Column="1" Grid.Row="0" Content="Редактировать"></Button>
+        <Button x:Name="buttonDelete" Click="ButtonDelete_Click" Grid.Column="2" Grid.Row="0" Content="Удалить"></Button>
+        <Button x:Name="buttonControl" Click="ButtonControl_Click" Grid.Column="3" Grid.Row="0" Content="Управление"></Button>
         <Label x:Name="labelFilter" Grid.Column="0" Grid.Row="1" Content="Фильтр:" HorizontalContentAlignment="Right"></Label>
         <Label x:Name="labelSort" Grid.Column="2" Grid.Row="1" Content="Сортировка:" HorizontalContentAlignment="Right"></Label>
         <ComboBox x:Name="comboFilter" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom">
