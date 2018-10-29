@@ -1,4 +1,16 @@
-﻿namespace TaskManager.Components
+﻿using System.ComponentModel;
+
+namespace TaskManager.Components
 {
-    public enum TaskPriority { Undefined, Low, Medium, High }
+    public enum TaskPriority
+    {
+        [Description("Неопределено")]
+        Undefined = 0,
+        [Description("Низкий приоритет")]
+        Low = 1,
+        [Description("Средний приоритет")]
+        Medium = 2,
+        [Description("Высокий приоритет")]
+        High = 3
+    }
 }

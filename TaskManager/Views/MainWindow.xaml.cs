@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TaskManager.ViewComponents;
+using TaskManager.Components;
 
 namespace TaskManager.Views
 {
@@ -69,6 +70,7 @@ namespace TaskManager.Views
         {
             UserTaskView task = new UserTaskView()
             {
+                Priority = TaskPriority.Low,
                 TaskDate = DateTime.Now,
                 NotifyDate = DateTime.Now
             };

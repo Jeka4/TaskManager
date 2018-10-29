@@ -10,9 +10,9 @@ namespace TaskManager.Views
     {
         public EditTaskWindow(UserTaskView task)
         {
-            InitializeComponent();
+            DataContext = task;
 
-            grid.DataContext = task;
+            InitializeComponent();
         }
 
         private void buttonAdd2_Click(object sender, RoutedEventArgs e)

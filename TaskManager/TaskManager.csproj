@@ -83,6 +83,9 @@
     <Compile Include="Presenters\MappingTaskException.cs" />
     <Compile Include="PresenterComponents\IPriorityConverter.cs" />
     <Compile Include="PresenterComponents\PriorityConverter.cs" />
+    <Compile Include="ViewComponents\EnumConverter.cs" />
+    <Compile Include="ViewComponents\EnumValueDescription.cs" />
+    <Compile Include="ViewComponents\EnumToListSource.cs" />
     <Compile Include="Views\IEditTaskWindow.cs" />
     <Compile Include="Views\IMainWindow.cs" />
     <Compile Include="Presenters\ITaskManagerPresenter.cs" />
