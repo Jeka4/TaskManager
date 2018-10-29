@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager"
+        xmlns:viewcomps="clr-namespace:TaskManager.ViewComponents"
+        xmlns:shared="clr-namespace:TaskManager.Components"
         mc:Ignorable="d"
         Title="SecondWindow" Height="300" Width="400">
+    <Window.Resources>
+        <viewcomps:EnumConverter x:Key="EnumConverter"/>
+    </Window.Resources>
     <Grid x:Name="grid" ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -27,7 +32,7 @@
         <Button x:Name="buttonAdd2" Click="buttonAdd2_Click" Grid.Column="0" Grid.Row="5" Content="Добавить/Редактировать" Grid.ColumnSpan="2"></Button>
         <TextBox x:Name="textboxName" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" MaxLength="50" Grid.Column="1" Grid.Row="0" />
         <TextBox x:Name="textboxDescription" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}" MaxLength="250"  Grid.Column="1" Grid.Row="1"/>
-        <ComboBox x:Name="comboboxPriority" SelectedItem="{Binding Path=Priority, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=PriorityTypes}" Grid.Column="1" Grid.Row="2"/>
+        <ComboBox x:Name="comboboxPriority" SelectedItem="{Binding Path=Priority, Converter={StaticResource EnumConverter}, ConverterParameter={x:Type shared:TaskPriority}}" ItemsSource="{Binding Source={viewcomps:EnumToListSource {x:Type shared:TaskPriority}}}" Grid.Column="1" Grid.Row="2"/>
         <DatePicker x:Name="datapickerTaskDate" SelectedDate="{Binding Path=TaskDate}" Grid.Column="1" Grid.Row="3"/>
         <DatePicker x:Name="datapickerNotifyDate" SelectedDate="{Binding Path=NotifyDate}" Grid.Column="1" Grid.Row="4"/>
     </Grid>
