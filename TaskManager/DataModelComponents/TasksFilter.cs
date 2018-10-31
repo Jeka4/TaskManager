@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TaskManager.Components;
 using TaskManager.DataModels;
@@ -7,23 +8,32 @@ namespace TaskManager.DataModelComponents
 {
     public class TasksFilter : ITaskFilter
     {
-        public void Filter(IQueryable<UserTask> query, FilterType filter)
+        public IQueryable<UserTask> Filter(IQueryable<UserTask> query, FilterType filter)
         {
             if (query == null)
-                throw new ArgumentNullException("Query is null");
+                throw new ArgumentNullException(nameof(query));
 
-            switch(filter)
+            IQueryable<UserTask> filterResult;
+
+            switch (filter)
             {
+                case FilterType.All:
+                    filterResult = query.AsQueryable();
+                    break;
                 case FilterType.HighPriority:
-                    query = query.Where(t => t.Priority == TaskPriority.High.ToString());
+                    filterResult = query.Where(t => t.Priority == TaskPriority.High.ToString());
                     break;
                 case FilterType.MediumPriority:
-                    query = query.Where(t => t.Priority == TaskPriority.Medium.ToString());
+                    filterResult = query.Where(t => t.Priority == TaskPriority.Medium.ToString());
                     break;
                 case FilterType.LowPriority:
-                    query = query.Where(t => t.Priority == TaskPriority.Low.ToString());
+                    filterResult = query.Where(t => t.Priority == TaskPriority.Low.ToString());
                     break;
+                default:
+                    throw new ArgumentException(nameof(filter));
             }
+
+            return filterResult;
         }
     }
 }

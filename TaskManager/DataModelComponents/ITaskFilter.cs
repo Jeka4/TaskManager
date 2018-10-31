@@ -5,6 +5,6 @@ namespace TaskManager.DataModelComponents
 {
     public interface ITaskFilter
     {
-        void Filter(IQueryable<UserTask> query, FilterType filter);
+        IQueryable<UserTask> Filter(IQueryable<UserTask> query, FilterType filter);
     }
 }
