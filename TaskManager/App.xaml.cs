@@ -4,6 +4,7 @@ using TaskManager.DataModels;
 using TaskManager.Presenters;
 using TaskManager.PresenterComponents;
 using TaskManager.DataModelComponents;
+using System.Configuration;
 
 namespace TaskManager
 {
@@ -14,7 +15,9 @@ namespace TaskManager
     {
         public App()
         {
-            IDateConverter dateConverter = new DateConverter("dd.MM.yyyy");
+            string dateFormat = ConfigurationManager.AppSettings["DateFormat"];
+
+            IDateConverter dateConverter = new DateConverter(dateFormat);
             IPriorityConverter priorityConverter = new PriorityConverter();
             ITaskFilter taskFilter = new TasksFilter();
 
