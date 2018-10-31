@@ -21,7 +21,7 @@ namespace TaskManager.Presenters
             _dateConverter = dateConverter;
             _priorityConverter = priorityConverter;
 
-            _dataModel.TasksDBUpdated += DataModel_TasksDBUpdated;
+            _dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
 
             _mainWindow.EnableEditRemoveControls(false);
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateSelected));

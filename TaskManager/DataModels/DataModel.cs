@@ -8,7 +8,7 @@ namespace TaskManager.DataModels
 {
     public class DataModel : IDataModel
     {
-        public event EventHandler TasksDBUpdated = delegate { };
+        public event EventHandler TasksDbUpdated = delegate { };
 
         private FilterType _filterType = FilterType.All;
 
@@ -26,7 +26,7 @@ namespace TaskManager.DataModels
             using (var db = new UserTasksDB())
                 db.Insert(task);
 
-            TasksDBUpdated(this, new EventArgs());
+            TasksDbUpdated(this, new EventArgs());
         }
 
         public void UpdateTask(UserTask task)
@@ -34,7 +34,7 @@ namespace TaskManager.DataModels
             using (var db = new UserTasksDB())
                 db.Update(task);
 
-            TasksDBUpdated(this, new EventArgs());
+            TasksDbUpdated(this, new EventArgs());
         }
 
         public void DeleteTask(UserTask task)
@@ -42,12 +42,12 @@ namespace TaskManager.DataModels
             using (var db = new UserTasksDB())
                 db.Delete(task);
 
-            TasksDBUpdated(this, new EventArgs());
+            TasksDbUpdated(this, new EventArgs());
         }
 
         public List<UserTask> GetAllTasks()
         {
-            List<UserTask> tasks = new List<UserTask>();
+            List<UserTask> tasks;
             using (var db = new UserTasksDB())
             {
                 var query = db.UserTasks;
@@ -61,7 +61,7 @@ namespace TaskManager.DataModels
 
         public List<UserTask> GetTasksOfDay(string date)
         {
-            List<UserTask> tasks = new List<UserTask>();
+            List<UserTask> tasks;
             using (var db = new UserTasksDB())
             {
                 var query = db.UserTasks.Where(t => t.TaskDate == date);
