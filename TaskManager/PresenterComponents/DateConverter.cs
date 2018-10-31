@@ -12,7 +12,7 @@ namespace TaskManager.PresenterComponents
         /// <param name="dateFormat">Шаблон даты</param>
         public DateConverter(string dateFormat)
         {
-            if (string.IsNullOrEmpty(_dateFormat))
+            if (string.IsNullOrEmpty(dateFormat))
                 throw new ArgumentException("Format string should not be null or empty.");
 
             _dateFormat = dateFormat;
