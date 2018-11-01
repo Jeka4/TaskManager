@@ -132,8 +132,8 @@ namespace TaskManager.Presenters
                             Name = task.Name,
                             Description = task.Description,
                             Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
-                            TaskDate = _dateConverter.ParseDateToString(task.TaskDate),
-                            NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate),
+                            TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
+                            NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
                             IsNotified = Convert.ToBoolean(task.IsNotified)
                         });
                 }
@@ -162,8 +162,8 @@ namespace TaskManager.Presenters
                             Name = task.Name,
                             Description = task.Description,
                             Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
-                            TaskDate = _dateConverter.ParseDateToString(task.TaskDate),
-                            NotifyDate = _dateConverter.ParseDateToString(task.NotifyDate),
+                            TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
+                            NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
                             IsNotified = Convert.ToBoolean(task.IsNotified)
                         });
                 }

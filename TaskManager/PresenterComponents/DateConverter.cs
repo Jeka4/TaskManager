@@ -23,7 +23,7 @@ namespace TaskManager.PresenterComponents
         /// </summary>
         /// <param name="date">Дата</param>
         /// <returns></returns>
-        public DateTime ParseDateToString(string date)
+        public DateTime ParseStringToDate(string date)
         {
             if (string.IsNullOrEmpty(date))
                 throw new ArgumentException("Date string should not be null or empty.");
