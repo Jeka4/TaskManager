@@ -8,17 +8,19 @@ namespace TaskManager.DataModels
 {
     public class DataModel : IDataModel
     {
-        public event EventHandler TasksDBUpdated = delegate { };
+        public event EventHandler TasksDbUpdated = delegate { };
 
-        private FilterType _filterType = FilterType.All;
+        private FilterType _filterType;
 
-        private SortType _sortType = SortType.AscendingPriority;
+        private SortType _sortType;
 
         private readonly ITaskFilter _taskFilter;
 
         public DataModel(ITaskFilter taskFilter)
         {
             _taskFilter = taskFilter;
+            _filterType = FilterType.All;
+            _sortType = SortType.AscendingPriority;
         }
 
         public void AddTask(UserTask task)
@@ -26,7 +28,7 @@ namespace TaskManager.DataModels
             using (var db = new UserTasksDB())
                 db.Insert(task);
 
-            TasksDBUpdated(this, new EventArgs());
+            TasksDbUpdated(this, new EventArgs());
         }
 
         public void UpdateTask(UserTask task)
@@ -34,7 +36,7 @@ namespace TaskManager.DataModels
             using (var db = new UserTasksDB())
                 db.Update(task);
 
-            TasksDBUpdated(this, new EventArgs());
+            TasksDbUpdated(this, new EventArgs());
         }
 
         public void DeleteTask(UserTask task)
@@ -42,33 +44,31 @@ namespace TaskManager.DataModels
             using (var db = new UserTasksDB())
                 db.Delete(task);
 
-            TasksDBUpdated(this, new EventArgs());
+            TasksDbUpdated(this, new EventArgs());
         }
 
         public List<UserTask> GetAllTasks()
         {
-            List<UserTask> tasks = new List<UserTask>();
+            List<UserTask> tasks;
             using (var db = new UserTasksDB())
             {
                 var query = db.UserTasks;
+                var filterResult = _taskFilter.Filter(query, _filterType);
 
-                _taskFilter.Filter(query, _filterType);
-
-                tasks = query.ToList();
+                tasks = filterResult.ToList();
             }
             return tasks;
         }
 
         public List<UserTask> GetTasksOfDay(string date)
         {
-            List<UserTask> tasks = new List<UserTask>();
+            List<UserTask> tasks;
             using (var db = new UserTasksDB())
             {
                 var query = db.UserTasks.Where(t => t.TaskDate == date);
+                var filterResult = _taskFilter.Filter(query, _filterType);
 
-                _taskFilter.Filter(query, _filterType);
-
-                tasks = query.ToList();
+                tasks = filterResult.ToList();
             }
             return tasks;
         }

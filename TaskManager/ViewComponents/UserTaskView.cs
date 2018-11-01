@@ -13,6 +13,6 @@ namespace TaskManager.ViewComponents
         public TaskPriority Priority { get; set; }
         public DateTime TaskDate { get; set; }
         public DateTime NotifyDate { get; set; }
-        public bool isNotified { get; set; }
+        public bool IsNotified { get; set; }
     }
 }

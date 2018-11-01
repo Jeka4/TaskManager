@@ -13,7 +13,9 @@ namespace TaskManager.ViewComponents
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (!(parameter is Type)) throw new ArgumentException(nameof(parameter));
             if (value == null) return string.Empty;
+
             foreach (var item in Enum.GetValues(parameter as Type))
             {
                 if (value.Equals(item))

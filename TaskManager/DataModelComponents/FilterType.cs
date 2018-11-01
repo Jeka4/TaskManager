@@ -1,4 +1,4 @@
 ﻿namespace TaskManager.DataModelComponents
 {
-    public enum FilterType { All, LowPriority, MediumPriority, HighPriority }
+    public enum FilterType { Undefined, All, LowPriority, MediumPriority, HighPriority }
 }
