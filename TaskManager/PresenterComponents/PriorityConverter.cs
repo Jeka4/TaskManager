@@ -7,17 +7,10 @@ namespace TaskManager.PresenterComponents
     {
         public string ConvertToModelPriority(TaskPriority priority)
         {
-            switch (priority)
-            {
-                case TaskPriority.High:
-                    return TaskPriority.High.ToString();
-                case TaskPriority.Medium:
-                    return TaskPriority.Medium.ToString();
-                case TaskPriority.Low:
-                    return TaskPriority.Low.ToString();
-                default:
-                    throw new ArgumentException("Unknow priority");
-            }
+            if(priority == TaskPriority.Undefined)
+                throw new ArgumentException("Unknow priority");
+
+            return priority.ToString();
         }
 
         public TaskPriority ConvertToViewPriority(string priority)
