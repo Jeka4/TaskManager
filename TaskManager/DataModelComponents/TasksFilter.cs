@@ -18,7 +18,7 @@ namespace TaskManager.DataModelComponents
             switch (filter)
             {
                 case FilterType.All:
-                    filterResult = query.AsQueryable();
+                    filterResult = query;
                     break;
                 case FilterType.HighPriority:
                     filterResult = query.Where(t => t.Priority == TaskPriority.High.ToString());

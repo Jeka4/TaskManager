@@ -4,7 +4,7 @@ namespace TaskManager.PresenterComponents
 {
     public interface IDateConverter
     {
-        DateTime ParseDateToString(string date);
+        DateTime ParseStringToDate(string date);
         string ConvertDateToString(DateTime date);
     }
 }
