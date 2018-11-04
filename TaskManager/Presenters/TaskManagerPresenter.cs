@@ -4,6 +4,7 @@ using TaskManager.Views;
 using TaskManager.DataModels;
 using TaskManager.PresenterComponents;
 using TaskManager.ViewComponents;
+using System.Linq;
 
 namespace TaskManager.Presenters
 {
@@ -123,20 +124,17 @@ namespace TaskManager.Presenters
             List<UserTaskView> tasksForView = new List<UserTaskView>();
             try
             {
-                foreach (var task in tasks)
+                tasksForView.AddRange(tasks.Select(task => new UserTaskView
                 {
-                    tasksForView.Add(
-                        new UserTaskView
-                        {
-                            Id = task.Id,
-                            Name = task.Name,
-                            Description = task.Description,
-                            Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
-                            TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
-                            NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
-                            IsNotified = Convert.ToBoolean(task.IsNotified)
-                        });
-                }
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
+                    TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
+                    NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
+                    IsNotified = Convert.ToBoolean(task.IsNotified)
+                }));
+
                 return tasksForView;
             }
             catch (Exception ex)
@@ -153,20 +151,17 @@ namespace TaskManager.Presenters
 
             try
             {
-                foreach (var task in tasks)
+                tasksForView.AddRange(tasks.Select(task => new UserTaskView
                 {
-                    tasksForView.Add(
-                        new UserTaskView
-                        {
-                            Id = task.Id,
-                            Name = task.Name,
-                            Description = task.Description,
-                            Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
-                            TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
-                            NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
-                            IsNotified = Convert.ToBoolean(task.IsNotified)
-                        });
-                }
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
+                    TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
+                    NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
+                    IsNotified = Convert.ToBoolean(task.IsNotified)
+                }));
+
                 return tasksForView;
             }
             catch (Exception ex)
