@@ -40,6 +40,9 @@ namespace TaskManager.Presenters
             var filter = _mainWindow.ComboFilter;
 
             _dataModel.FilterBy(filter);
+            _mainWindow.SetUserTasksToTasksList(
+                LoadTasksOfDay(_mainWindow.DateSelected)
+                );
         }
 
         private void MainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
