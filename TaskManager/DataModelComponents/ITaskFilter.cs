@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using TaskManager.DataModels;
+using TaskManager.Components;
 
 namespace TaskManager.DataModelComponents
 {

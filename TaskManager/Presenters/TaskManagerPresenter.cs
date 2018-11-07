@@ -31,7 +31,18 @@ namespace TaskManager.Presenters
             _mainWindow.UserTaskAdded += MainWindow_UserTaskAdded;
             _mainWindow.UserTaskUpdated += MainWindow_UserTaskUpdated;
             _mainWindow.UserTaskDeleted += MainWindow_UserTaskDeleted;
+            _mainWindow.FilterTypeChanged += MainWindow_FilterTypeChanged;
             _mainWindow.Show();
+        }
+
+        private void MainWindow_FilterTypeChanged(object sender, EventArgs e)
+        {
+            var filter = _mainWindow.ComboFilter;
+
+            _dataModel.FilterBy(filter);
+            _mainWindow.SetUserTasksToTasksList(
+                LoadTasksOfDay(_mainWindow.DateSelected)
+                );
         }
 
         private void MainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)

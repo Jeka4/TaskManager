@@ -17,6 +17,8 @@ namespace TaskManager.Views
 
         public DateTime DateSelected { get; private set; }
 
+        public FilterType ComboFilter { get; set; } = FilterType.All;
+
         public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
 
         public event EventHandler<UserTaskEventArgs> UserTaskAdded = delegate { };
@@ -27,11 +29,14 @@ namespace TaskManager.Views
 
         public event EventHandler SelectionListUpdated = delegate { };
 
+        public event EventHandler FilterTypeChanged = delegate { };
+
         public MainWindow()
         {
-            InitializeComponent();
-
+            DataContext = this;
             DateSelected = DateTime.Now;
+
+            InitializeComponent();
         }
 
         public void SetUserTasksToTasksList(List<UserTaskView> tasks)
@@ -125,6 +130,11 @@ namespace TaskManager.Views
         {
             if (sender != null && Mouse.Captured is System.Windows.Controls.Primitives.CalendarItem)
                 Mouse.Capture(null);
+        }
+
+        private void ComboFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FilterTypeChanged(this, EventArgs.Empty);
         }
     }
 }
