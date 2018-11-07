@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TaskManager.ViewComponents;
+using TaskManager.Components;
 
 namespace TaskManager.Views
 {
@@ -8,6 +9,7 @@ namespace TaskManager.Views
     {
         bool TaskSelected { get; }
         DateTime DateSelected { get; }
+        FilterType ComboFilter { get; }
         void Show();
         void SetUserTasksToTasksList(List<UserTaskView> tasks);
         void EnableEditRemoveControls(bool enable);
@@ -16,5 +18,6 @@ namespace TaskManager.Views
         event EventHandler<UserTaskEventArgs> UserTaskDeleted;
         event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged;
         event EventHandler SelectionListUpdated;
+        event EventHandler FilterTypeChanged;
     }
 }

@@ -34,7 +34,8 @@
         <Label x:Name="labelSort" Grid.Column="2" Grid.Row="0" Content="Сортировка:" HorizontalContentAlignment="Right"></Label>
         <ComboBox 
             x:Name="comboFilter"
-            SelectedItem="{Binding Path=Priority, Converter={StaticResource EnumConverter}, ConverterParameter={x:Type shared:FilterType}}" 
+            SelectionChanged="ComboFilter_SelectionChanged"
+            SelectedItem="{Binding Path=ComboFilter, Converter={StaticResource EnumConverter}, ConverterParameter={x:Type shared:FilterType}}"
             ItemsSource="{Binding Source={viewcomps:EnumToListSource {x:Type shared:FilterType}}}" 
             Grid.Column="1" 
             Grid.Row="0"
