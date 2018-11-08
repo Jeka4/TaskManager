@@ -61,7 +61,6 @@ namespace TaskManagerUnitTest
         public void FilterQueryNull()
         {
             var filter = new TasksFilter();
-            var usertasks = GenerateUserTaskList();
 
             Assert.Throws<ArgumentNullException>(() =>
                 filter.Filter(null, FilterType.All)
