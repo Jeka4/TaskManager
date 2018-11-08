@@ -15,7 +15,7 @@ namespace TaskManager.Views
     {
         public bool TaskSelected => TaskList.SelectedItem != null;
 
-        public DateTime DateSelected { get; private set; }
+        public DateInterval DateIntervalSelected { get; private set; }
 
         public FilterType ComboFilter { get; set; } = FilterType.All;
 
@@ -25,7 +25,7 @@ namespace TaskManager.Views
 
         public event EventHandler<UserTaskEventArgs> UserTaskDeleted = delegate { };
 
-        public event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged = delegate { };
+        public event EventHandler<TaskDateIntervalEventArg> CurrentCalendarDateChanged = delegate { };
 
         public event EventHandler SelectionListUpdated = delegate { };
 
@@ -34,7 +34,7 @@ namespace TaskManager.Views
         public MainWindow()
         {
             DataContext = this;
-            DateSelected = DateTime.Now;
+            DateIntervalSelected = new DateInterval(DateTime.Now);
 
             InitializeComponent();
         }
@@ -57,12 +57,15 @@ namespace TaskManager.Views
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e) //Использовать e?
         {
-            var calendar = sender as Calendar;
+            var selectedDates = e.AddedItems;
 
-            if (calendar != null && calendar.SelectedDate.HasValue)
+            if (selectedDates.Count > 0)
             {
-                DateSelected = calendar.SelectedDate.Value;
-                CurrentCalendarDateChanged(sender, new TaskDateEventArg(DateSelected));
+                DateTime beginDate = (DateTime)selectedDates[0];
+                DateTime endDate = (DateTime)selectedDates[selectedDates.Count - 1];
+
+                DateIntervalSelected = new DateInterval(beginDate, endDate);
+                CurrentCalendarDateChanged(sender, new TaskDateIntervalEventArg(DateIntervalSelected));
             }
         }
 

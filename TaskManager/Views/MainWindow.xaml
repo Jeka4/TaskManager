@@ -52,6 +52,7 @@
                   Grid.Row="3" 
                   Grid.ColumnSpan="2"
                   HorizontalAlignment="Left"
+                  SelectionMode="SingleRange"
                   SelectedDatesChanged="Calendar_SelectedDatesChanged"
                   PreviewMouseUp="Calendar_PreviewMouseUp"/>
         <ListBox x:Name="TaskList" SelectionChanged="TaskList_SelectionChanged" HorizontalContentAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3">

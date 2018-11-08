@@ -12,6 +12,7 @@ namespace TaskManager.DataModels
         void DeleteTask(UserTask task);
         List<UserTask> GetAllTasks();
         List<UserTask> GetTasksOfDay(string date);
+        List<UserTask> GetTasksOfDays(string beginDate, string endDate);
         void SortBy(SortType sort);
         void FilterBy(FilterType filter);
         event EventHandler TasksDbUpdated;

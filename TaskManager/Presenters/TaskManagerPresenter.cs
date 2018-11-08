@@ -5,6 +5,7 @@ using TaskManager.DataModels;
 using TaskManager.PresenterComponents;
 using TaskManager.ViewComponents;
 using System.Linq;
+using TaskManager.Components;
 
 namespace TaskManager.Presenters
 {
@@ -25,13 +26,15 @@ namespace TaskManager.Presenters
             _dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
 
             _mainWindow.EnableEditRemoveControls(false);
-            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateSelected));
             _mainWindow.CurrentCalendarDateChanged += MainWindow_CurrentCalendarDateChanged;
             _mainWindow.SelectionListUpdated += MainWindow_SelectionListUpdated;
             _mainWindow.UserTaskAdded += MainWindow_UserTaskAdded;
             _mainWindow.UserTaskUpdated += MainWindow_UserTaskUpdated;
             _mainWindow.UserTaskDeleted += MainWindow_UserTaskDeleted;
             _mainWindow.FilterTypeChanged += MainWindow_FilterTypeChanged;
+
+
+            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
             _mainWindow.Show();
         }
 
@@ -40,7 +43,7 @@ namespace TaskManager.Presenters
             var filter = _mainWindow.ComboFilter;
 
             _dataModel.FilterBy(filter);
-            RefreshViewTasksList(_mainWindow.DateSelected);
+            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
         private void MainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
@@ -65,12 +68,12 @@ namespace TaskManager.Presenters
 
         private void DataModel_TasksDBUpdated(object sender, EventArgs e)
         {
-            RefreshViewTasksList(_mainWindow.DateSelected);
+            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
-        private void MainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)
+        private void MainWindow_CurrentCalendarDateChanged(object sender, TaskDateIntervalEventArg e)
         {
-            RefreshViewTasksList(e.Date);
+            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
         public void AddTask(UserTaskView task)
@@ -126,9 +129,9 @@ namespace TaskManager.Presenters
             _dataModel.DeleteTask(userTask);
         }
 
-        public void RefreshViewTasksList(DateTime day)
+        public void RefreshViewTasksList(DateInterval dateInterval)
         {
-            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(day));
+            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDays(dateInterval));
         }
 
         public List<UserTaskView> LoadAllTasks()
@@ -160,6 +163,36 @@ namespace TaskManager.Presenters
         public List<UserTaskView> LoadTasksOfDay(DateTime day)
         {
             List<UserTask> tasks = _dataModel.GetTasksOfDay(_dateConverter.ConvertDateToString(day));
+
+            List<UserTaskView> tasksForView = new List<UserTaskView>();
+
+            try
+            {
+                tasksForView.AddRange(tasks.Select(task => new UserTaskView
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
+                    TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
+                    NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
+                    IsNotified = Convert.ToBoolean(task.IsNotified)
+                }));
+
+                return tasksForView;
+            }
+            catch (Exception ex)
+            {
+                throw new MappingTaskException(ex.Message, ex);
+            }
+        }
+
+        public List<UserTaskView> LoadTasksOfDays(DateInterval dateInterval)
+        {
+            List<UserTask> tasks = _dataModel.GetTasksOfDays(
+                _dateConverter.ConvertDateToString(dateInterval.BeginDate),
+                _dateConverter.ConvertDateToString(dateInterval.EndDate)
+                );
 
             List<UserTaskView> tasksForView = new List<UserTaskView>();
 
