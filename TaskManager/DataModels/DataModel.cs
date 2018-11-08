@@ -74,6 +74,19 @@ namespace TaskManager.DataModels
             return tasks;
         }
 
+        public List<UserTask> GetTasksOfDays(string beginDate, string endDate)
+        {
+            List<UserTask> tasks;
+            using (var db = new UserTasksDB())
+            {
+                var query = db.UserTasks.Where(t => t.TaskDate.CompareTo(beginDate) >= 0 && t.TaskDate.CompareTo(endDate) <= 0);
+                var filterResult = _taskFilter.Filter(query, _filterType);
+
+                tasks = filterResult.ToList();
+            }
+            return tasks;
+        }
+
         public void SortBy(SortType sort)
         {
             throw new NotImplementedException();

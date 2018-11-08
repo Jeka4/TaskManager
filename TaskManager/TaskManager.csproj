@@ -66,6 +66,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Components\DateInterval.cs" />
     <Compile Include="Components\TaskPriority.cs" />
     <Compile Include="DataModelComponents\SortType.cs" />
     <Compile Include="PresenterComponents\DateConverter.cs" />
@@ -92,7 +93,7 @@
     <Compile Include="Presenters\ITaskManagerPresenter.cs" />
     <Compile Include="Presenters\TaskManagerPresenter.cs" />
     <Compile Include="Views\ITasksManagerWindow.cs" />
-    <Compile Include="ViewComponents\TaskDateEventArg.cs" />
+    <Compile Include="ViewComponents\TaskDateIntervalEventArg.cs" />
     <Compile Include="Views\TasksManagerWindow.xaml.cs">
       <DependentUpon>TasksManagerWindow.xaml</DependentUpon>
     </Compile>
