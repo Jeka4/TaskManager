@@ -2,15 +2,17 @@
 
 namespace TaskManager.Components
 {
-    public enum TaskPriority
+    public enum FilterType
     {
         [Description("Неопределено")]
-        Undefined = 0,
+        Undefined,
+        [Description("Любой приоритет")]
+        All,
         [Description("Низкий приоритет")]
-        Low = 1,
+        LowPriority,
         [Description("Средний приоритет")]
-        Medium = 2,
+        MediumPriority,
         [Description("Высокий приоритет")]
-        High = 3
+        HighPriority
     }
 }

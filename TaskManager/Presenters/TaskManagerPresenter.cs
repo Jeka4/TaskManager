@@ -4,6 +4,7 @@ using TaskManager.Views;
 using TaskManager.DataModels;
 using TaskManager.PresenterComponents;
 using TaskManager.ViewComponents;
+using System.Linq;
 
 namespace TaskManager.Presenters
 {
@@ -30,7 +31,18 @@ namespace TaskManager.Presenters
             _mainWindow.UserTaskAdded += MainWindow_UserTaskAdded;
             _mainWindow.UserTaskUpdated += MainWindow_UserTaskUpdated;
             _mainWindow.UserTaskDeleted += MainWindow_UserTaskDeleted;
+            _mainWindow.FilterTypeChanged += MainWindow_FilterTypeChanged;
             _mainWindow.Show();
+        }
+
+        private void MainWindow_FilterTypeChanged(object sender, EventArgs e)
+        {
+            var filter = _mainWindow.ComboFilter;
+
+            _dataModel.FilterBy(filter);
+            _mainWindow.SetUserTasksToTasksList(
+                LoadTasksOfDay(_mainWindow.DateSelected)
+                );
         }
 
         private void MainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
@@ -123,20 +135,17 @@ namespace TaskManager.Presenters
             List<UserTaskView> tasksForView = new List<UserTaskView>();
             try
             {
-                foreach (var task in tasks)
+                tasksForView.AddRange(tasks.Select(task => new UserTaskView
                 {
-                    tasksForView.Add(
-                        new UserTaskView
-                        {
-                            Id = task.Id,
-                            Name = task.Name,
-                            Description = task.Description,
-                            Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
-                            TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
-                            NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
-                            IsNotified = Convert.ToBoolean(task.IsNotified)
-                        });
-                }
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
+                    TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
+                    NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
+                    IsNotified = Convert.ToBoolean(task.IsNotified)
+                }));
+
                 return tasksForView;
             }
             catch (Exception ex)
@@ -153,20 +162,17 @@ namespace TaskManager.Presenters
 
             try
             {
-                foreach (var task in tasks)
+                tasksForView.AddRange(tasks.Select(task => new UserTaskView
                 {
-                    tasksForView.Add(
-                        new UserTaskView
-                        {
-                            Id = task.Id,
-                            Name = task.Name,
-                            Description = task.Description,
-                            Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
-                            TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
-                            NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
-                            IsNotified = Convert.ToBoolean(task.IsNotified)
-                        });
-                }
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
+                    TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
+                    NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
+                    IsNotified = Convert.ToBoolean(task.IsNotified)
+                }));
+
                 return tasksForView;
             }
             catch (Exception ex)
