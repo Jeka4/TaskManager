@@ -40,9 +40,7 @@ namespace TaskManager.Presenters
             var filter = _mainWindow.ComboFilter;
 
             _dataModel.FilterBy(filter);
-            _mainWindow.SetUserTasksToTasksList(
-                LoadTasksOfDay(_mainWindow.DateSelected)
-                );
+            RefreshViewTasksList(_mainWindow.DateSelected);
         }
 
         private void MainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
@@ -67,12 +65,12 @@ namespace TaskManager.Presenters
 
         private void DataModel_TasksDBUpdated(object sender, EventArgs e)
         {
-            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateSelected));
+            RefreshViewTasksList(_mainWindow.DateSelected);
         }
 
         private void MainWindow_CurrentCalendarDateChanged(object sender, TaskDateEventArg e)
         {
-            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(e.Date));
+            RefreshViewTasksList(e.Date);
         }
 
         public void AddTask(UserTaskView task)
@@ -126,6 +124,11 @@ namespace TaskManager.Presenters
             };
 
             _dataModel.DeleteTask(userTask);
+        }
+
+        public void RefreshViewTasksList(DateTime day)
+        {
+            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(day));
         }
 
         public List<UserTaskView> LoadAllTasks()

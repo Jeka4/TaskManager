@@ -10,6 +10,7 @@ namespace TaskManager.Presenters
         void AddTask(UserTaskView task);
         void RemoveTask(UserTaskView task);
         void EditTask(UserTaskView task);
+        void RefreshViewTasksList(DateTime day);
         List<UserTaskView> LoadTasksOfDay(DateTime day);
         List<UserTaskView> LoadAllTasks();
     }
