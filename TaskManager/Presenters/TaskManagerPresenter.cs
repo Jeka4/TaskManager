@@ -26,13 +26,15 @@ namespace TaskManager.Presenters
             _dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
 
             _mainWindow.EnableEditRemoveControls(false);
-            //_mainWindow.SetUserTasksToTasksList(LoadTasksOfDay(_mainWindow.DateIntervalSelected)); !!!!!!!!!!!
             _mainWindow.CurrentCalendarDateChanged += MainWindow_CurrentCalendarDateChanged;
             _mainWindow.SelectionListUpdated += MainWindow_SelectionListUpdated;
             _mainWindow.UserTaskAdded += MainWindow_UserTaskAdded;
             _mainWindow.UserTaskUpdated += MainWindow_UserTaskUpdated;
             _mainWindow.UserTaskDeleted += MainWindow_UserTaskDeleted;
             _mainWindow.FilterTypeChanged += MainWindow_FilterTypeChanged;
+
+
+            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
             _mainWindow.Show();
         }
 
