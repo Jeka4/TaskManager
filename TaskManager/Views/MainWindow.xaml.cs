@@ -13,7 +13,7 @@ namespace TaskManager.Views
     /// </summary>
     public partial class MainWindow : Window, IMainWindow
     {
-        public bool TaskSelected { get; private set; }
+        public bool TaskSelected => TaskList.SelectedItem != null;
 
         public DateTime DateSelected { get; private set; }
 
@@ -52,12 +52,7 @@ namespace TaskManager.Views
 
         private void TaskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;
-
-            if (listBox != null)
-                TaskSelected = listBox.SelectedItem != null;
-
-            SelectionListUpdated(this, new EventArgs());
+            SelectionListUpdated(sender, new EventArgs());
         }
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e) //Использовать e?
@@ -67,7 +62,7 @@ namespace TaskManager.Views
             if (calendar != null && calendar.SelectedDate.HasValue)
             {
                 DateSelected = calendar.SelectedDate.Value;
-                CurrentCalendarDateChanged(this, new TaskDateEventArg(DateSelected));
+                CurrentCalendarDateChanged(sender, new TaskDateEventArg(DateSelected));
             }
         }
 
@@ -85,7 +80,7 @@ namespace TaskManager.Views
 
             if (dialogResult == true)
             {
-                UserTaskAdded(this, new UserTaskEventArgs(task));
+                UserTaskAdded(sender, new UserTaskEventArgs(task));
             }
         }
 
@@ -104,7 +99,7 @@ namespace TaskManager.Views
 
             if (dialogResult == true)
             {
-                UserTaskUpdated(this, new UserTaskEventArgs(task));
+                UserTaskUpdated(sender, new UserTaskEventArgs(task));
             }
         }
 
@@ -118,7 +113,7 @@ namespace TaskManager.Views
             if (task == null)
                 return;
 
-            UserTaskDeleted(this, new UserTaskEventArgs(task));
+            UserTaskDeleted(sender, new UserTaskEventArgs(task));
         }
 
         private void ButtonControl_Click(object sender, RoutedEventArgs e)
@@ -134,7 +129,7 @@ namespace TaskManager.Views
 
         private void ComboFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FilterTypeChanged(this, EventArgs.Empty);
+            FilterTypeChanged(sender, EventArgs.Empty);
         }
     }
 }
