@@ -54,7 +54,7 @@
                   HorizontalAlignment="Left"
                   SelectedDatesChanged="Calendar_SelectedDatesChanged"
                   PreviewMouseUp="Calendar_PreviewMouseUp"/>
-            <ListBox x:Name="TaskList" SelectionChanged="TaskList_SelectionChanged" HorizontalContentAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4">
+        <ListBox x:Name="TaskList" SelectionChanged="TaskList_SelectionChanged" HorizontalContentAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="2" Padding="0">
