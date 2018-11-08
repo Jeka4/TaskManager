@@ -4,6 +4,7 @@ using System.Linq;
 using LinqToDB;
 using TaskManager.DataModelComponents;
 using TaskManager.Components;
+using System.Linq.Expressions;
 
 namespace TaskManager.DataModels
 {
@@ -77,9 +78,16 @@ namespace TaskManager.DataModels
         public List<UserTask> GetTasksOfDays(string beginDate, string endDate)
         {
             List<UserTask> tasks;
+            Expression<Func<UserTask, bool>> compare;
+
+            if (beginDate == endDate) //Вынести в поле класса?
+                compare = t => t.TaskDate == beginDate;
+            else
+                compare = t => t.TaskDate.CompareTo(beginDate) >= 0 && t.TaskDate.CompareTo(endDate) <= 0;
+
             using (var db = new UserTasksDB())
             {
-                var query = db.UserTasks.Where(t => t.TaskDate.CompareTo(beginDate) >= 0 && t.TaskDate.CompareTo(endDate) <= 0);
+                var query = db.UserTasks.Where(compare);
                 var filterResult = _taskFilter.Filter(query, _filterType);
 
                 tasks = filterResult.ToList();
