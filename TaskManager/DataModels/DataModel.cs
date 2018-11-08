@@ -27,6 +27,9 @@ namespace TaskManager.DataModels
 
         public void AddTask(UserTask task)
         {
+            if (task == null)
+                throw new ArgumentNullException(nameof(task));
+
             using (var db = new UserTasksDB())
                 db.Insert(task);
 
@@ -35,6 +38,9 @@ namespace TaskManager.DataModels
 
         public void UpdateTask(UserTask task)
         {
+            if (task == null)
+                throw new ArgumentNullException(nameof(task));
+
             using (var db = new UserTasksDB())
                 db.Update(task);
 
@@ -43,6 +49,12 @@ namespace TaskManager.DataModels
 
         public void DeleteTask(UserTask task)
         {
+            if (task == null)
+                throw new ArgumentNullException(nameof(task));
+
+            if (task.Id <= 0) //С 1?
+                throw new ArgumentOutOfRangeException($"Id of {task} should be positive");
+
             using (var db = new UserTasksDB())
                 db.Delete(task);
 
@@ -64,6 +76,9 @@ namespace TaskManager.DataModels
 
         public List<UserTask> GetTasksOfDay(string date)
         {
+            if (string.IsNullOrWhiteSpace(date))
+                throw new ArgumentException($"{nameof(date)} should not to be null or empty.");
+
             List<UserTask> tasks;
             using (var db = new UserTasksDB())
             {
@@ -77,6 +92,9 @@ namespace TaskManager.DataModels
 
         public List<UserTask> GetTasksOfDays(string beginDate, string endDate)
         {
+            if (string.IsNullOrWhiteSpace(beginDate) || string.IsNullOrWhiteSpace(endDate))
+                throw new ArgumentException($"{nameof(beginDate)} or {nameof(endDate)} should not to be null or empty.");
+
             List<UserTask> tasks;
             Expression<Func<UserTask, bool>> compare;
 
