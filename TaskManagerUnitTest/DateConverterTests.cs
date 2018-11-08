@@ -7,21 +7,10 @@ namespace TaskManagerUnitTest
     [TestFixture]
     public class DateConverterTests
     {
-        [Test]
-        public void FormatStringIsNull()
+        [TestCase("")]
+        [TestCase(null)]
+        public void FormatStringIsNullOrEmpty(string formatString)
         {
-            string formatString = null;
-
-            Assert.Throws<ArgumentException>(() =>
-                new DateConverter(formatString)
-            );
-        }
-
-        [Test]
-        public void FormatStringIsEmpty()
-        {
-            string formatString = string.Empty;
-
             Assert.Throws<ArgumentException>(() =>
                 new DateConverter(formatString)
             );
