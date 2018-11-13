@@ -62,10 +62,17 @@ namespace TaskManager.Views
 
             if (selectedDates.Count > 0)
             {
-                DateTime beginDate = (DateTime)selectedDates[0];
-                DateTime endDate = (DateTime)selectedDates[selectedDates.Count - 1];
+                DateTime firstDate = (DateTime)selectedDates[0];
+                DateTime lastDate = (DateTime)selectedDates[selectedDates.Count - 1];
 
-                DateIntervalSelected = new DateInterval(beginDate, endDate);
+                if(firstDate > lastDate)
+                {
+                    DateTime swapDate = firstDate;
+                    firstDate = lastDate;
+                    lastDate = swapDate;
+                }
+
+                DateIntervalSelected = new DateInterval(firstDate, lastDate);
                 CurrentCalendarDateChanged(sender, new TaskDateIntervalEventArg(DateIntervalSelected));
             }
         }
