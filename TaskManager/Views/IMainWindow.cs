@@ -9,7 +9,7 @@ namespace TaskManager.Views
     {
         bool TaskSelected { get; }
         DateInterval DateIntervalSelected { get; }
-        FilterType ComboFilter { get; }
+        ITaskListSettings TaskListSettings { get; }
         void Show();
         void SetUserTasksToTasksList(List<UserTaskView> tasks);
         void EnableEditRemoveControls(bool enable);
@@ -17,7 +17,7 @@ namespace TaskManager.Views
         event EventHandler<UserTaskEventArgs> UserTaskAdded;
         event EventHandler<UserTaskEventArgs> UserTaskDeleted;
         event EventHandler<TaskDateIntervalEventArg> CurrentCalendarDateChanged;
+        event EventHandler<FilterEventArgs> FilterTypeChanged;
         event EventHandler SelectionListUpdated;
-        event EventHandler FilterTypeChanged;
     }
 }

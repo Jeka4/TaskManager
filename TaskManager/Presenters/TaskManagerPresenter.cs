@@ -38,9 +38,9 @@ namespace TaskManager.Presenters
             _mainWindow.Show();
         }
 
-        private void MainWindow_FilterTypeChanged(object sender, EventArgs e)
+        private void MainWindow_FilterTypeChanged(object sender, FilterEventArgs e)
         {
-            var filter = _mainWindow.ComboFilter;
+            var filter = e.Filter; //Исключение?
 
             _dataModel.FilterBy(filter);
             RefreshViewTasksList(_mainWindow.DateIntervalSelected);

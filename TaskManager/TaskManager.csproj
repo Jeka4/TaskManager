@@ -88,6 +88,9 @@
     <Compile Include="ViewComponents\EnumConverter.cs" />
     <Compile Include="ViewComponents\EnumValueDescription.cs" />
     <Compile Include="ViewComponents\EnumToListSource.cs" />
+    <Compile Include="ViewComponents\FilterEventArgs.cs" />
+    <Compile Include="ViewComponents\ITaskListSettings.cs" />
+    <Compile Include="ViewComponents\TaskListSettings.cs" />
     <Compile Include="Views\IEditTaskWindow.cs" />
     <Compile Include="Views\IMainWindow.cs" />
     <Compile Include="Presenters\ITaskManagerPresenter.cs" />

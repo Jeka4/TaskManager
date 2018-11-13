@@ -17,7 +17,7 @@ namespace TaskManager.Views
 
         public DateInterval DateIntervalSelected { get; private set; }
 
-        public FilterType ComboFilter { get; set; } = FilterType.All;
+        public ITaskListSettings TaskListSettings { get; private set; }
 
         public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
 
@@ -27,14 +27,15 @@ namespace TaskManager.Views
 
         public event EventHandler<TaskDateIntervalEventArg> CurrentCalendarDateChanged = delegate { };
 
-        public event EventHandler SelectionListUpdated = delegate { };
+        public event EventHandler<FilterEventArgs> FilterTypeChanged = delegate { };
 
-        public event EventHandler FilterTypeChanged = delegate { };
+        public event EventHandler SelectionListUpdated = delegate { };
 
         public MainWindow()
         {
-            DataContext = this;
+            TaskListSettings = new TaskListSettings(FilterType.All);
             DateIntervalSelected = new DateInterval(DateTime.Now);
+            DataContext = TaskListSettings;
 
             InitializeComponent();
         }
@@ -132,7 +133,7 @@ namespace TaskManager.Views
 
         private void ComboFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FilterTypeChanged(sender, EventArgs.Empty);
+            FilterTypeChanged(sender, new FilterEventArgs(TaskListSettings.Filter));
         }
     }
 }

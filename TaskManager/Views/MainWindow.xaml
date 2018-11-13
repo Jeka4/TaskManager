@@ -35,7 +35,7 @@
         <ComboBox 
             x:Name="comboFilter"
             SelectionChanged="ComboFilter_SelectionChanged"
-            SelectedItem="{Binding Path=ComboFilter, Converter={StaticResource EnumConverter}, ConverterParameter={x:Type shared:FilterType}}"
+            SelectedItem="{Binding Path=Filter, Converter={StaticResource EnumConverter}, ConverterParameter={x:Type shared:FilterType}}"
             ItemsSource="{Binding Source={viewcomps:EnumToListSource {x:Type shared:FilterType}}}" 
             Grid.Column="1" 
             Grid.Row="0"
