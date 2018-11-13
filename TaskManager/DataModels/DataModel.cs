@@ -113,6 +113,14 @@ namespace TaskManager.DataModels
             return tasks;
         }
 
+        public List<string> GetAllTaskDates()
+        {
+            using (var db = new UserTasksDB())
+            {
+                return db.UserTasks.Select(t => t.TaskDate).ToList();
+            }
+        }
+
         public void SortBy(SortType sort)
         {
             throw new NotImplementedException();

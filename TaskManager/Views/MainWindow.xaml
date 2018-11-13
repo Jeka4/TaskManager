@@ -10,6 +10,7 @@
         Title="MainWindow" Height="328" Width="550" MinHeight="328" MinWidth="550" MaxHeight="328" MaxWidth="550">
     <Window.Resources>
         <viewcomps:EnumConverter x:Key="EnumConverter"/>
+        <Style x:Key="CalendarDayStyle" TargetType="CalendarDayButton" />
     </Window.Resources>
     <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
@@ -54,7 +55,8 @@
                   HorizontalAlignment="Left"
                   SelectionMode="SingleRange"
                   SelectedDatesChanged="Calendar_SelectedDatesChanged"
-                  PreviewMouseUp="Calendar_PreviewMouseUp"/>
+                  PreviewMouseUp="Calendar_PreviewMouseUp"
+                  CalendarDayButtonStyle="{StaticResource CalendarDayStyle}"/>
         <ListBox x:Name="TaskList" SelectionChanged="TaskList_SelectionChanged" HorizontalContentAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3">
             <ListBox.ItemTemplate>
                 <DataTemplate>

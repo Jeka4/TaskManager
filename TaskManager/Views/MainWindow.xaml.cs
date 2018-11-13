@@ -50,6 +50,20 @@ namespace TaskManager.Views
             TaskList.ItemsSource = tasks;
         }
 
+        public void SetHighlightDates(List<DateTime> dates) //Оптимизировать добавление (месяц; при добавлении\изменении\удалении)
+        {
+            Style style = new Style(typeof(System.Windows.Controls.Primitives.CalendarDayButton));
+
+            foreach (var date in dates)
+            {
+                DataTrigger dataTrigger = new DataTrigger { Binding = new System.Windows.Data.Binding("Date"), Value = date };
+                dataTrigger.Setters.Add(new Setter(System.Windows.Controls.Primitives.CalendarDayButton.BackgroundProperty, System.Windows.Media.Brushes.AntiqueWhite));
+                style.Triggers.Add(dataTrigger);
+            }
+
+            Calendar.CalendarDayButtonStyle = style;
+        }
+
         public void EnableEditRemoveControls(bool enable)
         {
             buttonEdit.IsEnabled = enable;

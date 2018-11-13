@@ -13,6 +13,7 @@ namespace TaskManager.Views
         void Show();
         void ShowMessageBox(string message);
         void SetUserTasksToTasksList(List<UserTaskView> tasks);
+        void SetHighlightDates(List<DateTime> dates);
         void EnableEditRemoveControls(bool enable);
         event EventHandler<UserTaskEventArgs> UserTaskUpdated;
         event EventHandler<UserTaskEventArgs> UserTaskAdded;
