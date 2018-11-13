@@ -11,6 +11,7 @@ namespace TaskManager.Views
         DateInterval DateIntervalSelected { get; }
         ITaskListSettings TaskListSettings { get; }
         void Show();
+        void ShowMessageBox(string message);
         void SetUserTasksToTasksList(List<UserTaskView> tasks);
         void EnableEditRemoveControls(bool enable);
         event EventHandler<UserTaskEventArgs> UserTaskUpdated;

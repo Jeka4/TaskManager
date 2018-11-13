@@ -40,6 +40,11 @@ namespace TaskManager.Views
             InitializeComponent();
         }
 
+        public void ShowMessageBox(string message)
+        {
+            MessageBox.Show(message, "TaskManager", MessageBoxButton.OK);
+        }
+
         public void SetUserTasksToTasksList(List<UserTaskView> tasks)
         {
             TaskList.ItemsSource = tasks;
