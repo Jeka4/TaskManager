@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager", "TaskManager\TaskManager.csproj", "{80E6B452-9CAF-4E9F-A622-61CE2AE6A388}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager", "TaskManager.csproj", "{80E6B452-9CAF-4E9F-A622-61CE2AE6A388}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerUnitTest", "TaskManagerUnitTest\TaskManagerUnitTest.csproj", "{7F3E0125-5927-42A0-89B7-0B6574D553B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerUnitTest", "..\TaskManagerUnitTest\TaskManagerUnitTest.csproj", "{7F3E0125-5927-42A0-89B7-0B6574D553B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
