@@ -7,6 +7,8 @@ namespace TaskManager.DataModels
 {
     public interface IDataModel
     {
+        FilterType Filter { get; set; }
+        SortType Sort { get; set; }
         void AddTask(UserTask task);
         void UpdateTask(UserTask task);
         void DeleteTask(UserTask task);
@@ -14,8 +16,6 @@ namespace TaskManager.DataModels
         List<UserTask> GetTasksOfDay(string date);
         List<UserTask> GetTasksOfDays(string beginDate, string endDate);
         List<string> GetAllTaskDates();
-        void SortBy(SortType sort);
-        void FilterBy(FilterType filter);
         event EventHandler TasksDbUpdated;
     }
 }

@@ -42,7 +42,7 @@ namespace TaskManager.Presenters
         {
             var filter = e.Filter; //Исключение?
 
-            _dataModel.FilterBy(filter);
+            _dataModel.Filter = filter;
             RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
