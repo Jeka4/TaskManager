@@ -15,9 +15,9 @@ namespace TaskManager.Views
     {
         public bool TaskSelected => TaskList.SelectedItem != null;
 
-        public DateTime DateSelected { get; private set; }
+        public DateInterval DateIntervalSelected { get; private set; }
 
-        public FilterType ComboFilter { get; set; } = FilterType.All;
+        public ITaskListSettings TaskListSettings { get; private set; }
 
         public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
 
@@ -25,23 +25,43 @@ namespace TaskManager.Views
 
         public event EventHandler<UserTaskEventArgs> UserTaskDeleted = delegate { };
 
-        public event EventHandler<TaskDateEventArg> CurrentCalendarDateChanged = delegate { };
+        public event EventHandler<TaskDateIntervalEventArg> CurrentCalendarDateChanged = delegate { };
+
+        public event EventHandler<FilterEventArgs> FilterTypeChanged = delegate { };
 
         public event EventHandler SelectionListUpdated = delegate { };
 
-        public event EventHandler FilterTypeChanged = delegate { };
-
         public MainWindow()
         {
-            DataContext = this;
-            DateSelected = DateTime.Now;
+            TaskListSettings = new TaskListSettings(FilterType.All);
+            DateIntervalSelected = new DateInterval(DateTime.Now);
+            DataContext = TaskListSettings;
 
             InitializeComponent();
+        }
+
+        public void ShowMessageBox(string message)
+        {
+            MessageBox.Show(message, "TaskManager", MessageBoxButton.OK);
         }
 
         public void SetUserTasksToTasksList(List<UserTaskView> tasks)
         {
             TaskList.ItemsSource = tasks;
+        }
+
+        public void SetHighlightDates(List<DateTime> dates) //Оптимизировать добавление (месяц; при добавлении\изменении\удалении)
+        {
+            Style style = new Style(typeof(System.Windows.Controls.Primitives.CalendarDayButton));
+
+            foreach (var date in dates)
+            {
+                DataTrigger dataTrigger = new DataTrigger { Binding = new System.Windows.Data.Binding("Date"), Value = date };
+                dataTrigger.Setters.Add(new Setter(System.Windows.Controls.Primitives.CalendarDayButton.BackgroundProperty, System.Windows.Media.Brushes.AntiqueWhite));
+                style.Triggers.Add(dataTrigger);
+            }
+
+            Calendar.CalendarDayButtonStyle = style;
         }
 
         public void EnableEditRemoveControls(bool enable)
@@ -57,12 +77,22 @@ namespace TaskManager.Views
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e) //Использовать e?
         {
-            var calendar = sender as Calendar;
+            var selectedDates = e.AddedItems;
 
-            if (calendar != null && calendar.SelectedDate.HasValue)
+            if (selectedDates.Count > 0)
             {
-                DateSelected = calendar.SelectedDate.Value;
-                CurrentCalendarDateChanged(sender, new TaskDateEventArg(DateSelected));
+                DateTime firstDate = (DateTime)selectedDates[0];
+                DateTime lastDate = (DateTime)selectedDates[selectedDates.Count - 1];
+
+                if(firstDate > lastDate)
+                {
+                    DateTime swapDate = firstDate;
+                    firstDate = lastDate;
+                    lastDate = swapDate;
+                }
+
+                DateIntervalSelected = new DateInterval(firstDate, lastDate);
+                CurrentCalendarDateChanged(sender, new TaskDateIntervalEventArg(DateIntervalSelected));
             }
         }
 
@@ -129,7 +159,7 @@ namespace TaskManager.Views
 
         private void ComboFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FilterTypeChanged(sender, EventArgs.Empty);
+            FilterTypeChanged(sender, new FilterEventArgs(TaskListSettings.Filter));
         }
     }
 }

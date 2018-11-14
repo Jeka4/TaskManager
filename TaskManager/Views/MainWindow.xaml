@@ -10,6 +10,7 @@
         Title="MainWindow" Height="328" Width="550" MinHeight="328" MinWidth="550" MaxHeight="328" MaxWidth="550">
     <Window.Resources>
         <viewcomps:EnumConverter x:Key="EnumConverter"/>
+        <Style x:Key="CalendarDayStyle" TargetType="CalendarDayButton" />
     </Window.Resources>
     <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
@@ -35,7 +36,7 @@
         <ComboBox 
             x:Name="comboFilter"
             SelectionChanged="ComboFilter_SelectionChanged"
-            SelectedItem="{Binding Path=ComboFilter, Converter={StaticResource EnumConverter}, ConverterParameter={x:Type shared:FilterType}}"
+            SelectedItem="{Binding Path=Filter, Converter={StaticResource EnumConverter}, ConverterParameter={x:Type shared:FilterType}}"
             ItemsSource="{Binding Source={viewcomps:EnumToListSource {x:Type shared:FilterType}}}" 
             Grid.Column="1" 
             Grid.Row="0"
@@ -52,8 +53,10 @@
                   Grid.Row="3" 
                   Grid.ColumnSpan="2"
                   HorizontalAlignment="Left"
+                  SelectionMode="SingleRange"
                   SelectedDatesChanged="Calendar_SelectedDatesChanged"
-                  PreviewMouseUp="Calendar_PreviewMouseUp"/>
+                  PreviewMouseUp="Calendar_PreviewMouseUp"
+                  CalendarDayButtonStyle="{StaticResource CalendarDayStyle}"/>
         <ListBox x:Name="TaskList" SelectionChanged="TaskList_SelectionChanged" HorizontalContentAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3">
             <ListBox.ItemTemplate>
                 <DataTemplate>
