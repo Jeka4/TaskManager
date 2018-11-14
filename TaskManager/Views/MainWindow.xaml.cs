@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Linq;
 using TaskManager.ViewComponents;
 using TaskManager.Components;
 
@@ -54,10 +55,17 @@ namespace TaskManager.Views
         {
             Style style = new Style(typeof(System.Windows.Controls.Primitives.CalendarDayButton));
 
+            dates = dates.GroupBy(d => d.Date).Select(d => d.Key).ToList();
+
             foreach (var date in dates)
             {
-                DataTrigger dataTrigger = new DataTrigger { Binding = new System.Windows.Data.Binding("Date"), Value = date };
-                dataTrigger.Setters.Add(new Setter(System.Windows.Controls.Primitives.CalendarDayButton.BackgroundProperty, System.Windows.Media.Brushes.AntiqueWhite));
+                DataTrigger dataTrigger = new DataTrigger
+                {
+                    Binding = new System.Windows.Data.Binding("Date"),
+                    Value = date
+                };
+
+                dataTrigger.Setters.Add(new Setter(BackgroundProperty, System.Windows.Media.Brushes.AntiqueWhite));
                 style.Triggers.Add(dataTrigger);
             }
 
