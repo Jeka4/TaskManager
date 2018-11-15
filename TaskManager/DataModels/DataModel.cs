@@ -12,6 +12,30 @@ namespace TaskManager.DataModels
     {
         public event EventHandler TasksDbUpdated = delegate { };
 
+        public FilterType Filter
+        {
+            get
+            {
+                return _filterType;
+            }
+            set
+            {
+                _filterType = value;
+            }
+        }   
+
+        public SortType Sort
+        {
+            get
+            {
+                return _sortType;
+            }
+            set
+            {
+                _sortType = value;
+            }
+        }
+
         private FilterType _filterType;
 
         private SortType _sortType;
@@ -119,16 +143,6 @@ namespace TaskManager.DataModels
             {
                 return db.UserTasks.Select(t => t.TaskDate).ToList();
             }
-        }
-
-        public void SortBy(SortType sort)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void FilterBy(FilterType filter)
-        {
-            _filterType = filter;
         }
     }
 }

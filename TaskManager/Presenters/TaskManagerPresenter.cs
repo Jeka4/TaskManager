@@ -42,7 +42,7 @@ namespace TaskManager.Presenters
         {
             var filter = e.Filter; //Исключение?
 
-            _dataModel.FilterBy(filter);
+            _dataModel.Filter = filter;
             RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
@@ -142,11 +142,11 @@ namespace TaskManager.Presenters
         public List<UserTaskView> LoadAllTasks()
         {
             List<UserTask> tasks = _dataModel.GetAllTasks();
+            List<UserTaskView> tasksForView;
 
-            List<UserTaskView> tasksForView = new List<UserTaskView>();
             try
             {
-                tasksForView.AddRange(tasks.Select(task => new UserTaskView
+                tasksForView = tasks.Select(task => new UserTaskView
                 {
                     Id = task.Id,
                     Name = task.Name,
@@ -155,7 +155,7 @@ namespace TaskManager.Presenters
                     TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
                     NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
                     IsNotified = Convert.ToBoolean(task.IsNotified)
-                }));
+                }).ToList();
 
                 return tasksForView;
             }
@@ -168,12 +168,11 @@ namespace TaskManager.Presenters
         public List<UserTaskView> LoadTasksOfDay(DateTime day)
         {
             List<UserTask> tasks = _dataModel.GetTasksOfDay(_dateConverter.ConvertDateToString(day));
-
-            List<UserTaskView> tasksForView = new List<UserTaskView>();
+            List<UserTaskView> tasksForView;
 
             try
             {
-                tasksForView.AddRange(tasks.Select(task => new UserTaskView
+                tasksForView = tasks.Select(task => new UserTaskView
                 {
                     Id = task.Id,
                     Name = task.Name,
@@ -182,7 +181,7 @@ namespace TaskManager.Presenters
                     TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
                     NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
                     IsNotified = Convert.ToBoolean(task.IsNotified)
-                }));
+                }).ToList();
 
                 return tasksForView;
             }
@@ -199,11 +198,11 @@ namespace TaskManager.Presenters
                 _dateConverter.ConvertDateToString(dateInterval.EndDate)
                 );
 
-            List<UserTaskView> tasksForView = new List<UserTaskView>();
+            List<UserTaskView> tasksForView;
 
             try
             {
-                tasksForView.AddRange(tasks.Select(task => new UserTaskView
+                tasksForView = tasks.Select(task => new UserTaskView
                 {
                     Id = task.Id,
                     Name = task.Name,
@@ -212,7 +211,7 @@ namespace TaskManager.Presenters
                     TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
                     NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
                     IsNotified = Convert.ToBoolean(task.IsNotified)
-                }));
+                }).ToList();
 
                 return tasksForView;
             }

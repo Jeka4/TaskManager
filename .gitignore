@@ -192,6 +192,8 @@ PublishScripts/
 # NuGet v3's project.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
+#Linq2db t4
+.tools/
 
 # Microsoft Azure Build Output
 csx/

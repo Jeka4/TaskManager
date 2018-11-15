@@ -27,6 +27,7 @@ namespace TaskManager.ViewComponents
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return null;
+            if (!(parameter is Type)) return null;
             foreach (var one in Enum.GetValues(parameter as Type))
             {
                 if (value.ToString() == (one as Enum).GetDescription())
