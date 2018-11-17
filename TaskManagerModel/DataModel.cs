@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FluentValidation;
 using LinqToDB;
 using TaskManagerCommon.Components;
 using TaskManagerModel.Components;
+using TaskManagerModel.Validators;
 
 namespace TaskManagerModel
 {
@@ -54,6 +56,9 @@ namespace TaskManagerModel
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
+            var validator = new UserTaskValidator();
+            validator.ValidateAndThrow(task);
+
             using (var db = new UserTasksDB())
                 db.Insert(task);
 
@@ -64,6 +69,9 @@ namespace TaskManagerModel
         {
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
+
+            var validator = new UserTaskValidator();
+            validator.ValidateAndThrow(task);
 
             using (var db = new UserTasksDB())
                 db.Update(task);
@@ -76,8 +84,8 @@ namespace TaskManagerModel
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            if (task.Id <= 0) //С 1?
-                throw new ArgumentOutOfRangeException($"Id of {task} should be positive");
+            var validator = new UserTaskValidator(); //!!!!!!!!!!!
+                validator.ValidateAndThrow(task);
 
             using (var db = new UserTasksDB())
                 db.Delete(task);
