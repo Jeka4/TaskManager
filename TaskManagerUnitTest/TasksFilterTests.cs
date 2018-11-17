@@ -1,9 +1,9 @@
 ﻿using System;
 using NUnit.Framework;
-using TaskManager.DataModelComponents;
+using TaskManagerModel.DataModelComponents;
 using System.Collections.Generic;
-using TaskManager.DataModels;
-using TaskManager.Components;
+using TaskManagerModel.DataModels;
+using TaskManagerCommon.Components;
 using System.Linq;
 
 namespace TaskManagerUnitTest
