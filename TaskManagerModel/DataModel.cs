@@ -98,34 +98,27 @@ namespace TaskManagerModel
             return tasks;
         }
 
-        public List<UserTask> GetTasksOfDay(string date)
+        public List<UserTask> GetTasksOfDay(DateTime date)
         {
-            if (string.IsNullOrWhiteSpace(date))
-                throw new ArgumentException($"{nameof(date)} should not to be null or empty.");
-
-            List<UserTask> tasks;
             using (var db = new UserTasksDB())
             {
                 var query = db.UserTasks.Where(t => t.TaskDate == date);
                 var filterResult = _taskFilter.Filter(query, _filterType);
 
-                tasks = filterResult.ToList();
+                var tasks = filterResult.ToList();
+                return tasks;
             }
-            return tasks;
         }
 
-        public List<UserTask> GetTasksOfDays(string beginDate, string endDate)
+        public List<UserTask> GetTasksOfDays(DateTime beginDate, DateTime endDate)
         {
-            if (string.IsNullOrWhiteSpace(beginDate) || string.IsNullOrWhiteSpace(endDate))
-                throw new ArgumentException($"{nameof(beginDate)} or {nameof(endDate)} should not to be null or empty.");
-
             List<UserTask> tasks;
             Expression<Func<UserTask, bool>> compare;
 
             if (beginDate == endDate) //Вынести в поле класса?
                 compare = t => t.TaskDate == beginDate;
             else
-                compare = t => t.TaskDate.CompareTo(beginDate) >= 0 && t.TaskDate.CompareTo(endDate) <= 0;
+                compare = t => t.TaskDate >= beginDate && t.TaskDate <= endDate;
 
             using (var db = new UserTasksDB())
             {
@@ -137,7 +130,7 @@ namespace TaskManagerModel
             return tasks;
         }
 
-        public List<string> GetAllTaskDates()
+        public List<DateTime> GetAllTaskDates()
         {
             using (var db = new UserTasksDB())
             {

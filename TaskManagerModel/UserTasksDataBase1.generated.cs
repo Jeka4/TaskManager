@@ -38,13 +38,13 @@ namespace TaskManagerModel
 	[Table("UserTasks")]
 	public partial class UserTask
 	{
-		[Column("id"),          PrimaryKey,  Identity] public long   Id          { get; set; } // integer
-		[Column("name"),        NotNull              ] public string Name        { get; set; } // text(max)
-		[Column("description"),    Nullable          ] public string Description { get; set; } // text(max)
-		[Column("priority"),    NotNull              ] public string Priority    { get; set; } // text(max)
-		[Column("taskDate"),    NotNull              ] public string TaskDate    { get; set; } // text(max)
-		[Column("notifyDate"),  NotNull              ] public string NotifyDate  { get; set; } // text(max)
-		[Column("isNotified"),  NotNull              ] public long   IsNotified  { get; set; } // integer
+		[Column("id"),          PrimaryKey,  Identity] public long     Id          { get; set; } // integer
+		[Column("name"),        NotNull              ] public string   Name        { get; set; } // text(max)
+		[Column("description"),    Nullable          ] public string   Description { get; set; } // text(max)
+		[Column("priority"),    NotNull              ] public string   Priority    { get; set; } // text(max)
+		[Column("taskDate"),    NotNull              ] public DateTime TaskDate    { get; set; } // text(max)
+		[Column("notifyDate"),  NotNull              ] public DateTime NotifyDate  { get; set; } // text(max)
+		[Column("isNotified"),  NotNull              ] public bool     IsNotified  { get; set; } // integer
 	}
 
 	public static partial class TableExtensions

@@ -35,7 +35,7 @@ namespace TaskManagerView
         public MainWindow()
         {
             TaskListSettings = new TaskListSettings(FilterType.All);
-            DateIntervalSelected = new DateInterval(DateTime.Now);
+            DateIntervalSelected = new DateInterval(DateTime.Now.Date);
             DataContext = TaskListSettings;
 
             InitializeComponent();
@@ -89,8 +89,8 @@ namespace TaskManagerView
 
             if (selectedDates.Count > 0)
             {
-                DateTime firstDate = (DateTime)selectedDates[0];
-                DateTime lastDate = (DateTime)selectedDates[selectedDates.Count - 1];
+                DateTime firstDate = ((DateTime)selectedDates[0]).Date;
+                DateTime lastDate = ((DateTime)selectedDates[selectedDates.Count - 1]).Date;
 
                 if(firstDate > lastDate)
                 {

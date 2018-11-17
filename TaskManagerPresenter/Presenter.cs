@@ -13,14 +13,12 @@ namespace TaskManagerPresenter
     {
         private IMainWindow _mainWindow;
         private IDataModel _dataModel;
-        private readonly IDateConverter _dateConverter;
         private readonly IPriorityConverter _priorityConverter;
 
-        public Presenter(IMainWindow mainWindow, IDataModel dataModel, IDateConverter dateConverter, IPriorityConverter priorityConverter)
+        public Presenter(IMainWindow mainWindow, IDataModel dataModel, IPriorityConverter priorityConverter)
         {
             _mainWindow = mainWindow;
             _dataModel = dataModel;
-            _dateConverter = dateConverter;
             _priorityConverter = priorityConverter;
 
             _dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
@@ -87,11 +85,10 @@ namespace TaskManagerPresenter
                 Name = task.Name,
                 Description = task.Description,
                 Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                IsNotified = 0
+                IsNotified = false,
+                TaskDate = task.TaskDate,
+                NotifyDate = task.NotifyDate
             };
-
-            userTask.TaskDate = _dateConverter.ConvertDateToString(task.TaskDate);
-            userTask.NotifyDate = _dateConverter.ConvertDateToString(task.NotifyDate);
 
             _dataModel.AddTask(userTask);
         }
@@ -107,11 +104,10 @@ namespace TaskManagerPresenter
                 Name = task.Name,
                 Description = task.Description,
                 Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                IsNotified = 0
+                IsNotified = false,
+                TaskDate = task.TaskDate,
+                NotifyDate = task.NotifyDate
             };
-
-            userTask.TaskDate = _dateConverter.ConvertDateToString(task.TaskDate);
-            userTask.NotifyDate = _dateConverter.ConvertDateToString(task.NotifyDate);
 
             _dataModel.UpdateTask(userTask);
         }
@@ -133,28 +129,25 @@ namespace TaskManagerPresenter
         {
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDays(dateInterval));
 
-            List<DateTime> tasksDates = _dataModel.GetAllTaskDates()
-                                                  .Select(d => _dateConverter.ParseStringToDate(d))
-                                                  .ToList();
+            var tasksDates = _dataModel.GetAllTaskDates().ToList();
             _mainWindow.SetHighlightDates(tasksDates);
         }
 
         public List<UserTaskView> LoadAllTasks()
         {
             List<UserTask> tasks = _dataModel.GetAllTasks();
-            List<UserTaskView> tasksForView;
 
             try
             {
-                tasksForView = tasks.Select(task => new UserTaskView
+                var tasksForView = tasks.Select(task => new UserTaskView
                 {
                     Id = task.Id,
                     Name = task.Name,
                     Description = task.Description,
                     Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
-                    TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
-                    NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
-                    IsNotified = Convert.ToBoolean(task.IsNotified)
+                    TaskDate = task.TaskDate,
+                    NotifyDate = task.NotifyDate,
+                    IsNotified = task.IsNotified
                 }).ToList();
 
                 return tasksForView;
@@ -167,20 +160,19 @@ namespace TaskManagerPresenter
 
         public List<UserTaskView> LoadTasksOfDay(DateTime day)
         {
-            List<UserTask> tasks = _dataModel.GetTasksOfDay(_dateConverter.ConvertDateToString(day));
-            List<UserTaskView> tasksForView;
+            List<UserTask> tasks = _dataModel.GetTasksOfDay(day);
 
             try
             {
-                tasksForView = tasks.Select(task => new UserTaskView
+                var tasksForView = tasks.Select(task => new UserTaskView
                 {
                     Id = task.Id,
                     Name = task.Name,
                     Description = task.Description,
                     Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
-                    TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
-                    NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
-                    IsNotified = Convert.ToBoolean(task.IsNotified)
+                    TaskDate = task.TaskDate,
+                    NotifyDate = task.NotifyDate,
+                    IsNotified = task.IsNotified
                 }).ToList();
 
                 return tasksForView;
@@ -194,8 +186,8 @@ namespace TaskManagerPresenter
         public List<UserTaskView> LoadTasksOfDays(DateInterval dateInterval)
         {
             List<UserTask> tasks = _dataModel.GetTasksOfDays(
-                _dateConverter.ConvertDateToString(dateInterval.BeginDate),
-                _dateConverter.ConvertDateToString(dateInterval.EndDate)
+                dateInterval.BeginDate,
+                dateInterval.EndDate
                 );
 
             List<UserTaskView> tasksForView;
@@ -208,9 +200,9 @@ namespace TaskManagerPresenter
                     Name = task.Name,
                     Description = task.Description,
                     Priority = _priorityConverter.ConvertToViewPriority(task.Priority),
-                    TaskDate = _dateConverter.ParseStringToDate(task.TaskDate),
-                    NotifyDate = _dateConverter.ParseStringToDate(task.NotifyDate),
-                    IsNotified = Convert.ToBoolean(task.IsNotified)
+                    TaskDate = task.TaskDate,
+                    NotifyDate = task.NotifyDate,
+                    IsNotified = task.IsNotified
                 }).ToList();
 
                 return tasksForView;

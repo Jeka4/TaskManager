@@ -13,9 +13,9 @@ namespace TaskManagerModel
         void UpdateTask(UserTask task);
         void DeleteTask(UserTask task);
         List<UserTask> GetAllTasks();
-        List<UserTask> GetTasksOfDay(string date);
-        List<UserTask> GetTasksOfDays(string beginDate, string endDate);
-        List<string> GetAllTaskDates();
+        List<UserTask> GetTasksOfDay(DateTime date);
+        List<UserTask> GetTasksOfDays(DateTime beginDate, DateTime endDate);
+        List<DateTime> GetAllTaskDates();
         event EventHandler TasksDbUpdated;
     }
 }

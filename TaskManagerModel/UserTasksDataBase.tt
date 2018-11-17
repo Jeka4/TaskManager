@@ -39,5 +39,9 @@
 	LoadSQLiteMetadata(Host.ResolvePath("."), "UserTasks.sqlite");
 //	LoadSQLiteMetadata(string connectionString);
 
+	GetColumn("UserTasks", "taskDate").Type = "DateTime";
+	GetColumn("UserTasks", "notifyDate").Type = "DateTime";
+	GetColumn("UserTasks", "isNotified").Type = "bool";
+	
 	GenerateModel();
 #>
