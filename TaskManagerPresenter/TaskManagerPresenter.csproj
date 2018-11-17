@@ -40,14 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PresenterComponents\DateConverter.cs" />
-    <Compile Include="PresenterComponents\IDateConverter.cs" />
-    <Compile Include="PresenterComponents\IPriorityConverter.cs" />
-    <Compile Include="PresenterComponents\PriorityConverter.cs" />
-    <Compile Include="Presenters\ITaskManagerPresenter.cs" />
-    <Compile Include="Presenters\MappingTaskException.cs" />
-    <Compile Include="Presenters\NullTaskException.cs" />
-    <Compile Include="Presenters\Presenter.cs" />
+    <Compile Include="Components\DateConverter.cs" />
+    <Compile Include="Components\IDateConverter.cs" />
+    <Compile Include="Components\IPriorityConverter.cs" />
+    <Compile Include="Components\PriorityConverter.cs" />
+    <Compile Include="IPresenter.cs" />
+    <Compile Include="Components\MappingTaskException.cs" />
+    <Compile Include="Components\NullTaskException.cs" />
+    <Compile Include="Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

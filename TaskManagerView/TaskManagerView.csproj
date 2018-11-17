@@ -59,25 +59,25 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewComponents\EnumConverter.cs" />
-    <Compile Include="ViewComponents\EnumToListSource.cs" />
-    <Compile Include="ViewComponents\EnumValueDescription.cs" />
-    <Compile Include="ViewComponents\FilterEventArgs.cs" />
-    <Compile Include="ViewComponents\ITaskListSettings.cs" />
-    <Compile Include="ViewComponents\TaskDateIntervalEventArg.cs" />
-    <Compile Include="ViewComponents\TaskListSettings.cs" />
-    <Compile Include="ViewComponents\UserTaskEventArgs.cs" />
-    <Compile Include="ViewComponents\UserTaskView.cs" />
-    <Compile Include="Views\EditTaskWindow.xaml.cs">
+    <Compile Include="Components\EnumConverter.cs" />
+    <Compile Include="Components\EnumToListSource.cs" />
+    <Compile Include="Components\EnumValueDescription.cs" />
+    <Compile Include="Components\FilterEventArgs.cs" />
+    <Compile Include="Components\ITaskListSettings.cs" />
+    <Compile Include="Components\TaskDateIntervalEventArg.cs" />
+    <Compile Include="Components\TaskListSettings.cs" />
+    <Compile Include="Components\UserTaskEventArgs.cs" />
+    <Compile Include="Components\UserTaskView.cs" />
+    <Compile Include="EditTaskWindow.xaml.cs">
       <DependentUpon>EditTaskWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IEditTaskWindow.cs" />
-    <Compile Include="Views\IMainWindow.cs" />
-    <Compile Include="Views\ITasksManagerWindow.cs" />
-    <Compile Include="Views\MainWindow.xaml.cs">
+    <Compile Include="IEditTaskWindow.cs" />
+    <Compile Include="IMainWindow.cs" />
+    <Compile Include="ITasksManagerWindow.cs" />
+    <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TasksManagerWindow.xaml.cs">
+    <Compile Include="TasksManagerWindow.xaml.cs">
       <DependentUpon>TasksManagerWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -109,15 +109,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\EditTaskWindow.xaml">
+    <Page Include="EditTaskWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TasksManagerWindow.xaml">
+    <Page Include="TasksManagerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

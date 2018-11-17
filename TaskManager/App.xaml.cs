@@ -1,10 +1,10 @@
 ﻿using System.Windows;
-using TaskManagerView.Views;
-using TaskManagerModel.DataModels;
-using TaskManagerPresenter.Presenters;
-using TaskManagerPresenter.PresenterComponents;
+using TaskManagerModel;
 using System.Configuration;
-using TaskManagerModel.DataModelComponents;
+using TaskManagerModel.Components;
+using TaskManagerPresenter;
+using TaskManagerPresenter.Components;
+using TaskManagerView;
 
 namespace TaskManager
 {
@@ -23,7 +23,7 @@ namespace TaskManager
 
             IMainWindow mainWindow = new MainWindow();
             IDataModel dataModel = new DataModel(taskFilter);
-            ITaskManagerPresenter taskManagerPresenter = new Presenter(mainWindow, dataModel, dateConverter, priorityConverter);
+            IPresenter taskManagerPresenter = new Presenter(mainWindow, dataModel, dateConverter, priorityConverter);
         }
     }
 }

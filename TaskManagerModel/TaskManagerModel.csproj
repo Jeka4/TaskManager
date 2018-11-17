@@ -50,12 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModelComponents\ITaskFilter.cs" />
-    <Compile Include="DataModelComponents\SortType.cs" />
-    <Compile Include="DataModelComponents\TasksFilter.cs" />
-    <Compile Include="DataModels\DataModel.cs" />
-    <Compile Include="DataModels\IDataModel.cs" />
-    <Compile Include="DataModels\UserTasksDataBase1.generated.cs">
+    <Compile Include="Components\ITaskFilter.cs" />
+    <Compile Include="Components\SortType.cs" />
+    <Compile Include="Components\TasksFilter.cs" />
+    <Compile Include="DataModel.cs" />
+    <Compile Include="IDataModel.cs" />
+    <Compile Include="UserTasksDataBase1.generated.cs">
       <DependentUpon>UserTasksDataBase.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -63,7 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataModels\UserTasks.sqlite">
+    <None Include="UserTasks.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="LinqToDB.Templates\DataAnnotations.ttinclude" />
@@ -97,7 +97,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataModels\UserTasksDataBase.tt">
+    <Content Include="UserTasksDataBase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>UserTasksDataBase1.generated.cs</LastGenOutput>
     </Content>
@@ -112,6 +112,7 @@
       <Name>TaskManagerCommon</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using TaskManagerModel.DataModelComponents;
+using TaskManagerModel.Components;
 using System.Collections.Generic;
-using TaskManagerModel.DataModels;
+using TaskManagerModel;
 using TaskManagerCommon.Components;
 using System.Linq;
 
