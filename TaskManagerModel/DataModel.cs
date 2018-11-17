@@ -57,7 +57,7 @@ namespace TaskManagerModel
                 throw new ArgumentNullException(nameof(task));
 
             var validator = new UserTaskValidator();
-            validator.ValidateAndThrow(task);
+            validator.ValidateAndThrow(task, ruleSet: "Body");
 
             using (var db = new UserTasksDB())
                 db.Insert(task);
@@ -71,7 +71,7 @@ namespace TaskManagerModel
                 throw new ArgumentNullException(nameof(task));
 
             var validator = new UserTaskValidator();
-            validator.ValidateAndThrow(task);
+            validator.ValidateAndThrow(task, ruleSet: "*");
 
             using (var db = new UserTasksDB())
                 db.Update(task);
@@ -84,8 +84,8 @@ namespace TaskManagerModel
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            var validator = new UserTaskValidator(); //!!!!!!!!!!!
-                validator.ValidateAndThrow(task);
+            var validator = new UserTaskValidator();
+                validator.ValidateAndThrow(task, ruleSet: "Id");
 
             using (var db = new UserTasksDB())
                 db.Delete(task);

@@ -119,12 +119,7 @@ namespace TaskManagerPresenter
 
             UserTask userTask = new UserTask
             {
-                Id = task.Id,
-                Name = task.Name,
-                Description = task.Description,
-                IsNotified = task.IsNotified,
-                TaskDate = task.TaskDate,
-                NotifyDate = task.NotifyDate
+                Id = task.Id
             };
 
             _dataModel.DeleteTask(userTask);
