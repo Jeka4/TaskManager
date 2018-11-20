@@ -64,6 +64,7 @@
     <Compile Include="Components\EnumValueDescription.cs" />
     <Compile Include="Components\FilterEventArgs.cs" />
     <Compile Include="Components\ITaskListSettings.cs" />
+    <Compile Include="Components\SortEventArgs.cs" />
     <Compile Include="Components\TaskDateIntervalEventArg.cs" />
     <Compile Include="Components\TaskListSettings.cs" />
     <Compile Include="Components\UserTaskEventArgs.cs" />
