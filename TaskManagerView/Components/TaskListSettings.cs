@@ -6,9 +6,12 @@ namespace TaskManagerView.Components
     {
         public FilterType Filter { get; set; }
 
-        public TaskListSettings(FilterType filter)
+        public SortType Sort { get; set; }
+
+        public TaskListSettings(FilterType filter, SortType sort)
         {
             Filter = filter;
+            Sort = sort;
         }
     }
 }
