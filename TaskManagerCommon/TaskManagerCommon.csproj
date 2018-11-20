@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Components\DateInterval.cs" />
     <Compile Include="Components\FilterType.cs" />
+    <Compile Include="Components\SortType.cs" />
     <Compile Include="Components\TaskPriority.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

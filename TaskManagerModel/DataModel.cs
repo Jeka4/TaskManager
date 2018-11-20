@@ -85,7 +85,7 @@ namespace TaskManagerModel
                 throw new ArgumentNullException(nameof(task));
 
             var validator = new UserTaskValidator();
-                validator.ValidateAndThrow(task, ruleSet: "Id");
+            validator.ValidateAndThrow(task, ruleSet: "Id");
 
             using (var db = new UserTasksDB())
                 db.Delete(task);
@@ -99,9 +99,10 @@ namespace TaskManagerModel
             using (var db = new UserTasksDB())
             {
                 var query = db.UserTasks;
-                var filterResult = _taskFilter.Filter(query, _filterType);
+                //var filterResult = _taskFilter.Filter(query, _filterType);
+                //var sorterResult = filterResult.Sort(_sortType);
 
-                tasks = filterResult.ToList();
+                tasks = query.ToList();
             }
             return tasks;
         }
@@ -111,9 +112,9 @@ namespace TaskManagerModel
             using (var db = new UserTasksDB())
             {
                 var query = db.UserTasks.Where(t => t.TaskDate == date);
-                var filterResult = _taskFilter.Filter(query, _filterType);
+                var selectionResult = _taskFilter.Filter(query, _filterType).Sort(_sortType);
 
-                var tasks = filterResult.ToList();
+                var tasks = selectionResult.ToList();
                 return tasks;
             }
         }
@@ -131,9 +132,9 @@ namespace TaskManagerModel
             using (var db = new UserTasksDB())
             {
                 var query = db.UserTasks.Where(compare);
-                var filterResult = _taskFilter.Filter(query, _filterType);
+                var selectionResult = _taskFilter.Filter(query, _filterType).Sort(_sortType);
 
-                tasks = filterResult.ToList();
+                tasks = selectionResult.ToList();
             }
             return tasks;
         }

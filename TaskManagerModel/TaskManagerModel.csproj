@@ -64,8 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\ITaskFilter.cs" />
-    <Compile Include="Components\SortType.cs" />
     <Compile Include="Components\TasksFilter.cs" />
+    <Compile Include="Components\TasksSorter.cs" />
     <Compile Include="DataModel.cs" />
     <Compile Include="IDataModel.cs" />
     <Compile Include="UserTasksDataBase1.generated.cs">
