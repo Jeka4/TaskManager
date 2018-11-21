@@ -40,12 +40,12 @@ namespace TaskManager
 
                 _dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
 
-                _mainWindow.CurrentCalendarDateChanged += MainWindow_CurrentCalendarDateChanged;
-                _mainWindow.SelectionListUpdated += MainWindow_SelectionListUpdated;
-                _mainWindow.UserTaskAdded += MainWindow_UserTaskAdded;
-                _mainWindow.UserTaskUpdated += MainWindow_UserTaskUpdated;
-                _mainWindow.UserTaskDeleted += MainWindow_UserTaskDeleted;
-                _mainWindow.FilterTypeChanged += MainWindow_FilterTypeChanged;
+                _mainWindow.CurrentCalendarDateChanged += MainWindowOnCurrentCalendarDateChanged;
+                _mainWindow.SelectionListUpdated += MainWindowOnSelectionListUpdated;
+                _mainWindow.UserTaskAdded += MainWindowOnUserTaskAdded;
+                _mainWindow.UserTaskUpdated += MainWindowOnUserTaskUpdated;
+                _mainWindow.UserTaskDeleted += MainWindowOnUserTaskDeleted;
+                _mainWindow.FilterTypeChanged += MainWindowOnFilterTypeChanged;
                 _mainWindow.SortTypeChanged += MainWindowOnSortTypeChanged;
             }
 
@@ -58,7 +58,7 @@ namespace TaskManager
                 _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
             }
 
-            private void MainWindow_FilterTypeChanged(object sender, FilterEventArgs e)
+            private void MainWindowOnFilterTypeChanged(object sender, FilterEventArgs e)
             {
                 var filter = e.Filter; //Исключение?
 
@@ -66,22 +66,22 @@ namespace TaskManager
                 _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
             }
 
-            private void MainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
+            private void MainWindowOnUserTaskDeleted(object sender, UserTaskEventArgs e)
             {
                 _presenter.RemoveTask(e.UserTaskView);
             }
 
-            private void MainWindow_UserTaskUpdated(object sender, UserTaskEventArgs e)
+            private void MainWindowOnUserTaskUpdated(object sender, UserTaskEventArgs e)
             {
                 _presenter.EditTask(e.UserTaskView);
             }
 
-            private void MainWindow_UserTaskAdded(object sender, UserTaskEventArgs e)
+            private void MainWindowOnUserTaskAdded(object sender, UserTaskEventArgs e)
             {
                 _presenter.AddTask(e.UserTaskView);
             }
 
-            private void MainWindow_SelectionListUpdated(object sender, EventArgs e)
+            private void MainWindowOnSelectionListUpdated(object sender, EventArgs e)
             {
                 _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);
             }
@@ -91,7 +91,7 @@ namespace TaskManager
                 _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
             }
 
-            private void MainWindow_CurrentCalendarDateChanged(object sender, TaskDateIntervalEventArg e)
+            private void MainWindowOnCurrentCalendarDateChanged(object sender, TaskDateIntervalEventArg e)
             {
                 _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
             }
