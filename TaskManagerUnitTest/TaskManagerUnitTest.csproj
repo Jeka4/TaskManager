@@ -63,6 +63,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TaskManagerCommon\TaskManagerCommon.csproj">
+      <Project>{fa99bb1e-b5c8-4a4a-a474-f682b2598e0f}</Project>
+      <Name>TaskManagerCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManagerModel\TaskManagerModel.csproj">
+      <Project>{a59a8d5b-c19b-4220-b3de-a44d26a50bda}</Project>
+      <Name>TaskManagerModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManagerPresenter\TaskManagerPresenter.csproj">
+      <Project>{b2782879-ed48-4a69-9e7f-2dcb7db3f4e3}</Project>
+      <Name>TaskManagerPresenter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskManager\TaskManager.csproj">
       <Project>{80e6b452-9caf-4e9f-a622-61ce2ae6a388}</Project>
       <Name>TaskManager</Name>

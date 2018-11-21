@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using TaskManager.PresenterComponents;
+using TaskManagerPresenter.Components;
 
 namespace TaskManagerUnitTest
 {
