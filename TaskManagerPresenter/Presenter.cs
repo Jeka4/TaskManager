@@ -21,66 +21,9 @@ namespace TaskManagerPresenter
             _dataModel = dataModel;
             _priorityConverter = priorityConverter;
 
-            _dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
-
             _mainWindow.EnableEditRemoveControls(false);
-            _mainWindow.CurrentCalendarDateChanged += MainWindow_CurrentCalendarDateChanged;
-            _mainWindow.SelectionListUpdated += MainWindow_SelectionListUpdated;
-            _mainWindow.UserTaskAdded += MainWindow_UserTaskAdded;
-            _mainWindow.UserTaskUpdated += MainWindow_UserTaskUpdated;
-            _mainWindow.UserTaskDeleted += MainWindow_UserTaskDeleted;
-            _mainWindow.FilterTypeChanged += MainWindow_FilterTypeChanged;
-            _mainWindow.SortTypeChanged += MainWindowOnSortTypeChanged;
-
-
             RefreshViewTasksList(_mainWindow.DateIntervalSelected);
             _mainWindow.Show();
-        }
-
-        private void MainWindowOnSortTypeChanged(object sender, SortEventArgs e)
-        {
-            var sort = e.Sort;
-
-            _dataModel.Sort = sort;
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
-        }
-
-        private void MainWindow_FilterTypeChanged(object sender, FilterEventArgs e)
-        {
-            var filter = e.Filter; //Исключение?
-
-            _dataModel.Filter = filter;
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
-        }
-
-        private void MainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
-        {
-            RemoveTask(e.UserTaskView);
-        }
-
-        private void MainWindow_UserTaskUpdated(object sender, UserTaskEventArgs e)
-        {
-            EditTask(e.UserTaskView);
-        }
-
-        private void MainWindow_UserTaskAdded(object sender, UserTaskEventArgs e)
-        {
-            AddTask(e.UserTaskView);
-        }
-
-        private void MainWindow_SelectionListUpdated(object sender, EventArgs e)
-        {
-            _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);
-        }
-
-        private void DataModel_TasksDBUpdated(object sender, EventArgs e)
-        {
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
-        }
-
-        private void MainWindow_CurrentCalendarDateChanged(object sender, TaskDateIntervalEventArg e)
-        {
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
         public void AddTask(UserTaskView task)
