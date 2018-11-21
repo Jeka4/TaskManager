@@ -20,13 +20,13 @@ namespace TaskManagerModel.Components
                     filterResult = query;
                     break;
                 case FilterType.HighPriority:
-                    filterResult = query.Where(t => t.Priority == TaskPriority.High.ToString());
+                    filterResult = query.Where(t => t.Priority == (long)TaskPriority.High);
                     break;
                 case FilterType.MediumPriority:
-                    filterResult = query.Where(t => t.Priority == TaskPriority.Medium.ToString());
+                    filterResult = query.Where(t => t.Priority == (long)TaskPriority.Medium);
                     break;
                 case FilterType.LowPriority:
-                    filterResult = query.Where(t => t.Priority == TaskPriority.Low.ToString());
+                    filterResult = query.Where(t => t.Priority == (long)TaskPriority.Low);
                     break;
                 default:
                     throw new ArgumentException(nameof(filter));

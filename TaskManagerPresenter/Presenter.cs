@@ -30,10 +30,19 @@ namespace TaskManagerPresenter
             _mainWindow.UserTaskUpdated += MainWindow_UserTaskUpdated;
             _mainWindow.UserTaskDeleted += MainWindow_UserTaskDeleted;
             _mainWindow.FilterTypeChanged += MainWindow_FilterTypeChanged;
+            _mainWindow.SortTypeChanged += MainWindowOnSortTypeChanged;
 
 
             RefreshViewTasksList(_mainWindow.DateIntervalSelected);
             _mainWindow.Show();
+        }
+
+        private void MainWindowOnSortTypeChanged(object sender, SortEventArgs e)
+        {
+            var sort = e.Sort;
+
+            _dataModel.Sort = sort;
+            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
         private void MainWindow_FilterTypeChanged(object sender, FilterEventArgs e)
