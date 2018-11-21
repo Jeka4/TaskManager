@@ -75,6 +75,10 @@
       <Project>{b2782879-ed48-4a69-9e7f-2dcb7db3f4e3}</Project>
       <Name>TaskManagerPresenter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TaskManagerView\TaskManagerView.csproj">
+      <Project>{67626404-1d89-4a45-86b1-fadd3a2d1cac}</Project>
+      <Name>TaskManagerView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskManager\TaskManager.csproj">
       <Project>{80e6b452-9caf-4e9f-a622-61ce2ae6a388}</Project>
       <Name>TaskManager</Name>

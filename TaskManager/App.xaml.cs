@@ -18,7 +18,7 @@ namespace TaskManager
             ITaskFilter taskFilter = new TasksFilter();
 
             IMainWindow mainWindow = new MainWindow();
-            IDataModel dataModel = new DataModel(taskFilter);
+            IDataModel dataModel = new DataModel(new UserTasksDbFactory(), taskFilter);
             IPresenter taskManagerPresenter = new Presenter(mainWindow, dataModel, priorityConverter);
         }
     }
