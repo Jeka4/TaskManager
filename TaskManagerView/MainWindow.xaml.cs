@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -108,10 +109,20 @@ namespace TaskManagerView
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            UserTaskView task = new UserTaskView()
+            DateTime taskDate;
+            if (Calendar.SelectedDate == null)
+            {
+                taskDate = DateTime.Today;
+            }
+            else
+            {
+                taskDate = Calendar.SelectedDates.Count == 1 ? Calendar.SelectedDate.Value : DateTime.Today;
+            }
+
+            var task = new UserTaskView
             {
                 Priority = TaskPriority.Low,
-                TaskDate = DateTime.Now,
+                TaskDate = taskDate,
                 NotifyDate = DateTime.Now
             };
 
