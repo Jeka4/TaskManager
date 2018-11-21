@@ -109,20 +109,10 @@ namespace TaskManagerView
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            DateTime taskDate;
-            if (Calendar.SelectedDate == null)
-            {
-                taskDate = DateTime.Today;
-            }
-            else
-            {
-                taskDate = Calendar.SelectedDates.Count == 1 ? Calendar.SelectedDate.Value : DateTime.Today;
-            }
-
             var task = new UserTaskView
             {
                 Priority = TaskPriority.Low,
-                TaskDate = taskDate,
+                TaskDate = (Calendar.SelectedDate != null && Calendar.SelectedDates.Count == 1) ? Calendar.SelectedDate.Value : DateTime.Today,
                 NotifyDate = DateTime.Now
             };
 
