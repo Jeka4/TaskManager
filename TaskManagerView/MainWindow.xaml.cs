@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,7 +37,7 @@ namespace TaskManagerView
         public MainWindow()
         {
             TaskListSettings = new TaskListSettings(FilterType.All, SortType.DescendingPriority);
-            DateIntervalSelected = new DateInterval(DateTime.Now.Date);
+            DateIntervalSelected = new DateInterval(DateTime.Today);
             DataContext = TaskListSettings;
 
             InitializeComponent();
