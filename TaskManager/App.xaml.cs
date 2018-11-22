@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using TaskManagerCommon.Components;
 using TaskManagerModel;
 using TaskManagerModel.Components;
 using TaskManagerPresenter;
@@ -52,18 +53,12 @@ namespace TaskManager
 
             private void MainWindowOnSortTypeChanged(object sender, SortEventArgs e)
             {
-                var sort = e.Sort;
-
-                _dataModel.Sort = sort;
-                _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
+                _presenter.SortTypeChange(e?.Sort ?? SortType.Undefined);
             }
 
             private void MainWindowOnFilterTypeChanged(object sender, FilterEventArgs e)
             {
-                var filter = e.Filter; //Исключение?
-
-                _dataModel.Filter = filter;
-                _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
+                _presenter.FilterTypeChange(e?.Filter ?? FilterType.Undefined);
             }
 
             private void MainWindowOnUserTaskDeleted(object sender, UserTaskEventArgs e)
@@ -83,7 +78,7 @@ namespace TaskManager
 
             private void MainWindowOnSelectionListUpdated(object sender, EventArgs e)
             {
-                _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);
+                _presenter.SelectionListUpdated();
             }
 
             private void DataModel_TasksDBUpdated(object sender, EventArgs e)

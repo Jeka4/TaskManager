@@ -26,6 +26,29 @@ namespace TaskManagerPresenter
             _mainWindow.Show();
         }
 
+        public void SortTypeChange(SortType sort)
+        {
+            if(sort == SortType.Undefined)
+                throw new ArgumentException($"{nameof(sort)} is Undefined");
+
+            _dataModel.Sort = sort;
+            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
+        }
+
+        public void FilterTypeChange(FilterType filter)
+        {
+            if (filter == FilterType.Undefined)
+                throw new ArgumentException($"{nameof(filter)} is Undefined");
+
+            _dataModel.Filter = filter;
+            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
+        }
+
+        public void SelectionListUpdated()
+        {
+            _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);
+        }
+
         public void AddTask(UserTaskView task)
         {
             if (task == null)

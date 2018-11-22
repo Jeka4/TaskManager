@@ -7,6 +7,9 @@ namespace TaskManagerPresenter
 {
     public interface IPresenter
     {
+        void SortTypeChange(SortType sort);
+        void FilterTypeChange(FilterType filter);
+        void SelectionListUpdated();
         void AddTask(UserTaskView task);
         void RemoveTask(UserTaskView task);
         void EditTask(UserTaskView task);
