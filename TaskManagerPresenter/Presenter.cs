@@ -103,7 +103,10 @@ namespace TaskManagerPresenter
         public void RefreshViewTasksList(DateInterval dateInterval)
         {
             _mainWindow.SetUserTasksToTasksList(LoadTasksOfDays(dateInterval));
+        }
 
+        public void RefreshViewHighlightList()
+        {
             var tasksDates = _dataModel.GetAllTaskDates().ToList();
             _mainWindow.SetHighlightDates(tasksDates);
         }

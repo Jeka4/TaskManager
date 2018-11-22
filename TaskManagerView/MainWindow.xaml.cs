@@ -34,7 +34,9 @@ namespace TaskManagerView
         
         public event EventHandler SelectionListUpdated = delegate { };
 
-        public event EventHandler TasksListNeedUpdate = delegate { }; 
+        public event EventHandler TasksListNeedUpdate = delegate { };
+
+        public event EventHandler HighlightListNeedUpdate = delegate { };
 
         public MainWindow()
         {
@@ -50,6 +52,7 @@ namespace TaskManagerView
             FilterTypeChanged(this, new FilterEventArgs(TaskListSettings.Filter));
             SortTypeChanged(this, new SortEventArgs(TaskListSettings.Sort));
             TasksListNeedUpdate(this, EventArgs.Empty);
+            HighlightListNeedUpdate(this, EventArgs.Empty);
 
             Show();
         }
@@ -132,6 +135,7 @@ namespace TaskManagerView
             if (dialogResult == true)
             {
                 UserTaskAdded(sender, new UserTaskEventArgs(task));
+                HighlightListNeedUpdate(this, EventArgs.Empty);
             }
         }
 
@@ -151,6 +155,7 @@ namespace TaskManagerView
             if (dialogResult == true)
             {
                 UserTaskUpdated(sender, new UserTaskEventArgs(task));
+                HighlightListNeedUpdate(this, EventArgs.Empty);
             }
         }
 
@@ -165,6 +170,7 @@ namespace TaskManagerView
                 return;
 
             UserTaskDeleted(sender, new UserTaskEventArgs(task));
+            HighlightListNeedUpdate(this, EventArgs.Empty);
         }
 
         private void ButtonControl_Click(object sender, RoutedEventArgs e)
@@ -181,11 +187,13 @@ namespace TaskManagerView
         private void ComboFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             FilterTypeChanged(sender, new FilterEventArgs(TaskListSettings.Filter));
+            TasksListNeedUpdate(sender, EventArgs.Empty);
         }
 
         private void ComboSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SortTypeChanged(sender, new SortEventArgs(TaskListSettings.Sort));
+            TasksListNeedUpdate(sender, EventArgs.Empty);
         }
     }
 }

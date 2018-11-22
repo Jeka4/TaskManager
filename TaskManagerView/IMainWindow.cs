@@ -23,5 +23,6 @@ namespace TaskManagerView
         event EventHandler<SortEventArgs> SortTypeChanged; 
         event EventHandler SelectionListUpdated;
         event EventHandler TasksListNeedUpdate;
+        event EventHandler HighlightListNeedUpdate;
     }
 }

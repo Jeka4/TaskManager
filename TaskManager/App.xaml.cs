@@ -33,15 +33,13 @@ namespace TaskManager
         {
             private readonly IPresenter _presenter;
             private readonly IMainWindow _mainWindow;
-            private readonly IDataModel _dataModel;
 
             public PresenterSubscriber(IPresenter presenter, IDataModel dataModel, IMainWindow mainWindow)
             {
                 _presenter = presenter;
-                _dataModel = dataModel;
                 _mainWindow = mainWindow;
 
-                _dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
+                dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
 
                 _mainWindow.CurrentCalendarDateChanged += MainWindowOnCurrentCalendarDateChanged;
                 _mainWindow.SelectionListUpdated += MainWindowOnSelectionListUpdated;
@@ -51,6 +49,12 @@ namespace TaskManager
                 _mainWindow.FilterTypeChanged += MainWindowOnFilterTypeChanged;
                 _mainWindow.SortTypeChanged += MainWindowOnSortTypeChanged;
                 _mainWindow.TasksListNeedUpdate += MainWindowOnTasksListNeedUpdate;
+                _mainWindow.HighlightListNeedUpdate += MainWindowOnHighlightListNeedUpdate;
+            }
+
+            private void MainWindowOnHighlightListNeedUpdate(object sender, EventArgs eventArgs)
+            {
+                _presenter.RefreshViewHighlightList();
             }
 
             private void MainWindowOnTasksListNeedUpdate(object sender, EventArgs eventArgs)

@@ -15,6 +15,7 @@ namespace TaskManagerPresenter
         void RemoveTask(UserTaskView task);
         void EditTask(UserTaskView task);
         void RefreshViewTasksList(DateInterval dateInterval);
+        void RefreshViewHighlightList();
         List<UserTaskView> LoadTasksOfDay(DateTime day);
         List<UserTaskView> LoadTasksOfDays(DateInterval dayInterval);
         List<UserTaskView> LoadAllTasks();
