@@ -20,10 +20,12 @@ namespace TaskManagerPresenter
             _mainWindow = mainWindow;
             _dataModel = dataModel;
             _priorityConverter = priorityConverter;
+        }
 
+        public void Initialize()
+        {
+            _mainWindow.Initialize();
             _mainWindow.EnableEditRemoveControls(false);
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
-            _mainWindow.Show();
         }
 
         public void SortTypeChange(SortType sort)
@@ -32,7 +34,6 @@ namespace TaskManagerPresenter
                 throw new ArgumentException($"{nameof(sort)} is Undefined");
 
             _dataModel.Sort = sort;
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
         public void FilterTypeChange(FilterType filter)
@@ -41,7 +42,6 @@ namespace TaskManagerPresenter
                 throw new ArgumentException($"{nameof(filter)} is Undefined");
 
             _dataModel.Filter = filter;
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
         public void SelectionListUpdated()

@@ -18,7 +18,7 @@ namespace TaskManagerView
 
         public DateInterval DateIntervalSelected { get; private set; }
 
-        public ITaskListSettings TaskListSettings { get; }
+        public ITaskListSettings TaskListSettings { get; private set; }
 
         public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
 
@@ -34,13 +34,24 @@ namespace TaskManagerView
         
         public event EventHandler SelectionListUpdated = delegate { };
 
+        public event EventHandler TasksListNeedUpdate = delegate { }; 
+
         public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        public void Initialize()
         {
             TaskListSettings = new TaskListSettings(FilterType.All, SortType.DescendingPriority);
             DateIntervalSelected = new DateInterval(DateTime.Today);
             DataContext = TaskListSettings;
 
-            InitializeComponent();
+            FilterTypeChanged(this, new FilterEventArgs(TaskListSettings.Filter));
+            SortTypeChanged(this, new SortEventArgs(TaskListSettings.Sort));
+            TasksListNeedUpdate(this, EventArgs.Empty);
+
+            Show();
         }
 
         public void ShowMessageBox(string message)

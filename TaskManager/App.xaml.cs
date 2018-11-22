@@ -25,6 +25,8 @@ namespace TaskManager
             IPresenter taskManagerPresenter = new Presenter(mainWindow, dataModel, priorityConverter);
 
             new PresenterSubscriber(taskManagerPresenter, dataModel, mainWindow);
+
+            taskManagerPresenter.Initialize();
         }
 
         class PresenterSubscriber
@@ -48,8 +50,13 @@ namespace TaskManager
                 _mainWindow.UserTaskDeleted += MainWindowOnUserTaskDeleted;
                 _mainWindow.FilterTypeChanged += MainWindowOnFilterTypeChanged;
                 _mainWindow.SortTypeChanged += MainWindowOnSortTypeChanged;
+                _mainWindow.TasksListNeedUpdate += MainWindowOnTasksListNeedUpdate;
             }
 
+            private void MainWindowOnTasksListNeedUpdate(object sender, EventArgs eventArgs)
+            {
+                _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
+            }
 
             private void MainWindowOnSortTypeChanged(object sender, SortEventArgs e)
             {
@@ -88,7 +95,7 @@ namespace TaskManager
 
             private void MainWindowOnCurrentCalendarDateChanged(object sender, TaskDateIntervalEventArg e)
             {
-                _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
+                _presenter.RefreshViewTasksList(e?.DateInterval ?? new DateInterval());
             }
         }
     }
