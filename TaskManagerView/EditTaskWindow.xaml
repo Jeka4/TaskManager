@@ -70,7 +70,29 @@
                 </Binding>
             </ComboBox.SelectedItem>
         </ComboBox>
-        <DatePicker x:Name="datapickerTaskDate" SelectedDate="{Binding Path=TaskDate, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
-        <DatePicker x:Name="datapickerNotifyDate" SelectedDate="{Binding Path=NotifyDate, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+        <DatePicker 
+            x:Name="datapickerTaskDate" 
+            Grid.Column="1" 
+            Grid.Row="3">
+            <DatePicker.SelectedDate>
+                <Binding Path="TaskDate" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.SelectedDate>
+        </DatePicker>
+        <DatePicker 
+            x:Name="datapickerNotifyDate"
+            Grid.Column="1" 
+            Grid.Row="4">
+            <DatePicker.SelectedDate>
+                <Binding Path="NotifyDate" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.SelectedDate>
+        </DatePicker>
     </Grid>
 </Window>
