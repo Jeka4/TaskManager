@@ -65,7 +65,14 @@ namespace TaskManagerPresenter
                 NotifyDate = task.NotifyDate
             };
 
-            _dataModel.AddTask(userTask);
+            try
+            {
+                _dataModel.AddTask(userTask);
+            }
+            catch (Exception ex)
+            {
+                _mainWindow.ShowMessageBox("Возникла ошибка при добавлении задачи");
+            }
         }
 
         public void EditTask(UserTaskView task)
