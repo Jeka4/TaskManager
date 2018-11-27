@@ -24,7 +24,7 @@ namespace TaskManagerView
                 Validation.GetHasError(datapickerTaskDate) ||
                 Validation.GetHasError(datapickerNotifyDate))
             {
-                MessageBox.Show("Error!");
+                MessageBox.Show("Допущена ошибка при заполении полей!");
                 return;
             }
 

@@ -7,12 +7,12 @@ namespace TaskManagerModel.Validators
         public UserTaskValidator() //Можно добавить сообщения при ошибках валидации
         {
             RuleSet("Id", () => {
-                RuleFor(task => task.Id).GreaterThan(0).WithMessage("ID should be greater than 0");
+                RuleFor(task => task.Id).GreaterThan(0).WithMessage("should be greater than 0");
             });
 
             RuleSet("Body", () => {
-                RuleFor(task => task.Name).NotNull().NotEmpty();
-                RuleFor(task => task.Description).NotNull().NotEmpty();
+                RuleFor(task => task.Name).NotNull().NotEmpty().WithMessage("should be not empty");
+                RuleFor(task => task.Description).NotNull().NotEmpty().WithMessage("should be not empty");
             });
         }
     }

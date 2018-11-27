@@ -69,9 +69,10 @@ namespace TaskManagerPresenter
 
                 _dataModel.AddTask(userTask);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _mainWindow.ShowMessageBox("Возникла ошибка при добавлении задачи");
+                _mainWindow.ShowMessageBox("Возникла ошибка при добавлении задачи\n"
+                                          + ex.Message);
             }
         }
 
@@ -95,9 +96,10 @@ namespace TaskManagerPresenter
 
                 _dataModel.UpdateTask(userTask);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _mainWindow.ShowMessageBox("Возникла ошибка при редактировании задачи");
+                _mainWindow.ShowMessageBox("Возникла ошибка при редактировании задачи"
+                                          + ex.Message);
             }
         }
 
