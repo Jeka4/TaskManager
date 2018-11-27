@@ -11,8 +11,8 @@ namespace TaskManagerPresenter
 {
     public class Presenter : IPresenter
     {
-        private IMainWindow _mainWindow;
-        private IDataModel _dataModel;
+        private readonly IMainWindow _mainWindow;
+        private readonly IDataModel _dataModel;
         private readonly IPriorityConverter _priorityConverter;
 
         public Presenter(IMainWindow mainWindow, IDataModel dataModel, IPriorityConverter priorityConverter)
@@ -30,7 +30,7 @@ namespace TaskManagerPresenter
 
         public void SortTypeChange(SortType sort)
         {
-            if(sort == SortType.Undefined)
+            if (sort == SortType.Undefined)
                 throw new ArgumentException($"{nameof(sort)} is Undefined");
 
             _dataModel.Sort = sort;
@@ -54,22 +54,22 @@ namespace TaskManagerPresenter
             if (task == null)
                 throw new NullTaskException();
 
-            UserTask userTask = new UserTask
-            {
-                Id = task.Id,
-                Name = task.Name,
-                Description = task.Description,
-                Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                IsNotified = false,
-                TaskDate = task.TaskDate,
-                NotifyDate = task.NotifyDate
-            };
-
             try
             {
+                UserTask userTask = new UserTask
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
+                    IsNotified = false,
+                    TaskDate = task.TaskDate,
+                    NotifyDate = task.NotifyDate
+                };
+
                 _dataModel.AddTask(userTask);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _mainWindow.ShowMessageBox("Возникла ошибка при добавлении задачи");
             }
@@ -80,18 +80,25 @@ namespace TaskManagerPresenter
             if (task == null)
                 throw new NullTaskException();
 
-            UserTask userTask = new UserTask
+            try
             {
-                Id = task.Id,
-                Name = task.Name,
-                Description = task.Description,
-                Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                IsNotified = false,
-                TaskDate = task.TaskDate,
-                NotifyDate = task.NotifyDate
-            };
+                UserTask userTask = new UserTask
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
+                    IsNotified = false,
+                    TaskDate = task.TaskDate,
+                    NotifyDate = task.NotifyDate
+                };
 
-            _dataModel.UpdateTask(userTask);
+                _dataModel.UpdateTask(userTask);
+            }
+            catch (Exception)
+            {
+                _mainWindow.ShowMessageBox("Возникла ошибка при редактировании задачи");
+            }
         }
 
         public void RemoveTask(UserTaskView task)
@@ -99,23 +106,44 @@ namespace TaskManagerPresenter
             if (task == null)
                 throw new NullTaskException();
 
-            UserTask userTask = new UserTask
+            try
             {
-                Id = task.Id
-            };
+                UserTask userTask = new UserTask
+                {
+                    Id = task.Id
+                };
 
-            _dataModel.DeleteTask(userTask);
+                _dataModel.DeleteTask(userTask);
+            }
+            catch (Exception)
+            {
+                _mainWindow.ShowMessageBox("Возникла ошибка при удалении задачи");
+            }
         }
 
         public void RefreshViewTasksList(DateInterval dateInterval)
         {
-            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDays(dateInterval));
+            try
+            {
+                _mainWindow.SetUserTasksToTasksList(LoadTasksOfDays(dateInterval));
+            }
+            catch (Exception)
+            {
+                _mainWindow.ShowMessageBox("Неудалось обновить список задач :C");
+            }
         }
 
         public void RefreshViewHighlightList()
         {
-            var tasksDates = _dataModel.GetAllTaskDates().ToList();
-            _mainWindow.SetHighlightDates(tasksDates);
+            try
+            {
+                var tasksDates = _dataModel.GetAllTaskDates().ToList();
+                _mainWindow.SetHighlightDates(tasksDates);
+            }
+            catch (Exception)
+            {
+                _mainWindow.ShowMessageBox("Неудалось обновить список задач :C");
+            }
         }
 
         public List<UserTaskView> LoadAllTasks()
@@ -175,11 +203,9 @@ namespace TaskManagerPresenter
                 dateInterval.EndDate
                 );
 
-            List<UserTaskView> tasksForView;
-
             try
             {
-                tasksForView = tasks.Select(task => new UserTaskView
+                var tasksForView = tasks.Select(task => new UserTaskView
                 {
                     Id = task.Id,
                     Name = task.Name,

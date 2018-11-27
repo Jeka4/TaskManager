@@ -108,8 +108,6 @@ namespace TaskManagerModel
             using (var context = _contextFactory.BuildContex())
             {
                 var query = context.GetUserTasksTable();
-                //var filterResult = _taskFilter.Filter(query, _filterType);
-                //var sorterResult = filterResult.Sort(_sortType);
 
                 tasks = query.ToList();
             }

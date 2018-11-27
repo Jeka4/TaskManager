@@ -150,7 +150,7 @@ namespace TaskManagerView
                 return;
 
             IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
-            bool? dialogResult = editTaskWindow.ShowDialog();
+            var dialogResult = editTaskWindow.ShowDialog();
 
             if (dialogResult == true)
             {
