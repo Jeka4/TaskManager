@@ -15,10 +15,10 @@ namespace TaskManagerUnitTest
         {
             return new List<UserTask>
             {
-                new UserTask { Priority = TaskPriority.High.ToString() },
-                new UserTask { Priority = TaskPriority.Medium.ToString() },
-                new UserTask { Priority = TaskPriority.Low.ToString() },
-                new UserTask { Priority = TaskPriority.Undefined.ToString() }
+                new UserTask { Priority = (long)TaskPriority.Undefined },
+                new UserTask { Priority = (long)TaskPriority.High },
+                new UserTask { Priority = (long)TaskPriority.Medium },
+                new UserTask { Priority = (long)TaskPriority.Low }
             };
         }
 
@@ -32,7 +32,7 @@ namespace TaskManagerUnitTest
 
             var result = filter.Filter(usertasks.AsQueryable(), filterType);
 
-            Assert.IsTrue(result.All(t => t.Priority == priority.ToString()));
+            Assert.IsTrue(result.All(t => t.Priority == (long)priority));
         }
 
         [Test]

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FluentValidation;
-using LinqToDB;
 using TaskManagerCommon.Components;
 using TaskManagerModel.Components;
 using TaskManagerModel.Validators;
@@ -44,8 +43,12 @@ namespace TaskManagerModel
 
         private readonly ITaskFilter _taskFilter;
 
-        public DataModel(ITaskFilter taskFilter)
+        private readonly IContextFactory _contextFactory;
+
+        public DataModel(IContextFactory contextFactory, ITaskFilter taskFilter)
         {
+            _contextFactory = contextFactory;
+
             _taskFilter = taskFilter;
             _filterType = FilterType.All;
             _sortType = SortType.AscendingPriority;
@@ -59,8 +62,10 @@ namespace TaskManagerModel
             var validator = new UserTaskValidator();
             validator.ValidateAndThrow(task, ruleSet: "Body");
 
-            using (var db = new UserTasksDB())
-                db.Insert(task);
+            using (var context = _contextFactory.BuildContex())
+            {
+                context.Insert(task);
+            }
 
             TasksDbUpdated(this, new EventArgs());
         }
@@ -73,8 +78,10 @@ namespace TaskManagerModel
             var validator = new UserTaskValidator();
             validator.ValidateAndThrow(task, ruleSet: "*");
 
-            using (var db = new UserTasksDB())
-                db.Update(task);
+            using (var context = _contextFactory.BuildContex())
+            {
+                context.Update(task);
+            }
 
             TasksDbUpdated(this, new EventArgs());
         }
@@ -85,10 +92,12 @@ namespace TaskManagerModel
                 throw new ArgumentNullException(nameof(task));
 
             var validator = new UserTaskValidator();
-                validator.ValidateAndThrow(task, ruleSet: "Id");
+            validator.ValidateAndThrow(task, ruleSet: "Id");
 
-            using (var db = new UserTasksDB())
-                db.Delete(task);
+            using (var context = _contextFactory.BuildContex())
+            {
+                context.Delete(task);
+            }
 
             TasksDbUpdated(this, new EventArgs());
         }
@@ -96,24 +105,23 @@ namespace TaskManagerModel
         public List<UserTask> GetAllTasks()
         {
             List<UserTask> tasks;
-            using (var db = new UserTasksDB())
+            using (var context = _contextFactory.BuildContex())
             {
-                var query = db.UserTasks;
-                var filterResult = _taskFilter.Filter(query, _filterType);
+                var query = context.GetUserTasksTable();
 
-                tasks = filterResult.ToList();
+                tasks = query.ToList();
             }
             return tasks;
         }
 
         public List<UserTask> GetTasksOfDay(DateTime date)
         {
-            using (var db = new UserTasksDB())
+            using (var context = _contextFactory.BuildContex())
             {
-                var query = db.UserTasks.Where(t => t.TaskDate == date);
-                var filterResult = _taskFilter.Filter(query, _filterType);
+                var query = context.GetUserTasksTable().Where(t => t.TaskDate == date);
+                var selectionResult = _taskFilter.Filter(query, _filterType).Sort(_sortType);
 
-                var tasks = filterResult.ToList();
+                var tasks = selectionResult.ToList();
                 return tasks;
             }
         }
@@ -128,21 +136,21 @@ namespace TaskManagerModel
             else
                 compare = t => t.TaskDate >= beginDate && t.TaskDate <= endDate;
 
-            using (var db = new UserTasksDB())
+            using (var context = _contextFactory.BuildContex())
             {
-                var query = db.UserTasks.Where(compare);
-                var filterResult = _taskFilter.Filter(query, _filterType);
+                var query = context.GetUserTasksTable().Where(compare);
+                var selectionResult = _taskFilter.Filter(query, _filterType).Sort(_sortType);
 
-                tasks = filterResult.ToList();
+                tasks = selectionResult.ToList();
             }
             return tasks;
         }
 
         public List<DateTime> GetAllTaskDates()
         {
-            using (var db = new UserTasksDB())
+            using (var context = _contextFactory.BuildContex())
             {
-                return db.UserTasks.Select(t => t.TaskDate).ToList();
+                return context.GetUserTasksTable().Select(t => t.TaskDate).ToList();
             }
         }
     }

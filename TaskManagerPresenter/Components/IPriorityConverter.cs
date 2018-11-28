@@ -4,8 +4,8 @@ namespace TaskManagerPresenter.Components
 {
     public interface IPriorityConverter
     {
-        string ConvertToModelPriority(TaskPriority priority);
+        long ConvertToModelPriority(TaskPriority priority);
 
-        TaskPriority ConvertToViewPriority(string priority);
+        TaskPriority ConvertToViewPriority(long priority);
     }
 }

@@ -5,18 +5,18 @@ namespace TaskManagerPresenter.Components
 {
     public class PriorityConverter : IPriorityConverter
     {
-        public string ConvertToModelPriority(TaskPriority priority)
+        public long ConvertToModelPriority(TaskPriority priority)
         {
             if(priority == TaskPriority.Undefined)
                 throw new ArgumentException("Unknow priority");
 
-            return priority.ToString();
+            return (long)priority;
         }
 
-        public TaskPriority ConvertToViewPriority(string priority)
+        public TaskPriority ConvertToViewPriority(long priority)
         {
             TaskPriority modelPriority;
-            bool success = Enum.TryParse(priority, out modelPriority);
+            bool success = Enum.TryParse(priority.ToString(), out modelPriority);
 
             if (!success)
                 throw new ArgumentException("The string is not reducible to enum.");

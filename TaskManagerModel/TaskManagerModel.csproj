@@ -63,9 +63,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\IContextFactory.cs" />
+    <Compile Include="Components\UserTasksDbAdapter.cs" />
+    <Compile Include="Components\IContext.cs" />
     <Compile Include="Components\ITaskFilter.cs" />
-    <Compile Include="Components\SortType.cs" />
     <Compile Include="Components\TasksFilter.cs" />
+    <Compile Include="Components\TasksSorter.cs" />
+    <Compile Include="Components\UserTasksDbFactory.cs" />
     <Compile Include="DataModel.cs" />
     <Compile Include="IDataModel.cs" />
     <Compile Include="UserTasksDataBase1.generated.cs">

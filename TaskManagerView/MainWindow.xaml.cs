@@ -30,15 +30,31 @@ namespace TaskManagerView
 
         public event EventHandler<FilterEventArgs> FilterTypeChanged = delegate { };
 
+        public event EventHandler<SortEventArgs> SortTypeChanged = delegate { };
+        
         public event EventHandler SelectionListUpdated = delegate { };
+
+        public event EventHandler TasksListNeedUpdate = delegate { };
+
+        public event EventHandler HighlightListNeedUpdate = delegate { };
 
         public MainWindow()
         {
-            TaskListSettings = new TaskListSettings(FilterType.All);
-            DateIntervalSelected = new DateInterval(DateTime.Now.Date);
+            InitializeComponent();
+        }
+
+        public void Initialize()
+        {
+            TaskListSettings = new TaskListSettings(FilterType.All, SortType.DescendingPriority);
+            DateIntervalSelected = new DateInterval(DateTime.Today);
             DataContext = TaskListSettings;
 
-            InitializeComponent();
+            FilterTypeChanged(this, new FilterEventArgs(TaskListSettings.Filter));
+            SortTypeChanged(this, new SortEventArgs(TaskListSettings.Sort));
+            TasksListNeedUpdate(this, EventArgs.Empty);
+            HighlightListNeedUpdate(this, EventArgs.Empty);
+
+            Show();
         }
 
         public void ShowMessageBox(string message)
@@ -106,10 +122,10 @@ namespace TaskManagerView
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            UserTaskView task = new UserTaskView()
+            var task = new UserTaskView
             {
                 Priority = TaskPriority.Low,
-                TaskDate = DateTime.Now,
+                TaskDate = (Calendar.SelectedDate != null && Calendar.SelectedDates.Count == 1) ? Calendar.SelectedDate.Value : DateTime.Today,
                 NotifyDate = DateTime.Now
             };
 
@@ -119,6 +135,7 @@ namespace TaskManagerView
             if (dialogResult == true)
             {
                 UserTaskAdded(sender, new UserTaskEventArgs(task));
+                HighlightListNeedUpdate(this, EventArgs.Empty);
             }
         }
 
@@ -133,11 +150,12 @@ namespace TaskManagerView
                 return;
 
             IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
-            bool? dialogResult = editTaskWindow.ShowDialog();
+            var dialogResult = editTaskWindow.ShowDialog();
 
             if (dialogResult == true)
             {
                 UserTaskUpdated(sender, new UserTaskEventArgs(task));
+                HighlightListNeedUpdate(this, EventArgs.Empty);
             }
         }
 
@@ -152,6 +170,7 @@ namespace TaskManagerView
                 return;
 
             UserTaskDeleted(sender, new UserTaskEventArgs(task));
+            HighlightListNeedUpdate(this, EventArgs.Empty);
         }
 
         private void ButtonControl_Click(object sender, RoutedEventArgs e)
@@ -168,6 +187,13 @@ namespace TaskManagerView
         private void ComboFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             FilterTypeChanged(sender, new FilterEventArgs(TaskListSettings.Filter));
+            TasksListNeedUpdate(sender, EventArgs.Empty);
+        }
+
+        private void ComboSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SortTypeChanged(sender, new SortEventArgs(TaskListSettings.Sort));
+            TasksListNeedUpdate(sender, EventArgs.Empty);
         }
     }
 }

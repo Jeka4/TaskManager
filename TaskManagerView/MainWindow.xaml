@@ -32,7 +32,7 @@
         <Button x:Name="buttonDelete" Click="ButtonDelete_Click" Grid.Column="4" Grid.Row="2" Content="Удалить"></Button>
         <Button x:Name="buttonControl" Click="ButtonControl_Click" Grid.Column="5" Grid.Row="2" Content="Управление"></Button>
         <Label x:Name="labelFilter" Grid.Column="0" Grid.Row="0" Content="Фильтр:" HorizontalContentAlignment="Right"></Label>
-        <Label x:Name="labelSort" Grid.Column="2" Grid.Row="0" Content="Сортировка:" HorizontalContentAlignment="Right"></Label>
+        <Label x:Name="labelSort" Grid.Column="3" Grid.Row="0" Content="Сортировка:" HorizontalContentAlignment="Right"></Label>
         <ComboBox 
             x:Name="comboFilter"
             SelectionChanged="ComboFilter_SelectionChanged"
@@ -40,14 +40,17 @@
             ItemsSource="{Binding Source={components:EnumToListSource {x:Type shared:FilterType}}}" 
             Grid.Column="1" 
             Grid.Row="0"
+            Grid.ColumnSpan="2"
             VerticalAlignment="Bottom"/>
-        <ComboBox x:Name="comboSort" Grid.Column="3" Grid.Row="0" VerticalAlignment="Bottom">
-            <TextBlock>1</TextBlock>
-            <TextBlock>2</TextBlock>
-            <TextBlock>3</TextBlock>
-            <TextBlock>4</TextBlock>
-            <TextBlock>5</TextBlock>
-        </ComboBox>
+        <ComboBox
+            x:Name="comboSort"
+            SelectionChanged="ComboSort_SelectionChanged"
+            SelectedItem="{Binding Path=Sort, Converter={StaticResource EnumConverter}, ConverterParameter={x:Type shared:SortType}}"
+            ItemsSource="{Binding Source={components:EnumToListSource {x:Type shared:SortType}}}" 
+            Grid.Column="4"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Bottom" />
         <Calendar x:Name="Calendar"
                   Grid.Column="4"
                   Grid.Row="3" 

@@ -11,7 +11,7 @@
     <Window.Resources>
         <components:EnumConverter x:Key="EnumConverter"/>
     </Window.Resources>
-    <Grid x:Name="grid" ShowGridLines="True">
+    <Grid x:Name="grid" ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="2.3*"></ColumnDefinition>
@@ -30,10 +30,69 @@
         <Label x:Name="labelDate" Grid.Column="0" Grid.Row="3" Content="Дата задачи:" HorizontalContentAlignment="Left"></Label>
         <Label x:Name="labelNoticeDate" Grid.Column="0" Grid.Row="4" Content="Дата напоминания:" HorizontalContentAlignment="Left"></Label>
         <Button x:Name="buttonAdd2" Click="buttonAdd2_Click" Grid.Column="0" Grid.Row="5" Content="Добавить/Редактировать" Grid.ColumnSpan="2"></Button>
-        <TextBox x:Name="textboxName" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" MaxLength="50" Grid.Column="1" Grid.Row="0" />
-        <TextBox x:Name="textboxDescription" Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}" MaxLength="250"  Grid.Column="1" Grid.Row="1"/>
-        <ComboBox x:Name="comboboxPriority" SelectedItem="{Binding Path=Priority, Converter={StaticResource EnumConverter}, ConverterParameter={x:Type shared:TaskPriority}}" ItemsSource="{Binding Source={components:EnumToListSource {x:Type shared:TaskPriority}}}" Grid.Column="1" Grid.Row="2"/>
-        <DatePicker x:Name="datapickerTaskDate" SelectedDate="{Binding Path=TaskDate}" Grid.Column="1" Grid.Row="3"/>
-        <DatePicker x:Name="datapickerNotifyDate" SelectedDate="{Binding Path=NotifyDate}" Grid.Column="1" Grid.Row="4"/>
+        <TextBox
+            x:Name="textboxName"
+            MaxLength="50" 
+            Grid.Column="1" 
+            Grid.Row="0">
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox 
+            x:Name="textboxDescription" 
+            MaxLength="250"  
+            Grid.Column="1" 
+            Grid.Row="1">
+            <TextBox.Text>
+                <Binding Path="Description" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <ComboBox
+            x:Name="comboboxPriority" 
+            ItemsSource="{Binding Source={components:EnumToListSource {x:Type shared:TaskPriority}}}"
+            Grid.Column="1" 
+            Grid.Row="2" 
+            VerticalContentAlignment="Center">
+            <ComboBox.SelectedItem>
+                <Binding Path="Priority" Converter="{StaticResource EnumConverter}" ConverterParameter="{x:Type shared:TaskPriority}">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.SelectedItem>
+        </ComboBox>
+        <DatePicker 
+            x:Name="datapickerTaskDate" 
+            Grid.Column="1" 
+            Grid.Row="3">
+            <DatePicker.SelectedDate>
+                <Binding Path="TaskDate" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.SelectedDate>
+        </DatePicker>
+        <DatePicker 
+            x:Name="datapickerNotifyDate"
+            Grid.Column="1" 
+            Grid.Row="4">
+            <DatePicker.SelectedDate>
+                <Binding Path="NotifyDate" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.SelectedDate>
+        </DatePicker>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using TaskManagerView.Components;
 
 namespace TaskManagerView
@@ -17,6 +18,16 @@ namespace TaskManagerView
 
         private void buttonAdd2_Click(object sender, RoutedEventArgs e)
         {
+            if (Validation.GetHasError(textboxName) ||
+                Validation.GetHasError(textboxDescription) ||
+                Validation.GetHasError(comboboxPriority) ||
+                Validation.GetHasError(datapickerTaskDate) ||
+                Validation.GetHasError(datapickerNotifyDate))
+            {
+                MessageBox.Show("Допущена ошибка при заполении полей!");
+                return;
+            }
+
             DialogResult = true;
         }
     }

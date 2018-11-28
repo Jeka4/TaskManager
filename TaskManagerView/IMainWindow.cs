@@ -7,10 +7,10 @@ namespace TaskManagerView
 {
     public interface IMainWindow
     {
+        void Initialize();
         bool TaskSelected { get; }
         DateInterval DateIntervalSelected { get; }
         ITaskListSettings TaskListSettings { get; }
-        void Show();
         void ShowMessageBox(string message);
         void SetUserTasksToTasksList(List<UserTaskView> tasks);
         void SetHighlightDates(List<DateTime> dates);
@@ -20,6 +20,9 @@ namespace TaskManagerView
         event EventHandler<UserTaskEventArgs> UserTaskDeleted;
         event EventHandler<TaskDateIntervalEventArg> CurrentCalendarDateChanged;
         event EventHandler<FilterEventArgs> FilterTypeChanged;
+        event EventHandler<SortEventArgs> SortTypeChanged; 
         event EventHandler SelectionListUpdated;
+        event EventHandler TasksListNeedUpdate;
+        event EventHandler HighlightListNeedUpdate;
     }
 }

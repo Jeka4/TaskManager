@@ -11,8 +11,8 @@ namespace TaskManagerPresenter
 {
     public class Presenter : IPresenter
     {
-        private IMainWindow _mainWindow;
-        private IDataModel _dataModel;
+        private readonly IMainWindow _mainWindow;
+        private readonly IDataModel _dataModel;
         private readonly IPriorityConverter _priorityConverter;
 
         public Presenter(IMainWindow mainWindow, IDataModel dataModel, IPriorityConverter priorityConverter)
@@ -20,58 +20,33 @@ namespace TaskManagerPresenter
             _mainWindow = mainWindow;
             _dataModel = dataModel;
             _priorityConverter = priorityConverter;
-
-            _dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
-
-            _mainWindow.EnableEditRemoveControls(false);
-            _mainWindow.CurrentCalendarDateChanged += MainWindow_CurrentCalendarDateChanged;
-            _mainWindow.SelectionListUpdated += MainWindow_SelectionListUpdated;
-            _mainWindow.UserTaskAdded += MainWindow_UserTaskAdded;
-            _mainWindow.UserTaskUpdated += MainWindow_UserTaskUpdated;
-            _mainWindow.UserTaskDeleted += MainWindow_UserTaskDeleted;
-            _mainWindow.FilterTypeChanged += MainWindow_FilterTypeChanged;
-
-
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
-            _mainWindow.Show();
         }
 
-        private void MainWindow_FilterTypeChanged(object sender, FilterEventArgs e)
+        public void Initialize()
         {
-            var filter = e.Filter; //Исключение?
+            _mainWindow.Initialize();
+            _mainWindow.EnableEditRemoveControls(false);
+        }
+
+        public void SortTypeChange(SortType sort)
+        {
+            if (sort == SortType.Undefined)
+                throw new ArgumentException($"{nameof(sort)} is Undefined");
+
+            _dataModel.Sort = sort;
+        }
+
+        public void FilterTypeChange(FilterType filter)
+        {
+            if (filter == FilterType.Undefined)
+                throw new ArgumentException($"{nameof(filter)} is Undefined");
 
             _dataModel.Filter = filter;
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
-        private void MainWindow_UserTaskDeleted(object sender, UserTaskEventArgs e)
-        {
-            RemoveTask(e.UserTaskView);
-        }
-
-        private void MainWindow_UserTaskUpdated(object sender, UserTaskEventArgs e)
-        {
-            EditTask(e.UserTaskView);
-        }
-
-        private void MainWindow_UserTaskAdded(object sender, UserTaskEventArgs e)
-        {
-            AddTask(e.UserTaskView);
-        }
-
-        private void MainWindow_SelectionListUpdated(object sender, EventArgs e)
+        public void SelectionListUpdated()
         {
             _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);
-        }
-
-        private void DataModel_TasksDBUpdated(object sender, EventArgs e)
-        {
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
-        }
-
-        private void MainWindow_CurrentCalendarDateChanged(object sender, TaskDateIntervalEventArg e)
-        {
-            RefreshViewTasksList(_mainWindow.DateIntervalSelected);
         }
 
         public void AddTask(UserTaskView task)
@@ -79,18 +54,26 @@ namespace TaskManagerPresenter
             if (task == null)
                 throw new NullTaskException();
 
-            UserTask userTask = new UserTask
+            try
             {
-                Id = task.Id,
-                Name = task.Name,
-                Description = task.Description,
-                Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                IsNotified = false,
-                TaskDate = task.TaskDate,
-                NotifyDate = task.NotifyDate
-            };
+                UserTask userTask = new UserTask
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
+                    IsNotified = false,
+                    TaskDate = task.TaskDate,
+                    NotifyDate = task.NotifyDate
+                };
 
-            _dataModel.AddTask(userTask);
+                _dataModel.AddTask(userTask);
+            }
+            catch (Exception ex)
+            {
+                _mainWindow.ShowMessageBox("Возникла ошибка при добавлении задачи\n"
+                                          + ex.Message);
+            }
         }
 
         public void EditTask(UserTaskView task)
@@ -98,18 +81,26 @@ namespace TaskManagerPresenter
             if (task == null)
                 throw new NullTaskException();
 
-            UserTask userTask = new UserTask
+            try
             {
-                Id = task.Id,
-                Name = task.Name,
-                Description = task.Description,
-                Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                IsNotified = false,
-                TaskDate = task.TaskDate,
-                NotifyDate = task.NotifyDate
-            };
+                UserTask userTask = new UserTask
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    Description = task.Description,
+                    Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
+                    IsNotified = false,
+                    TaskDate = task.TaskDate,
+                    NotifyDate = task.NotifyDate
+                };
 
-            _dataModel.UpdateTask(userTask);
+                _dataModel.UpdateTask(userTask);
+            }
+            catch (Exception ex)
+            {
+                _mainWindow.ShowMessageBox("Возникла ошибка при редактировании задачи"
+                                          + ex.Message);
+            }
         }
 
         public void RemoveTask(UserTaskView task)
@@ -117,20 +108,44 @@ namespace TaskManagerPresenter
             if (task == null)
                 throw new NullTaskException();
 
-            UserTask userTask = new UserTask
+            try
             {
-                Id = task.Id
-            };
+                UserTask userTask = new UserTask
+                {
+                    Id = task.Id
+                };
 
-            _dataModel.DeleteTask(userTask);
+                _dataModel.DeleteTask(userTask);
+            }
+            catch (Exception)
+            {
+                _mainWindow.ShowMessageBox("Возникла ошибка при удалении задачи");
+            }
         }
 
         public void RefreshViewTasksList(DateInterval dateInterval)
         {
-            _mainWindow.SetUserTasksToTasksList(LoadTasksOfDays(dateInterval));
+            try
+            {
+                _mainWindow.SetUserTasksToTasksList(LoadTasksOfDays(dateInterval));
+            }
+            catch (Exception)
+            {
+                _mainWindow.ShowMessageBox("Неудалось обновить список задач :C");
+            }
+        }
 
-            var tasksDates = _dataModel.GetAllTaskDates().ToList();
-            _mainWindow.SetHighlightDates(tasksDates);
+        public void RefreshViewHighlightList()
+        {
+            try
+            {
+                var tasksDates = _dataModel.GetAllTaskDates().ToList();
+                _mainWindow.SetHighlightDates(tasksDates);
+            }
+            catch (Exception)
+            {
+                _mainWindow.ShowMessageBox("Неудалось обновить список задач :C");
+            }
         }
 
         public List<UserTaskView> LoadAllTasks()
@@ -190,11 +205,9 @@ namespace TaskManagerPresenter
                 dateInterval.EndDate
                 );
 
-            List<UserTaskView> tasksForView;
-
             try
             {
-                tasksForView = tasks.Select(task => new UserTaskView
+                var tasksForView = tasks.Select(task => new UserTaskView
                 {
                     Id = task.Id,
                     Name = task.Name,
