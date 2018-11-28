@@ -22,8 +22,12 @@ namespace TaskManagerView
 
         public event EventHandler SelectionListChanged = delegate { };
 
+        private readonly EditTaskWindowFactory _editTaskWindowFactory;
+
         public TasksManagerWindow()
         {
+            _editTaskWindowFactory = new EditTaskWindowFactory();
+
             InitializeComponent();
         }
 
@@ -50,7 +54,20 @@ namespace TaskManagerView
 
         private void ListBox_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            if (IsTaskSelected == false)
+                return;
+
+            UserTaskView task = TaskList.SelectedItem as UserTaskView;
+
+            if (task == null)
+                return;
+
+            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task);
+
+            if (dialogResult == true)
+            {
+                //UserTaskUpdated(sender, new UserTaskEventArgs(task)); Продумать!!
+            }
         }
 
     }
