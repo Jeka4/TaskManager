@@ -38,8 +38,12 @@ namespace TaskManagerView
 
         public event EventHandler HighlightListNeedUpdate = delegate { };
 
+        private readonly EditTaskWindowFactory _editTaskWindowFactory;
+
         public MainWindow()
         {
+            _editTaskWindowFactory = new EditTaskWindowFactory();
+
             InitializeComponent();
         }
 
@@ -149,8 +153,7 @@ namespace TaskManagerView
             if (task == null)
                 return;
 
-            IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
-            var dialogResult = editTaskWindow.ShowDialog();
+            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task);
 
             if (dialogResult == true)
             {
