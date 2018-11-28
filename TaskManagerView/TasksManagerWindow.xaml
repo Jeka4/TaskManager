@@ -38,8 +38,21 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="buttonDelete2" Grid.Column="1" Grid.Row="1" Content="Удалить"></Button>
-        <Button IsEnabled="False" x:Name="buttonDeleteAll" Grid.Column="1" Grid.Row="2" Content="Удалить всё"></Button>
-        <Button IsEnabled="False" x:Name="buttonDeleteCompleted" Grid.Column="1" Grid.Row="3" Content="Удалить завершённые"></Button>
+        <Button 
+            x:Name="buttonDelete2" 
+            Click="ButtonDelete_OnClick"
+            Grid.Column="1" 
+            Grid.Row="1" 
+            Content="Удалить"/>
+        <Button 
+            IsEnabled="False" 
+            x:Name="buttonDeleteAll" 
+            Grid.Column="1" Grid.Row="2" 
+            Content="Удалить всё"/>
+        <Button 
+            IsEnabled="False"
+            x:Name="buttonDeleteCompleted"
+            Grid.Column="1" Grid.Row="3"
+            Content="Удалить завершённые"/>
     </Grid>
 </Window>

@@ -24,16 +24,17 @@ namespace TaskManagerPresenter
 
         public void Initialize()
         {
-            
+
         }
 
         public void ShowTasksControlWindow()
         {
-            if(_tasksManagerWindow != null)
+            if (_tasksManagerWindow != null)
                 return;
 
             _tasksManagerWindow = _tasksManagerWindowFactory.ShowTaskManagerWindow();
             _tasksManagerWindow.TasksListNeedUpdate += WindowOnTasksListNeedUpdate;
+            _tasksManagerWindow.UserTasksDeleted += TasksManagerWindowOnUserTasksDeleted;
             _tasksManagerWindow.SelectionListChanged += TasksManagerWindowOnSelectionListChanged;
             _tasksManagerWindow.Closed += WindowOnClosed;
 
@@ -54,6 +55,11 @@ namespace TaskManagerPresenter
         private void WindowOnTasksListNeedUpdate(object sender, EventArgs eventArgs)
         {
             RefreshTasksList();
+        }
+
+        private void TasksManagerWindowOnUserTasksDeleted(object sender, UserTasksListEventArgs userTasksListEventArgs)
+        {
+            DeleteTasks(userTasksListEventArgs?.UserTasksList);
         }
 
         private void TasksManagerWindowOnSelectionListChanged(object sender, EventArgs eventArgs)
@@ -84,6 +90,24 @@ namespace TaskManagerPresenter
             {
                 throw new MappingTaskException(ex.Message, ex);
             }
-        } 
+        }
+
+        private void DeleteTasks(List<UserTaskView> tasksList)
+        {
+            if (tasksList == null)
+                throw new ArgumentNullException(nameof(tasksList));
+
+            try
+            {
+                tasksList.Select(t => new UserTask
+                {
+                    Id = t.Id
+                }).ToList().ForEach(t => _dataModel.DeleteTask(t));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

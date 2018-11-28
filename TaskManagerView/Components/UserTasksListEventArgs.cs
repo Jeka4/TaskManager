@@ -7,9 +7,9 @@ namespace TaskManagerView.Components
     {
         public List<UserTaskView> UserTasksList { get; set; }
 
-        public UserTasksListEventArgs(List<UserTaskView> tasks)
+        public UserTasksListEventArgs(List<UserTaskView> tasksList)
         {
-            UserTasksList = tasks;
+            UserTasksList = tasksList;
         }
     }
 }

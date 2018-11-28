@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -70,5 +71,14 @@ namespace TaskManagerView
             }
         }
 
+        private void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            if(IsTaskSelected == false)
+                return;
+
+            List<UserTaskView> tasksList = TaskList.SelectedItems.Cast<UserTaskView>().ToList();
+
+            UserTasksDeleted(sender, new UserTasksListEventArgs(tasksList));
+        }
     }
 }
