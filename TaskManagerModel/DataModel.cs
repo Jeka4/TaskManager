@@ -102,6 +102,26 @@ namespace TaskManagerModel
             TasksDbUpdated(this, new EventArgs());
         }
 
+        public void DeleteTasks(List<UserTask> tasksList)
+        {
+            if (tasksList == null)
+                throw new ArgumentNullException(nameof(tasksList));
+
+
+            using (var context = _contextFactory.BuildContex())
+            {
+                foreach (var task in tasksList)
+                {
+                    var validator = new UserTaskValidator();
+                    validator.ValidateAndThrow(task, ruleSet: "Id");
+
+                    context.Delete(task);
+                }
+            }
+
+            TasksDbUpdated(this, new EventArgs());
+        }
+
         public List<UserTask> GetAllTasks()
         {
             List<UserTask> tasks;

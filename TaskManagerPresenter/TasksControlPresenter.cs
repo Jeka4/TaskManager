@@ -99,10 +99,12 @@ namespace TaskManagerPresenter
 
             try
             {
-                tasksList.Select(t => new UserTask
+                var tasksForDataModel = tasksList.Select(t => new UserTask
                 {
                     Id = t.Id
-                }).ToList().ForEach(t => _dataModel.DeleteTask(t));
+                }).ToList();
+
+                _dataModel.DeleteTasks(tasksForDataModel);
             }
             catch (Exception)
             {
