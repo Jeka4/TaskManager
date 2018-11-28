@@ -104,6 +104,7 @@ namespace TaskManager
             private void DataModel_TasksDBUpdated(object sender, EventArgs e)
             {
                 _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
+                _presenter.RefreshViewHighlightList();
                 _tasksControlPresenter.RefreshTasksList();
             }
 

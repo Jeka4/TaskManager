@@ -141,7 +141,7 @@ namespace TaskManagerView
             if (dialogResult == true)
             {
                 UserTaskAdded(sender, new UserTaskEventArgs(task));
-                HighlightListNeedUpdate(this, EventArgs.Empty);
+                //HighlightListNeedUpdate(this, EventArgs.Empty);
             }
         }
 
@@ -160,7 +160,7 @@ namespace TaskManagerView
             if (dialogResult == true)
             {
                 UserTaskUpdated(sender, new UserTaskEventArgs(task));
-                HighlightListNeedUpdate(this, EventArgs.Empty);
+                //HighlightListNeedUpdate(this, EventArgs.Empty);
             }
         }
 
@@ -175,7 +175,7 @@ namespace TaskManagerView
                 return;
 
             UserTaskDeleted(sender, new UserTaskEventArgs(task));
-            HighlightListNeedUpdate(this, EventArgs.Empty);
+            //HighlightListNeedUpdate(this, EventArgs.Empty);
         }
 
         private void ButtonControl_Click(object sender, RoutedEventArgs e)
