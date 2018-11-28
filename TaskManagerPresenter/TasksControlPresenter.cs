@@ -38,6 +38,11 @@ namespace TaskManagerPresenter
             _tasksManagerWindow.Initialize();
         }
 
+        public void RefreshTasksList()
+        {
+            _tasksManagerWindow?.SetUserTasksToTasksList(LoadAllTasks());
+        }
+
         private void WindowOnClosed(object sender, EventArgs eventArgs)
         {
             _tasksManagerWindow = null;
@@ -45,7 +50,7 @@ namespace TaskManagerPresenter
 
         private void WindowOnTasksListNeedUpdate(object sender, EventArgs eventArgs)
         {
-            _tasksManagerWindow?.SetUserTasksToTasksList(LoadAllTasks());
+            RefreshTasksList();
         }
 
         private List<UserTaskView> LoadAllTasks()
