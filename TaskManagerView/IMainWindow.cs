@@ -20,7 +20,8 @@ namespace TaskManagerView
         event EventHandler<UserTaskEventArgs> UserTaskDeleted;
         event EventHandler<TaskDateIntervalEventArg> CurrentCalendarDateChanged;
         event EventHandler<FilterEventArgs> FilterTypeChanged;
-        event EventHandler<SortEventArgs> SortTypeChanged; 
+        event EventHandler<SortEventArgs> SortTypeChanged;
+        event EventHandler TasksControlButtonPressed;
         event EventHandler SelectionListUpdated;
         event EventHandler TasksListNeedUpdate;
         event EventHandler HighlightListNeedUpdate;

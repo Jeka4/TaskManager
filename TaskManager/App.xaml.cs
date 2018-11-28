@@ -23,8 +23,9 @@ namespace TaskManager
             IMainWindow mainWindow = new MainWindow();
             IDataModel dataModel = new DataModel(new UserTasksDbFactory(), taskFilter);
             IPresenter taskManagerPresenter = new Presenter(mainWindow, dataModel, priorityConverter);
+            ITasksControlPresenter tasksControlPresenter = new TasksControlPresenter(new TaskManagerWindowFactory(), dataModel, priorityConverter);
 
-            new PresenterSubscriber(taskManagerPresenter, dataModel, mainWindow);
+            new PresenterSubscriber(taskManagerPresenter, tasksControlPresenter, dataModel, mainWindow);
 
             taskManagerPresenter.Initialize();
         }
@@ -33,11 +34,13 @@ namespace TaskManager
         {
             private readonly IPresenter _presenter;
             private readonly IMainWindow _mainWindow;
+            private readonly ITasksControlPresenter _tasksControlPresenter;
 
-            public PresenterSubscriber(IPresenter presenter, IDataModel dataModel, IMainWindow mainWindow)
+            public PresenterSubscriber(IPresenter presenter, ITasksControlPresenter tasksControlPresenter, IDataModel dataModel, IMainWindow mainWindow)
             {
                 _presenter = presenter;
                 _mainWindow = mainWindow;
+                _tasksControlPresenter = tasksControlPresenter;
 
                 dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
 
@@ -50,6 +53,12 @@ namespace TaskManager
                 _mainWindow.SortTypeChanged += MainWindowOnSortTypeChanged;
                 _mainWindow.TasksListNeedUpdate += MainWindowOnTasksListNeedUpdate;
                 _mainWindow.HighlightListNeedUpdate += MainWindowOnHighlightListNeedUpdate;
+                _mainWindow.TasksControlButtonPressed += MainWindowOnTasksControlButtonPressed;
+            }
+
+            private void MainWindowOnTasksControlButtonPressed(object sender, EventArgs eventArgs)
+            {
+                _tasksControlPresenter.ShowTasksControlWindow();
             }
 
             private void MainWindowOnHighlightListNeedUpdate(object sender, EventArgs eventArgs)

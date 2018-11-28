@@ -31,7 +31,9 @@ namespace TaskManagerView
         public event EventHandler<FilterEventArgs> FilterTypeChanged = delegate { };
 
         public event EventHandler<SortEventArgs> SortTypeChanged = delegate { };
-        
+
+        public event EventHandler TasksControlButtonPressed = delegate { };
+
         public event EventHandler SelectionListUpdated = delegate { };
 
         public event EventHandler TasksListNeedUpdate = delegate { };
@@ -178,7 +180,7 @@ namespace TaskManagerView
 
         private void ButtonControl_Click(object sender, RoutedEventArgs e)
         {
-
+            TasksControlButtonPressed(sender, EventArgs.Empty);
         }
 
         private void Calendar_PreviewMouseUp(object sender, MouseButtonEventArgs e)
