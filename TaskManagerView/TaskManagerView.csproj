@@ -71,6 +71,7 @@
     <Compile Include="Components\TaskListSettings.cs" />
     <Compile Include="Components\TaskManagerWindowFactory.cs" />
     <Compile Include="Components\UserTaskEventArgs.cs" />
+    <Compile Include="Components\UserTasksListEventArgs.cs" />
     <Compile Include="Components\UserTaskView.cs" />
     <Compile Include="EditTaskWindow.xaml.cs">
       <DependentUpon>EditTaskWindow.xaml</DependentUpon>

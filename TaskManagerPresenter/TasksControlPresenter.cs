@@ -34,7 +34,10 @@ namespace TaskManagerPresenter
 
             _tasksManagerWindow = _tasksManagerWindowFactory.ShowTaskManagerWindow();
             _tasksManagerWindow.TasksListNeedUpdate += WindowOnTasksListNeedUpdate;
+            _tasksManagerWindow.SelectionListChanged += TasksManagerWindowOnSelectionListChanged;
             _tasksManagerWindow.Closed += WindowOnClosed;
+
+            _tasksManagerWindow.EnableDeleteButton(false);
             _tasksManagerWindow.Initialize();
         }
 
@@ -51,6 +54,11 @@ namespace TaskManagerPresenter
         private void WindowOnTasksListNeedUpdate(object sender, EventArgs eventArgs)
         {
             RefreshTasksList();
+        }
+
+        private void TasksManagerWindowOnSelectionListChanged(object sender, EventArgs eventArgs)
+        {
+            _tasksManagerWindow?.EnableDeleteButton(_tasksManagerWindow.IsTaskSelected);
         }
 
         private List<UserTaskView> LoadAllTasks()
