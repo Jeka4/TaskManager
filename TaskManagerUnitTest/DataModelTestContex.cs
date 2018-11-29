@@ -34,7 +34,7 @@ namespace TaskManagerUnitTest
 
         public int Insert(UserTask task)
         {
-            ///
+            //
             _data.Add(task);
 
             return 1;
@@ -46,7 +46,12 @@ namespace TaskManagerUnitTest
 
             taskFromData.Name = task.Name;
             taskFromData.Description = task.Description;
-            ///
+            taskFromData.IsNotified = task.IsNotified;
+            taskFromData.Priority = task.Priority;
+            taskFromData.TaskDate = task.TaskDate;
+            taskFromData.NotifyDate = task.NotifyDate;
+
+            return 1;
         }
     }
 }

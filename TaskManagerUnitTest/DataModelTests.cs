@@ -3,6 +3,7 @@ using TaskManagerModel.Components;
 using TaskManagerModel;
 using TaskManagerCommon.Components;
 using System;
+using System.Linq;
 
 namespace TaskManagerUnitTest
 {
@@ -21,7 +22,7 @@ namespace TaskManagerUnitTest
         {
             using (var contex = _contexFactory.BuildContex())
             {
-                contex.Insert(new UserTask
+                var task = new UserTask
                 {
                     Name = "TestName",
                     Description = "TestDescription",
@@ -29,7 +30,11 @@ namespace TaskManagerUnitTest
                     IsNotified = false,
                     TaskDate = DateTime.Today,
                     NotifyDate = DateTime.Today
-                });
+                };
+
+                contex.Insert(task);
+
+                Assert.AreEqual(task, contex.GetUserTasksTable().Single());
             }
         }
     }
