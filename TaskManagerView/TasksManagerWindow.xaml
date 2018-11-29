@@ -17,7 +17,16 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <ListBox x:Name="TaskList" HorizontalContentAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
+        <!--Проверить SelectionMode!!!-->
+        <ListBox 
+            x:Name="TaskList" 
+            SelectionChanged="ListBox_OnSelectionChanged"
+            MouseDoubleClick="ListBox_OnMouseDoubleClick"
+            SelectionMode="Extended" 
+            HorizontalContentAlignment="Stretch" 
+            Grid.Column="0" 
+            Grid.Row="0" 
+            Grid.RowSpan="4">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="2" Padding="0">
@@ -29,9 +38,21 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="buttonEdit2" Grid.Column="1" Grid.Row="0" Content="Редактировать"></Button>
-        <Button x:Name="buttonDelete2" Grid.Column="1" Grid.Row="1" Content="Удалить"></Button>
-        <Button x:Name="buttonDeleteAll" Grid.Column="1" Grid.Row="2" Content="Удалить всё"></Button>
-        <Button x:Name="buttonDeleteCompleted" Grid.Column="1" Grid.Row="3" Content="Удалить завершённые"></Button>
+        <Button 
+            x:Name="buttonDelete2" 
+            Click="ButtonDelete_OnClick"
+            Grid.Column="1" 
+            Grid.Row="1" 
+            Content="Удалить"/>
+        <Button 
+            IsEnabled="False" 
+            x:Name="buttonDeleteAll" 
+            Grid.Column="1" Grid.Row="2" 
+            Content="Удалить всё"/>
+        <Button 
+            IsEnabled="False"
+            x:Name="buttonDeleteCompleted"
+            Grid.Column="1" Grid.Row="3"
+            Content="Удалить завершённые"/>
     </Grid>
 </Window>

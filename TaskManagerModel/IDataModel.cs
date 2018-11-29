@@ -12,6 +12,7 @@ namespace TaskManagerModel
         void AddTask(UserTask task);
         void UpdateTask(UserTask task);
         void DeleteTask(UserTask task);
+        void DeleteTasks(List<UserTask> tasksList);
         List<UserTask> GetAllTasks();
         List<UserTask> GetTasksOfDay(DateTime date);
         List<UserTask> GetTasksOfDays(DateTime beginDate, DateTime endDate);

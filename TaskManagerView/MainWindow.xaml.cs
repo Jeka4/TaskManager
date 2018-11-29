@@ -31,15 +31,21 @@ namespace TaskManagerView
         public event EventHandler<FilterEventArgs> FilterTypeChanged = delegate { };
 
         public event EventHandler<SortEventArgs> SortTypeChanged = delegate { };
-        
+
+        public event EventHandler TasksControlButtonPressed = delegate { };
+
         public event EventHandler SelectionListUpdated = delegate { };
 
         public event EventHandler TasksListNeedUpdate = delegate { };
 
         public event EventHandler HighlightListNeedUpdate = delegate { };
 
+        private readonly EditTaskWindowFactory _editTaskWindowFactory;
+
         public MainWindow()
         {
+            _editTaskWindowFactory = new EditTaskWindowFactory();
+
             InitializeComponent();
         }
 
@@ -135,7 +141,7 @@ namespace TaskManagerView
             if (dialogResult == true)
             {
                 UserTaskAdded(sender, new UserTaskEventArgs(task));
-                HighlightListNeedUpdate(this, EventArgs.Empty);
+                //HighlightListNeedUpdate(this, EventArgs.Empty);
             }
         }
 
@@ -149,13 +155,12 @@ namespace TaskManagerView
             if (task == null)
                 return;
 
-            IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
-            var dialogResult = editTaskWindow.ShowDialog();
+            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task);
 
             if (dialogResult == true)
             {
                 UserTaskUpdated(sender, new UserTaskEventArgs(task));
-                HighlightListNeedUpdate(this, EventArgs.Empty);
+                //HighlightListNeedUpdate(this, EventArgs.Empty);
             }
         }
 
@@ -170,12 +175,12 @@ namespace TaskManagerView
                 return;
 
             UserTaskDeleted(sender, new UserTaskEventArgs(task));
-            HighlightListNeedUpdate(this, EventArgs.Empty);
+            //HighlightListNeedUpdate(this, EventArgs.Empty);
         }
 
         private void ButtonControl_Click(object sender, RoutedEventArgs e)
         {
-
+            TasksControlButtonPressed(sender, EventArgs.Empty);
         }
 
         private void Calendar_PreviewMouseUp(object sender, MouseButtonEventArgs e)

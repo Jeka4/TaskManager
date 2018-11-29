@@ -23,21 +23,39 @@ namespace TaskManager
             IMainWindow mainWindow = new MainWindow();
             IDataModel dataModel = new DataModel(new UserTasksDbFactory(), taskFilter);
             IPresenter taskManagerPresenter = new Presenter(mainWindow, dataModel, priorityConverter);
+            ITasksControlPresenter tasksControlPresenter = new TasksControlPresenter(new TaskManagerWindowFactory(), dataModel, priorityConverter);
 
-            new PresenterSubscriber(taskManagerPresenter, dataModel, mainWindow);
+            new PresenterSubscriber(taskManagerPresenter, tasksControlPresenter, dataModel, mainWindow);
 
             taskManagerPresenter.Initialize();
+
+            
+/*            Random rnd = new Random();
+            for (int i = 0; i < 100; i++)
+            {
+                taskManagerPresenter.AddTask(new UserTaskView
+                {
+                    Name = rnd.Next(0, 1000).ToString(),
+                    Description = rnd.Next(0, 1000).ToString(),
+                    IsNotified = false,
+                    Priority = (TaskPriority)Enum.Parse(typeof(TaskPriority), rnd.Next(1, 3).ToString()),
+                    TaskDate = DateTime.Today,
+                    NotifyDate = DateTime.Today
+                });
+            }*/
         }
 
         class PresenterSubscriber
         {
             private readonly IPresenter _presenter;
             private readonly IMainWindow _mainWindow;
+            private readonly ITasksControlPresenter _tasksControlPresenter;
 
-            public PresenterSubscriber(IPresenter presenter, IDataModel dataModel, IMainWindow mainWindow)
+            public PresenterSubscriber(IPresenter presenter, ITasksControlPresenter tasksControlPresenter, IDataModel dataModel, IMainWindow mainWindow)
             {
                 _presenter = presenter;
                 _mainWindow = mainWindow;
+                _tasksControlPresenter = tasksControlPresenter;
 
                 dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
 
@@ -50,6 +68,12 @@ namespace TaskManager
                 _mainWindow.SortTypeChanged += MainWindowOnSortTypeChanged;
                 _mainWindow.TasksListNeedUpdate += MainWindowOnTasksListNeedUpdate;
                 _mainWindow.HighlightListNeedUpdate += MainWindowOnHighlightListNeedUpdate;
+                _mainWindow.TasksControlButtonPressed += MainWindowOnTasksControlButtonPressed;
+            }
+
+            private void MainWindowOnTasksControlButtonPressed(object sender, EventArgs eventArgs)
+            {
+                _tasksControlPresenter.ShowTasksControlWindow();
             }
 
             private void MainWindowOnHighlightListNeedUpdate(object sender, EventArgs eventArgs)
@@ -95,6 +119,8 @@ namespace TaskManager
             private void DataModel_TasksDBUpdated(object sender, EventArgs e)
             {
                 _presenter.RefreshViewTasksList(_mainWindow.DateIntervalSelected);
+                _presenter.RefreshViewHighlightList();
+                _tasksControlPresenter.RefreshTasksList();
             }
 
             private void MainWindowOnCurrentCalendarDateChanged(object sender, TaskDateIntervalEventArg e)
