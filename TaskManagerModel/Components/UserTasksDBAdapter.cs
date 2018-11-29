@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using System.Linq;
 
 namespace TaskManagerModel.Components
 {
@@ -29,7 +30,7 @@ namespace TaskManagerModel.Components
             return _contex.Delete(task);
         }
 
-        public ITable<UserTask> GetUserTasksTable()
+        public IQueryable<UserTask> GetUserTasksTable()
         {
             return _contex.UserTasks;
         }

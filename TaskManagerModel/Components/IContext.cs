@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Data;
-using LinqToDB;
+using System.Linq;
 
 namespace TaskManagerModel.Components
 {
@@ -9,6 +8,6 @@ namespace TaskManagerModel.Components
         int Insert(UserTask task);
         int Update(UserTask task);
         int Delete(UserTask task);
-        ITable<UserTask> GetUserTasksTable();
+        IQueryable<UserTask> GetUserTasksTable();
     }
 }
