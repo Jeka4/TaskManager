@@ -54,7 +54,7 @@ namespace TaskManagerModel
             _sortType = SortType.AscendingPriority;
         }
 
-        public void AddTask(UserTask task)
+        public void AddTask(UserTask task) //Возвращать результат? (int)
         {
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
@@ -150,6 +150,9 @@ namespace TaskManagerModel
         {
             List<UserTask> tasks;
             Expression<Func<UserTask, bool>> compare;
+
+            if(endDate < beginDate)
+                throw new ArgumentException($"{nameof(endDate)} < {nameof(beginDate)}");
 
             if (beginDate == endDate) //Вынести в поле класса?
                 compare = t => t.TaskDate == beginDate;
