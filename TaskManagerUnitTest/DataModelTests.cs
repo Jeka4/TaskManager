@@ -5,6 +5,7 @@ using TaskManagerCommon.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation;
 using TaskManagerUnitTest.Fakes;
 
 namespace TaskManagerUnitTest
@@ -52,7 +53,7 @@ namespace TaskManagerUnitTest
                 NotifyDate = DateTime.Today
             };
 
-            Assert.Catch(() => dataModel.AddTask(task)); //Именно ValidationException??
+            Assert.Throws<ValidationException>(() => dataModel.AddTask(task));
         }
 
         [Test]
@@ -75,7 +76,8 @@ namespace TaskManagerUnitTest
             Assert.DoesNotThrow(() => dataModel.UpdateTask(task));
         }
 
-        [TestCase(-1, "Task", "TaskDescription", TaskPriority.Medium, Description = "Invalid id")]
+        [TestCase(-1, "Task", "TaskDescription", TaskPriority.Medium, Description = "Invalid id < 0")]
+        [TestCase(0, "Task", "TaskDescription", TaskPriority.Medium, Description = "Invalid id = 0")]
         [TestCase(1, "", "TaskDescription", TaskPriority.Medium, Description = "Empty name")]
         [TestCase(1, null, "TaskDescription", TaskPriority.Medium, Description = "Null name")]
         [TestCase(1, "Task", "", TaskPriority.Medium, Description = "Empty description")]
@@ -97,7 +99,7 @@ namespace TaskManagerUnitTest
                 NotifyDate = DateTime.Today
             };
 
-            Assert.Catch(() => dataModel.UpdateTask(task));
+            Assert.Throws<ValidationException>(() => dataModel.UpdateTask(task));
         }
 
         [Test]
@@ -126,7 +128,7 @@ namespace TaskManagerUnitTest
                 Id = id
             };
 
-            Assert.Catch(() => dataModel.DeleteTask(task));
+            Assert.Throws<ValidationException>(() => dataModel.DeleteTask(task));
         }
 
         [Test]
@@ -158,7 +160,7 @@ namespace TaskManagerUnitTest
                 new UserTask { Id = -3 }
             };
 
-            Assert.Catch(() => dataModel.DeleteTasks(tasks));
+            Assert.Throws<ValidationException>(() => dataModel.DeleteTasks(tasks));
         }
 
         [Test]
