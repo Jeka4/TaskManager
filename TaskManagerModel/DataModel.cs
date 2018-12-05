@@ -45,6 +45,8 @@ namespace TaskManagerModel
 
         private readonly IContextFactory _contextFactory;
 
+        private readonly IValidator<UserTask> _validator; 
+
         public DataModel(IContextFactory contextFactory, ITaskFilter taskFilter)
         {
             _contextFactory = contextFactory;
@@ -52,15 +54,15 @@ namespace TaskManagerModel
             _taskFilter = taskFilter;
             _filterType = FilterType.All;
             _sortType = SortType.AscendingPriority;
+            _validator = new UserTaskValidator();
         }
 
-        public void AddTask(UserTask task) //Возвращать результат? (int)
+        public void AddTask(UserTask task)
         {
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            var validator = new UserTaskValidator();
-            validator.ValidateAndThrow(task, ruleSet: "Body");
+            _validator.ValidateAndThrow(task, ruleSet: "Body");
 
             using (var context = _contextFactory.BuildContex())
             {
@@ -75,8 +77,7 @@ namespace TaskManagerModel
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            var validator = new UserTaskValidator();
-            validator.ValidateAndThrow(task, ruleSet: "*");
+            _validator.ValidateAndThrow(task, ruleSet: "*");
 
             using (var context = _contextFactory.BuildContex())
             {
@@ -91,8 +92,7 @@ namespace TaskManagerModel
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            var validator = new UserTaskValidator();
-            validator.ValidateAndThrow(task, ruleSet: "Id");
+            _validator.ValidateAndThrow(task, ruleSet: "Id");
 
             using (var context = _contextFactory.BuildContex())
             {
@@ -115,8 +115,7 @@ namespace TaskManagerModel
                     if(task == null)
                         throw new ArgumentException(nameof(tasksList));
 
-                    var validator = new UserTaskValidator();
-                    validator.ValidateAndThrow(task, ruleSet: "Id");
+                    _validator.ValidateAndThrow(task, ruleSet: "Id");
 
                     context.Delete(task);
                 }
