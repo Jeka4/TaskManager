@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FluentValidation;
+using LinqToDB;
 using TaskManagerCommon.Components;
 using TaskManagerModel.Components;
 using TaskManagerModel.Validators;
@@ -87,38 +88,27 @@ namespace TaskManagerModel
             TasksDbUpdated(this, new EventArgs());
         }
 
-        public void DeleteTask(UserTask task)
+        public void DeleteTask(long id)
         {
-            if (task == null)
-                throw new ArgumentNullException(nameof(task));
-
-            _validator.ValidateAndThrow(task, ruleSet: "Id");
+            if (id <= 0)
+                throw new ArgumentException(nameof(id));
 
             using (var context = _contextFactory.BuildContex())
             {
-                context.Delete(task);
+                context.GetUserTasksTable().Where(x => x.Id == id).Delete();
             }
 
             TasksDbUpdated(this, new EventArgs());
         }
 
-        public void DeleteTasks(List<UserTask> tasksList)
+        public void DeleteTasks(List<long> tasksIdList)
         {
-            if (tasksList == null)
-                throw new ArgumentNullException(nameof(tasksList));
-
+            if (tasksIdList == null) //Ещё проверку каждого элемента
+                throw new ArgumentNullException(nameof(tasksIdList));
 
             using (var context = _contextFactory.BuildContex())
             {
-                foreach (var task in tasksList)
-                {
-                    if(task == null)
-                        throw new ArgumentException(nameof(tasksList));
-
-                    _validator.ValidateAndThrow(task, ruleSet: "Id");
-
-                    context.Delete(task);
-                }
+                context.GetUserTasksTable().Where(x => tasksIdList.Contains(x.Id)).Delete();
             }
 
             TasksDbUpdated(this, new EventArgs());
