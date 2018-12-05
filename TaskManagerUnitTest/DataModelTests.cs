@@ -3,6 +3,7 @@ using TaskManagerModel.Components;
 using TaskManagerModel;
 using TaskManagerCommon.Components;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
@@ -25,9 +26,7 @@ namespace TaskManagerUnitTest
                 Name = "TestName",
                 Description = "TestDescription",
                 Priority = (long)TaskPriority.Medium,
-                IsNotified = false,
-                TaskDate = DateTime.Today,
-                NotifyDate = DateTime.Today
+                IsNotified = false
             };
 
             Assert.DoesNotThrow(() => dataModel.AddTask(task));
@@ -38,7 +37,7 @@ namespace TaskManagerUnitTest
         [TestCase("Task", "", TaskPriority.Medium, Description = "Empty description")]
         [TestCase("Task", null, TaskPriority.Medium, Description = "Null description")]
         [TestCase("Task", "TaskDescription", TaskPriority.Undefined, Description = "Priority undefined")]
-        public void InsertInvalidTask(string name, string descr, TaskPriority prior) //На null?
+        public void InsertInvalidTask(string name, string descr, TaskPriority prior)
         {
             IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
             IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
@@ -48,12 +47,19 @@ namespace TaskManagerUnitTest
                 Name = name,
                 Description = descr,
                 Priority = (long)prior,
-                IsNotified = false,
-                TaskDate = DateTime.Today,
-                NotifyDate = DateTime.Today
+                IsNotified = false
             };
 
             Assert.Throws<ValidationException>(() => dataModel.AddTask(task));
+        }
+
+        [Test]
+        public void InsertNullTask()
+        {
+            IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
+            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
+
+            Assert.Throws<ArgumentNullException>(() => dataModel.AddTask(null));
         }
 
         [Test]
@@ -68,9 +74,7 @@ namespace TaskManagerUnitTest
                 Name = "TestName",
                 Description = "TestDescription",
                 Priority = (long)TaskPriority.Medium,
-                IsNotified = false,
-                TaskDate = DateTime.Today,
-                NotifyDate = DateTime.Today
+                IsNotified = false
             };
 
             Assert.DoesNotThrow(() => dataModel.UpdateTask(task));
@@ -94,12 +98,19 @@ namespace TaskManagerUnitTest
                 Name = name,
                 Description = descr,
                 Priority = (long)prior,
-                IsNotified = false,
-                TaskDate = DateTime.Today,
-                NotifyDate = DateTime.Today
+                IsNotified = false
             };
 
             Assert.Throws<ValidationException>(() => dataModel.UpdateTask(task));
+        }
+
+        [Test]
+        public void UpdateNullTask()
+        {
+            IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
+            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
+
+            Assert.Throws<ArgumentNullException>(() => dataModel.UpdateTask(null));
         }
 
         [Test]
@@ -123,12 +134,21 @@ namespace TaskManagerUnitTest
             IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
             IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
 
-            var task = new UserTask //Проверка на null?
+            var task = new UserTask
             {
                 Id = id
             };
 
             Assert.Throws<ValidationException>(() => dataModel.DeleteTask(task));
+        }
+
+        [Test]
+        public void DeleteNullTask()
+        {
+            IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
+            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
+
+            Assert.Throws<ArgumentNullException>(() => dataModel.DeleteTask(null));
         }
 
         [Test]
@@ -164,6 +184,31 @@ namespace TaskManagerUnitTest
         }
 
         [Test]
+        public void DeleteNullListTasks()
+        {
+            IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
+            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
+
+            Assert.Throws<ArgumentNullException>(() => dataModel.DeleteTasks(null));
+        }
+
+        [Test]
+        public void DeleteListTasksOfNulls()
+        {
+            IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
+            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
+
+            var tasks = new List<UserTask>
+            {
+                null,
+                null,
+                null
+            };
+
+            Assert.Throws<ArgumentException>(() => dataModel.DeleteTasks(tasks));
+        }
+
+        [Test]
         public void GetAllTasks()
         {
             IContextFactory contexFactoryFake = new DataModelFactoryFake(GenerateUserTaskList());
@@ -174,19 +219,19 @@ namespace TaskManagerUnitTest
             Assert.AreEqual(GenerateUserTaskList().Count, tasks.Count);
         }
 
-        [Test]
-        public void GetTasksOfDay() //Для всех дат?
+        [Test, TestCaseSource(typeof(DatesForTest), nameof(DatesForTest.TestCase))]
+        public void GetTasksOfDay(DateTime date)
         {
             IContextFactory contexFactoryFake = new DataModelFactoryFake(GenerateUserTaskList());
             IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
 
-            var tasks = dataModel.GetTasksOfDay(new DateTime(1, 1, 1));
+            var tasks = dataModel.GetTasksOfDay(date);
 
-            Assert.AreEqual(1, tasks.Single().TaskDate.Day);
+            Assert.AreEqual(date, tasks.Single().TaskDate);
         }
 
         [Test]
-        public void GetTasksOfTwoDays() //Revert?
+        public void GetTasksOfTwoDays()
         {
             IContextFactory contexFactoryFake = new DataModelFactoryFake(GenerateUserTaskList());
             IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
@@ -194,6 +239,16 @@ namespace TaskManagerUnitTest
             var tasks = dataModel.GetTasksOfDays(new DateTime(1, 1, 1), new DateTime(1, 1, 2));
 
             Assert.True(tasks.Count == 2 && tasks[0].TaskDate.Day < 3 && tasks[1].TaskDate.Day < 3);
+        }
+
+        [Test]
+        public void GetTasksOfTwoDaysRevert()
+        {
+            IContextFactory contexFactoryFake = new DataModelFactoryFake(GenerateUserTaskList());
+            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
+
+            Assert.Throws<ArgumentException>(
+                () => dataModel.GetTasksOfDays(new DateTime(1, 1, 2), new DateTime(1, 1, 1)));
         }
 
         [Test]
@@ -239,6 +294,19 @@ namespace TaskManagerUnitTest
                     NotifyDate = new DateTime(1, 1, 3)
                 },
             };
+        }
+
+        private class DatesForTest
+        {
+            public static IEnumerable TestCase
+            {
+                get
+                {
+                    yield return new TestCaseData(new DateTime(1, 1, 1));
+                    yield return new TestCaseData(new DateTime(1, 1, 2));
+                    yield return new TestCaseData(new DateTime(1, 1, 3));
+                }
+            } 
         }
     }
 }

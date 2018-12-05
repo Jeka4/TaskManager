@@ -112,6 +112,9 @@ namespace TaskManagerModel
             {
                 foreach (var task in tasksList)
                 {
+                    if(task == null)
+                        throw new ArgumentException(nameof(tasksList));
+
                     var validator = new UserTaskValidator();
                     validator.ValidateAndThrow(task, ruleSet: "Id");
 
