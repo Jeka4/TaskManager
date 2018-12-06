@@ -95,7 +95,7 @@ namespace TaskManagerModel
 
             using (var context = _contextFactory.BuildContex())
             {
-                context.GetUserTasksTable().Where(x => x.Id == id).Delete();
+                context.DeleteById(id);
             }
 
             TasksDbUpdated(this, new EventArgs());
@@ -103,12 +103,16 @@ namespace TaskManagerModel
 
         public void DeleteTasks(List<long> tasksIdList)
         {
-            if (tasksIdList == null) //Ещё проверку каждого элемента
+            if (tasksIdList == null)
                 throw new ArgumentNullException(nameof(tasksIdList));
+
+            for (var i = 0; i < tasksIdList.Count; i++)
+                if (tasksIdList[i] <= 0)
+                    throw new ArgumentException(nameof(tasksIdList));
 
             using (var context = _contextFactory.BuildContex())
             {
-                context.GetUserTasksTable().Where(x => tasksIdList.Contains(x.Id)).Delete();
+                context.DeleteByIds(tasksIdList);
             }
 
             TasksDbUpdated(this, new EventArgs());
