@@ -11,6 +11,8 @@ namespace TaskManagerModel.Components
         int Delete(UserTask task);
         int DeleteByIds(List<long> tasksIdList);
         int DeleteById(long id);
+        int DeleteAll();
+        int DeleteCompleted(DateTime today);
         IQueryable<UserTask> GetUserTasksTable();
     }
 }

@@ -118,6 +118,26 @@ namespace TaskManagerModel
             TasksDbUpdated(this, new EventArgs());
         }
 
+        public void DeleteAllTasks()
+        {
+            using (var context = _contextFactory.BuildContex())
+            {
+                context.DeleteAll();
+            }
+
+            TasksDbUpdated(this, new EventArgs());
+        }
+
+        public void DeleteCompletedTasks(DateTime today)
+        {
+            using (var context = _contextFactory.BuildContex())
+            {
+                context.DeleteCompleted(today);
+            }
+
+            TasksDbUpdated(this, new EventArgs());
+        }
+
         public List<UserTask> GetAllTasks()
         {
             List<UserTask> tasks;

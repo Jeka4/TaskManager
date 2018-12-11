@@ -19,6 +19,10 @@ namespace TaskManagerView
 
         public event EventHandler<UserTasksListEventArgs> UserTasksDeleted = delegate { };
 
+        public event EventHandler UserTasksAllDeleted = delegate { };
+
+        public event EventHandler UserTasksCompletedDeleted = delegate { };
+
         public event EventHandler TasksListNeedUpdate = delegate { };
 
         public event EventHandler SelectionListChanged = delegate { };
@@ -41,7 +45,13 @@ namespace TaskManagerView
 
         public void EnableDeleteButton(bool enable)
         {
-            buttonDelete2.IsEnabled = enable;
+            ButtonDelete.IsEnabled = enable;
+        }
+
+        public void EnableDeleteCompletedAndAllButton(bool enable)
+        {
+            ButtonDeleteAll.IsEnabled = enable;
+            ButtonDeleteCompleted.IsEnabled = enable;
         }
 
         public void SetUserTasksToTasksList(List<UserTaskView> tasks)
@@ -79,6 +89,16 @@ namespace TaskManagerView
             List<UserTaskView> tasksList = TaskList.SelectedItems.Cast<UserTaskView>().ToList();
 
             UserTasksDeleted(sender, new UserTasksListEventArgs(tasksList));
+        }
+
+        private void ButtonDeleteAll_OnClick(object sender, RoutedEventArgs e)
+        {
+            UserTasksAllDeleted(sender, EventArgs.Empty);
+        }
+
+        private void ButtonDeleteCompleted_OnClick(object sender, RoutedEventArgs e)
+        {
+            UserTasksCompletedDeleted(sender, EventArgs.Empty);
         }
     }
 }

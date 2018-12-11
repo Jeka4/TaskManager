@@ -38,11 +38,23 @@ namespace TaskManagerPresenter
             _tasksManagerWindow.TasksListNeedUpdate += WindowOnTasksListNeedUpdate;
             _tasksManagerWindow.UserTaskEdited += TasksManagerWindowOnUserTaskEdited;
             _tasksManagerWindow.UserTasksDeleted += TasksManagerWindowOnUserTasksDeleted;
+            _tasksManagerWindow.UserTasksAllDeleted += TasksManagerWindowOnUserTasksAllDeleted;
+            _tasksManagerWindow.UserTasksCompletedDeleted += TasksManagerWindowOnUserTasksCompletedDeleted;
             _tasksManagerWindow.SelectionListChanged += TasksManagerWindowOnSelectionListChanged;
             _tasksManagerWindow.Closed += WindowOnClosed;
 
             _tasksManagerWindow.EnableDeleteButton(false);
             _tasksManagerWindow.Initialize();
+        }
+
+        private void TasksManagerWindowOnUserTasksCompletedDeleted(object sender, EventArgs eventArgs)
+        {
+            DeleteCompletedTasks();
+        }
+
+        private void TasksManagerWindowOnUserTasksAllDeleted(object sender, EventArgs eventArgs)
+        {
+            DeleteAllTasks();
         }
 
         private void TasksManagerWindowOnUserTaskEdited(object sender, UserTaskEventArgs e)
@@ -52,7 +64,13 @@ namespace TaskManagerPresenter
 
         public void RefreshTasksList()
         {
-            _tasksManagerWindow?.SetUserTasksToTasksList(LoadAllTasks());
+            var tasks = LoadAllTasks();
+
+            if (_tasksManagerWindow != null)
+            {
+                _tasksManagerWindow.SetUserTasksToTasksList(tasks);
+                _tasksManagerWindow.EnableDeleteCompletedAndAllButton(tasks.Count != 0);
+            }
         }
 
         private void WindowOnClosed(object sender, EventArgs eventArgs)
@@ -112,6 +130,30 @@ namespace TaskManagerPresenter
                 _dataModel.DeleteTasks(idsForDataModel);
             }
             catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void DeleteAllTasks()
+        {
+            try
+            {
+                _dataModel.DeleteAllTasks();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private void DeleteCompletedTasks()
+        {
+            try
+            {
+                _dataModel.DeleteCompletedTasks(DateTime.Today);
+            }
+            catch
             {
                 throw;
             }
