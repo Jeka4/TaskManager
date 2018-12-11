@@ -76,9 +76,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Fakes\DataModelContexFake.cs" />
-    <Compile Include="Fakes\DataModelFactoryFake.cs" />
+    <Compile Include="Fakes\DataModelContexFactoryFake.cs" />
     <Compile Include="DataModelTests.cs" />
     <Compile Include="Fakes\TasksFilterFake.cs" />
+    <Compile Include="PresenterTests.cs" />
     <Compile Include="TasksFilterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
