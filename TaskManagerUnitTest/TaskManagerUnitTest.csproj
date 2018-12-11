@@ -78,7 +78,6 @@
     <Compile Include="Fakes\DataModelContexFake.cs" />
     <Compile Include="Fakes\DataModelFactoryFake.cs" />
     <Compile Include="DataModelTests.cs" />
-    <Compile Include="DateConverterTests.cs" />
     <Compile Include="Fakes\TasksFilterFake.cs" />
     <Compile Include="TasksFilterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
