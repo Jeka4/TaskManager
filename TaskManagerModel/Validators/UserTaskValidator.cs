@@ -13,8 +13,8 @@ namespace TaskManagerModel.Validators
 
             RuleSet("Body", () =>
             {
-                RuleFor(task => task.Name).NotNull().NotEmpty().WithMessage("should be not empty");
-                RuleFor(task => task.Description).NotNull().NotEmpty().WithMessage("should be not empty");
+                RuleFor(task => task.Name).NotEmpty().WithMessage("should be not empty");
+                RuleFor(task => task.Description).NotEmpty().WithMessage("should be not empty");
                 RuleFor(task => task.Priority).NotEqual(0).WithMessage("should be defined");
             });
         }
