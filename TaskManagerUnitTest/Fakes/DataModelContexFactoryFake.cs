@@ -6,7 +6,7 @@ namespace TaskManagerUnitTest.Fakes
 {
     class DataModelContexFactoryFake : IContextFactory
     {
-        private List<UserTask> _data;
+        private readonly List<UserTask> _data;
 
         public DataModelContexFactoryFake(List<UserTask> data)
         {
