@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FluentValidation;
-using LinqToDB;
 using TaskManagerCommon.Components;
 using TaskManagerModel.Components;
 using TaskManagerModel.Validators;
@@ -106,9 +105,10 @@ namespace TaskManagerModel
             if (tasksIdList == null)
                 throw new ArgumentNullException(nameof(tasksIdList));
 
-            for (var i = 0; i < tasksIdList.Count; i++)
-                if (tasksIdList[i] <= 0)
-                    throw new ArgumentException(nameof(tasksIdList));
+            if (tasksIdList.Any(id => id <= 0))
+            {
+                throw new ArgumentException(nameof(tasksIdList));
+            }                    
 
             using (var context = _contextFactory.BuildContex())
             {
