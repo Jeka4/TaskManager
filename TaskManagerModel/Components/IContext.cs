@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TaskManagerModel.Components
@@ -8,6 +9,8 @@ namespace TaskManagerModel.Components
         int Insert(UserTask task);
         int Update(UserTask task);
         int Delete(UserTask task);
+        int DeleteByIds(List<long> tasksIdList);
+        int DeleteById(long id);
         IQueryable<UserTask> GetUserTasksTable();
     }
 }

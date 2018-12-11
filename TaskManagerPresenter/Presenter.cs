@@ -110,12 +110,7 @@ namespace TaskManagerPresenter
 
             try
             {
-                UserTask userTask = new UserTask
-                {
-                    Id = task.Id
-                };
-
-                _dataModel.DeleteTask(userTask);
+                _dataModel.DeleteTask(task.Id);
             }
             catch (Exception)
             {

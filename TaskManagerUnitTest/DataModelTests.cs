@@ -119,12 +119,9 @@ namespace TaskManagerUnitTest
             IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
             IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
 
-            var task = new UserTask
-            {
-                Id = 1
-            };
+            var id = 1;
 
-            Assert.DoesNotThrow(() => dataModel.DeleteTask(task));
+            Assert.DoesNotThrow(() => dataModel.DeleteTask(id));
         }
 
         [TestCase(-1, Description = "Invalid id = -1 < 0")]
@@ -134,21 +131,7 @@ namespace TaskManagerUnitTest
             IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
             IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
 
-            var task = new UserTask
-            {
-                Id = id
-            };
-
-            Assert.Throws<ValidationException>(() => dataModel.DeleteTask(task));
-        }
-
-        [Test]
-        public void DeleteNullTask()
-        {
-            IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
-            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
-
-            Assert.Throws<ArgumentNullException>(() => dataModel.DeleteTask(null));
+            Assert.Throws<ArgumentException>(() => dataModel.DeleteTask(id));
         }
 
         [Test]
@@ -157,14 +140,9 @@ namespace TaskManagerUnitTest
             IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
             IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
 
-            var tasks = new List<UserTask>
-            {
-                new UserTask { Id = 1 },
-                new UserTask { Id = 2 },
-                new UserTask { Id = 3 }
-            };
+            var taskIds = new List<long> { 1, 2, 3 };
 
-            Assert.DoesNotThrow(() => dataModel.DeleteTasks(tasks));
+            Assert.DoesNotThrow(() => dataModel.DeleteTasks(taskIds));
         }
 
         [Test]
@@ -173,14 +151,9 @@ namespace TaskManagerUnitTest
             IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
             IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
 
-            var tasks = new List<UserTask>
-            {
-                new UserTask { Id = -1 },
-                new UserTask { Id = -2 },
-                new UserTask { Id = -3 }
-            };
+            var taskIds = new List<long> { 0, -1, -2, -3 };
 
-            Assert.Throws<ValidationException>(() => dataModel.DeleteTasks(tasks));
+            Assert.Throws<ArgumentException>(() => dataModel.DeleteTasks(taskIds));
         }
 
         [Test]
@@ -190,22 +163,6 @@ namespace TaskManagerUnitTest
             IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
 
             Assert.Throws<ArgumentNullException>(() => dataModel.DeleteTasks(null));
-        }
-
-        [Test]
-        public void DeleteListTasksOfNulls()
-        {
-            IContextFactory contexFactoryFake = new DataModelFactoryFake(new List<UserTask>());
-            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
-
-            var tasks = new List<UserTask>
-            {
-                null,
-                null,
-                null
-            };
-
-            Assert.Throws<ArgumentException>(() => dataModel.DeleteTasks(tasks));
         }
 
         [Test]
@@ -306,7 +263,7 @@ namespace TaskManagerUnitTest
                     yield return new TestCaseData(new DateTime(1, 1, 2));
                     yield return new TestCaseData(new DateTime(1, 1, 3));
                 }
-            } 
+            }
         }
     }
 }

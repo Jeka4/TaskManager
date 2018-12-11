@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TaskManagerModel.Components
@@ -28,6 +29,16 @@ namespace TaskManagerModel.Components
         public int Delete(UserTask task)
         {
             return _contex.Delete(task);
+        }
+
+        public int DeleteById(long id)
+        {
+            return _contex.UserTasks.Where(x => x.Id == id).Delete();
+        }
+
+        public int DeleteByIds(List<long> tasksIdList)
+        {
+            return _contex.UserTasks.Where(x => tasksIdList.Contains(x.Id)).Delete();
         }
 
         public IQueryable<UserTask> GetUserTasksTable()
