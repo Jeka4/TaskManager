@@ -4,7 +4,7 @@ namespace TaskManagerModel.Validators
 {
     public class UserTaskValidator : AbstractValidator<UserTask>
     {
-        public UserTaskValidator() //Можно добавить сообщения при ошибках валидации
+        public UserTaskValidator()
         {
             RuleSet("Id", () =>
             {

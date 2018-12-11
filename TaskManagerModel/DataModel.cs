@@ -45,7 +45,7 @@ namespace TaskManagerModel
 
         private readonly IContextFactory _contextFactory;
 
-        private readonly IValidator<UserTask> _validator; 
+        private readonly ValidatorsFactory _validatorsFactory;
 
         public DataModel(IContextFactory contextFactory, ITaskFilter taskFilter)
         {
@@ -54,7 +54,7 @@ namespace TaskManagerModel
             _taskFilter = taskFilter;
             _filterType = FilterType.All;
             _sortType = SortType.AscendingPriority;
-            _validator = new UserTaskValidator();
+            _validatorsFactory = new ValidatorsFactory();
         }
 
         public void AddTask(UserTask task)
@@ -62,7 +62,7 @@ namespace TaskManagerModel
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            _validator.ValidateAndThrow(task, ruleSet: "Body");
+            _validatorsFactory.GetUserTaskValidator().ValidateAndThrow(task, ruleSet: "Body");
 
             using (var context = _contextFactory.BuildContex())
             {
@@ -77,7 +77,7 @@ namespace TaskManagerModel
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            _validator.ValidateAndThrow(task, ruleSet: "*");
+            _validatorsFactory.GetUserTaskValidator().ValidateAndThrow(task, ruleSet: "*");
 
             using (var context = _contextFactory.BuildContex())
             {
@@ -130,6 +130,8 @@ namespace TaskManagerModel
 
         public void DeleteCompletedTasks(DateTime today)
         {
+            _validatorsFactory.GetTodayDateValidator().Validate(today); //не работает
+
             using (var context = _contextFactory.BuildContex())
             {
                 context.DeleteCompleted(today);
