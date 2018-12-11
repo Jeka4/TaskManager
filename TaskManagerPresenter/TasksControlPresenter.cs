@@ -10,6 +10,8 @@ namespace TaskManagerPresenter
 {
     public class TasksControlPresenter : ITasksControlPresenter
     {
+        public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
+
         private readonly ITaskManagerWindowFactory _tasksManagerWindowFactory;
         private readonly IDataModel _dataModel;
         private readonly IPriorityConverter _priorityConverter;
@@ -34,12 +36,18 @@ namespace TaskManagerPresenter
 
             _tasksManagerWindow = _tasksManagerWindowFactory.ShowTaskManagerWindow();
             _tasksManagerWindow.TasksListNeedUpdate += WindowOnTasksListNeedUpdate;
+            _tasksManagerWindow.UserTaskEdited += TasksManagerWindowOnUserTaskEdited;
             _tasksManagerWindow.UserTasksDeleted += TasksManagerWindowOnUserTasksDeleted;
             _tasksManagerWindow.SelectionListChanged += TasksManagerWindowOnSelectionListChanged;
             _tasksManagerWindow.Closed += WindowOnClosed;
 
             _tasksManagerWindow.EnableDeleteButton(false);
             _tasksManagerWindow.Initialize();
+        }
+
+        private void TasksManagerWindowOnUserTaskEdited(object sender, UserTaskEventArgs e)
+        {
+            UserTaskUpdated(sender, e);
         }
 
         public void RefreshTasksList()

@@ -15,7 +15,7 @@ namespace TaskManagerView
     {
         public bool IsTaskSelected => TaskList.SelectedItem != null;
 
-        public event EventHandler<UserTaskView> UserTaskEdited = delegate { };
+        public event EventHandler<UserTaskEventArgs> UserTaskEdited = delegate { };
 
         public event EventHandler<UserTasksListEventArgs> UserTasksDeleted = delegate { };
 
@@ -67,7 +67,7 @@ namespace TaskManagerView
 
             if (dialogResult == true)
             {
-                //UserTaskUpdated(sender, new UserTaskEventArgs(task)); Продумать!!
+                UserTaskEdited(sender, new UserTaskEventArgs(task));
             }
         }
 

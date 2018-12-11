@@ -69,6 +69,13 @@ namespace TaskManager
                 _mainWindow.TasksListNeedUpdate += MainWindowOnTasksListNeedUpdate;
                 _mainWindow.HighlightListNeedUpdate += MainWindowOnHighlightListNeedUpdate;
                 _mainWindow.TasksControlButtonPressed += MainWindowOnTasksControlButtonPressed;
+
+                _tasksControlPresenter.UserTaskUpdated += TasksControlPresenterOnUserTaskUpdated;
+            }
+
+            private void TasksControlPresenterOnUserTaskUpdated(object sender, UserTaskEventArgs e)
+            {
+                _presenter.EditTask(e?.UserTaskView);
             }
 
             private void MainWindowOnTasksControlButtonPressed(object sender, EventArgs eventArgs)
