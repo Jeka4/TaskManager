@@ -9,6 +9,7 @@ namespace TaskManagerView
     {
         bool IsTaskSelected { get; }
         void Initialize();
+        void ShowMessage(string text);
         void EnableDeleteButton(bool enable);
         void EnableDeleteCompletedAndAllButton(bool enable);
         void SetUserTasksToTasksList(List<UserTaskView> tasks);

@@ -100,5 +100,10 @@ namespace TaskManagerView
         {
             UserTasksCompletedDeleted(sender, EventArgs.Empty);
         }
+
+        public void ShowMessage(string text)
+        {
+            MessageBox.Show(text, "TaskManager", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
