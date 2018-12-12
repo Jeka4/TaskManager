@@ -7,82 +7,60 @@ namespace TaskManagerUnitTest.Fakes
 {
     class DataModelFake : IDataModel
     {
-        public FilterType Filter
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        public FilterType Filter { get; set; }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public SortType Sort
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public SortType Sort { get; set; }
 
         public event EventHandler TasksDbUpdated;
 
         public void AddTask(UserTask task)
         {
-            throw new NotImplementedException();
+
         }
 
         public void DeleteAllTasks()
         {
-            throw new NotImplementedException();
+
         }
 
         public void DeleteCompletedTasks(DateTime today)
         {
-            throw new NotImplementedException();
+
         }
 
         public void DeleteTask(long id)
         {
-            throw new NotImplementedException();
+
         }
 
         public void DeleteTasks(List<long> tasksIdList)
         {
-            throw new NotImplementedException();
+
         }
 
         public List<DateTime> GetAllTaskDates()
         {
-            throw new NotImplementedException();
+            return new List<DateTime>();
         }
 
         public List<UserTask> GetAllTasks()
         {
-            throw new NotImplementedException();
+            return new List<UserTask>();
         }
 
         public List<UserTask> GetTasksOfDay(DateTime date)
         {
-            throw new NotImplementedException();
+            return new List<UserTask>();
         }
 
         public List<UserTask> GetTasksOfDays(DateTime beginDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            return new List<UserTask>();
         }
 
         public void UpdateTask(UserTask task)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
