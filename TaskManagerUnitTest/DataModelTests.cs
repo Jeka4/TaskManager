@@ -157,6 +157,28 @@ namespace TaskManagerUnitTest
         }
 
         [Test]
+        public void DeleteCompletedTaskCorrect()
+        {
+            IContextFactory contexFactoryFake = new DataModelContexFactoryFake(new List<UserTask>());
+            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
+
+            var today = new DateTime(2005, 1, 2);
+
+            Assert.DoesNotThrow(() => dataModel.DeleteCompletedTasks(today));
+        }
+
+        [Test]
+        public void DeleteCompletedTaskInvalid()
+        {
+            IContextFactory contexFactoryFake = new DataModelContexFactoryFake(new List<UserTask>());
+            IDataModel dataModel = new DataModel(contexFactoryFake, new TasksFilterFake());
+
+            var today = new DateTime(2005, 1, 2, 1, 2, 5);
+
+            Assert.Throws<ValidationException>(() => dataModel.DeleteCompletedTasks(today));
+        }
+
+        [Test]
         public void DeleteNullListTasks()
         {
             IContextFactory contexFactoryFake = new DataModelContexFactoryFake(new List<UserTask>());
