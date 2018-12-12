@@ -130,7 +130,7 @@ namespace TaskManagerModel
 
         public void DeleteCompletedTasks(DateTime today)
         {
-            _validatorsFactory.GetTodayDateValidator().Validate(today); //не работает
+            _validatorsFactory.GetTodayDateValidator().ValidateAndThrow(today);
 
             using (var context = _contextFactory.BuildContex())
             {
