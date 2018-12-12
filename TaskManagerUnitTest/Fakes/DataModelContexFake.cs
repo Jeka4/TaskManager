@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TaskManagerModel;
 using TaskManagerModel.Components;
@@ -17,6 +18,26 @@ namespace TaskManagerUnitTest.Fakes
         public int Delete(UserTask task)
         {
             return 1;
+        }
+
+        public int DeleteById(long id)
+        {
+            return 1;
+        }
+
+        public int DeleteByIds(List<long> tasksIdList)
+        {
+            return 0;
+        }
+
+        public int DeleteAll()
+        {
+            return 0;
+        }
+
+        public int DeleteCompleted(DateTime today)
+        {
+            return 0;
         }
 
         public void Dispose()

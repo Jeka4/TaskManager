@@ -10,6 +10,8 @@ namespace TaskManagerPresenter
 {
     public class TasksControlPresenter : ITasksControlPresenter
     {
+        public event EventHandler<UserTaskEventArgs> UserTaskUpdated = delegate { };
+
         private readonly ITaskManagerWindowFactory _tasksManagerWindowFactory;
         private readonly IDataModel _dataModel;
         private readonly IPriorityConverter _priorityConverter;
@@ -34,7 +36,10 @@ namespace TaskManagerPresenter
 
             _tasksManagerWindow = _tasksManagerWindowFactory.ShowTaskManagerWindow();
             _tasksManagerWindow.TasksListNeedUpdate += WindowOnTasksListNeedUpdate;
+            _tasksManagerWindow.UserTaskEdited += TasksManagerWindowOnUserTaskEdited;
             _tasksManagerWindow.UserTasksDeleted += TasksManagerWindowOnUserTasksDeleted;
+            _tasksManagerWindow.UserTasksAllDeleted += TasksManagerWindowOnUserTasksAllDeleted;
+            _tasksManagerWindow.UserTasksCompletedDeleted += TasksManagerWindowOnUserTasksCompletedDeleted;
             _tasksManagerWindow.SelectionListChanged += TasksManagerWindowOnSelectionListChanged;
             _tasksManagerWindow.Closed += WindowOnClosed;
 
@@ -42,9 +47,30 @@ namespace TaskManagerPresenter
             _tasksManagerWindow.Initialize();
         }
 
+        private void TasksManagerWindowOnUserTasksCompletedDeleted(object sender, EventArgs eventArgs)
+        {
+            DeleteCompletedTasks();
+        }
+
+        private void TasksManagerWindowOnUserTasksAllDeleted(object sender, EventArgs eventArgs)
+        {
+            DeleteAllTasks();
+        }
+
+        private void TasksManagerWindowOnUserTaskEdited(object sender, UserTaskEventArgs e)
+        {
+            UserTaskUpdated(sender, e);
+        }
+
         public void RefreshTasksList()
         {
-            _tasksManagerWindow?.SetUserTasksToTasksList(LoadAllTasks());
+            var tasks = LoadAllTasks();
+
+            if (_tasksManagerWindow != null)
+            {
+                _tasksManagerWindow.SetUserTasksToTasksList(tasks);
+                _tasksManagerWindow.EnableDeleteCompletedAndAllButton(tasks.Count != 0);
+            }
         }
 
         private void WindowOnClosed(object sender, EventArgs eventArgs)
@@ -99,14 +125,35 @@ namespace TaskManagerPresenter
 
             try
             {
-                var tasksForDataModel = tasksList.Select(t => new UserTask
-                {
-                    Id = t.Id
-                }).ToList();
+                var idsForDataModel = tasksList.Select(t => t.Id).ToList();
 
-                _dataModel.DeleteTasks(tasksForDataModel);
+                _dataModel.DeleteTasks(idsForDataModel);
             }
             catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void DeleteAllTasks()
+        {
+            try
+            {
+                _dataModel.DeleteAllTasks();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private void DeleteCompletedTasks()
+        {
+            try
+            {
+                _dataModel.DeleteCompletedTasks(DateTime.Today);
+            }
+            catch
             {
                 throw;
             }

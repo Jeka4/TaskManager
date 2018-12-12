@@ -11,8 +11,10 @@ namespace TaskManagerModel
         SortType Sort { get; set; }
         void AddTask(UserTask task);
         void UpdateTask(UserTask task);
-        void DeleteTask(UserTask task);
-        void DeleteTasks(List<UserTask> tasksList);
+        void DeleteTask(long id);
+        void DeleteTasks(List<long> tasksIdList);
+        void DeleteAllTasks();
+        void DeleteCompletedTasks(DateTime today);
         List<UserTask> GetAllTasks();
         List<UserTask> GetTasksOfDay(DateTime date);
         List<UserTask> GetTasksOfDays(DateTime beginDate, DateTime endDate);

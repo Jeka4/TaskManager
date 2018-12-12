@@ -4,11 +4,11 @@ using TaskManagerModel.Components;
 
 namespace TaskManagerUnitTest.Fakes
 {
-    class DataModelFactoryFake : IContextFactory
+    class DataModelContexFactoryFake : IContextFactory
     {
-        private List<UserTask> _data;
+        private readonly List<UserTask> _data;
 
-        public DataModelFactoryFake(List<UserTask> data)
+        public DataModelContexFactoryFake(List<UserTask> data)
         {
             _data = data;
         }

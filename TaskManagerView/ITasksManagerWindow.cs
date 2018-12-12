@@ -10,9 +10,12 @@ namespace TaskManagerView
         bool IsTaskSelected { get; }
         void Initialize();
         void EnableDeleteButton(bool enable);
+        void EnableDeleteCompletedAndAllButton(bool enable);
         void SetUserTasksToTasksList(List<UserTaskView> tasks);
-        event EventHandler<UserTaskView> UserTaskEdited;
+        event EventHandler<UserTaskEventArgs> UserTaskEdited;
         event EventHandler<UserTasksListEventArgs> UserTasksDeleted;
+        event EventHandler UserTasksAllDeleted;
+        event EventHandler UserTasksCompletedDeleted;
         event EventHandler SelectionListChanged;
         event EventHandler TasksListNeedUpdate;
         event EventHandler Closed;

@@ -45,7 +45,7 @@ namespace TaskManagerModel
 
         private readonly IContextFactory _contextFactory;
 
-        private readonly IValidator<UserTask> _validator; 
+        private readonly ValidatorsFactory _validatorsFactory;
 
         public DataModel(IContextFactory contextFactory, ITaskFilter taskFilter)
         {
@@ -54,7 +54,7 @@ namespace TaskManagerModel
             _taskFilter = taskFilter;
             _filterType = FilterType.All;
             _sortType = SortType.AscendingPriority;
-            _validator = new UserTaskValidator();
+            _validatorsFactory = new ValidatorsFactory();
         }
 
         public void AddTask(UserTask task)
@@ -62,7 +62,7 @@ namespace TaskManagerModel
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            _validator.ValidateAndThrow(task, ruleSet: "Body");
+            _validatorsFactory.GetUserTaskValidator().ValidateAndThrow(task, ruleSet: "Body");
 
             using (var context = _contextFactory.BuildContex())
             {
@@ -77,7 +77,7 @@ namespace TaskManagerModel
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
 
-            _validator.ValidateAndThrow(task, ruleSet: "*");
+            _validatorsFactory.GetUserTaskValidator().ValidateAndThrow(task, ruleSet: "*");
 
             using (var context = _contextFactory.BuildContex())
             {
@@ -87,38 +87,54 @@ namespace TaskManagerModel
             TasksDbUpdated(this, new EventArgs());
         }
 
-        public void DeleteTask(UserTask task)
+        public void DeleteTask(long id)
         {
-            if (task == null)
-                throw new ArgumentNullException(nameof(task));
-
-            _validator.ValidateAndThrow(task, ruleSet: "Id");
+            if (id <= 0)
+                throw new ArgumentException(nameof(id));
 
             using (var context = _contextFactory.BuildContex())
             {
-                context.Delete(task);
+                context.DeleteById(id);
             }
 
             TasksDbUpdated(this, new EventArgs());
         }
 
-        public void DeleteTasks(List<UserTask> tasksList)
+        public void DeleteTasks(List<long> tasksIdList)
         {
-            if (tasksList == null)
-                throw new ArgumentNullException(nameof(tasksList));
+            if (tasksIdList == null)
+                throw new ArgumentNullException(nameof(tasksIdList));
 
+            if (tasksIdList.Any(id => id <= 0))
+            {
+                throw new ArgumentException(nameof(tasksIdList));
+            }                    
 
             using (var context = _contextFactory.BuildContex())
             {
-                foreach (var task in tasksList)
-                {
-                    if(task == null)
-                        throw new ArgumentException(nameof(tasksList));
+                context.DeleteByIds(tasksIdList);
+            }
 
-                    _validator.ValidateAndThrow(task, ruleSet: "Id");
+            TasksDbUpdated(this, new EventArgs());
+        }
 
-                    context.Delete(task);
-                }
+        public void DeleteAllTasks()
+        {
+            using (var context = _contextFactory.BuildContex())
+            {
+                context.DeleteAll();
+            }
+
+            TasksDbUpdated(this, new EventArgs());
+        }
+
+        public void DeleteCompletedTasks(DateTime today)
+        {
+            _validatorsFactory.GetTodayDateValidator().Validate(today); //не работает
+
+            using (var context = _contextFactory.BuildContex())
+            {
+                context.DeleteCompleted(today);
             }
 
             TasksDbUpdated(this, new EventArgs());

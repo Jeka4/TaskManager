@@ -79,7 +79,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserTasksDBTrace.cs" />
+    <Compile Include="Validators\TodayDateValidator.cs" />
     <Compile Include="Validators\UserTaskValidator.cs" />
+    <Compile Include="Validators\ValidatorsFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UserTasks.sqlite">

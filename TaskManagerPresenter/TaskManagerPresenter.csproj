@@ -40,8 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\DateConverter.cs" />
-    <Compile Include="Components\IDateConverter.cs" />
     <Compile Include="Components\IPriorityConverter.cs" />
     <Compile Include="Components\PriorityConverter.cs" />
     <Compile Include="IPresenter.cs" />
