@@ -80,6 +80,7 @@
     <Compile Include="DataModelTests.cs" />
     <Compile Include="Fakes\DataModelFake.cs" />
     <Compile Include="Fakes\MainWindowFake.cs" />
+    <Compile Include="Fakes\PriorityConverterStub.cs" />
     <Compile Include="Fakes\TasksFilterFake.cs" />
     <Compile Include="PresenterTests.cs" />
     <Compile Include="TasksFilterTests.cs" />

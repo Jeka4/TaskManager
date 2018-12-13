@@ -20,7 +20,7 @@ namespace TaskManagerUnitTest
         public void TestSortTypeChangeCorrect(SortType sort)
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter()); //STUB!!!!!!!
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub()); //STUB!!!!!!!
 
             Assert.DoesNotThrow(() => presenter.SortTypeChange(sort));
         }
@@ -29,7 +29,7 @@ namespace TaskManagerUnitTest
         public void TestSortTypeChangeUndefined()
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             SortType sort = SortType.Undefined;
 
@@ -43,7 +43,7 @@ namespace TaskManagerUnitTest
         public void TesttFilterTypeChangeCorrect(FilterType filter)
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             Assert.DoesNotThrow(() => presenter.FilterTypeChange(filter));
         }
@@ -52,7 +52,7 @@ namespace TaskManagerUnitTest
         public void TestFilterTypeChangeUndefined()
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             FilterType filter = FilterType.Undefined;
 
@@ -63,7 +63,7 @@ namespace TaskManagerUnitTest
         public void TestAddTaskCorrect()
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             UserTaskView task = new UserTaskView();
 
@@ -74,7 +74,7 @@ namespace TaskManagerUnitTest
         public void TestAddNullTask()
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             UserTaskView task = null;
 
@@ -85,7 +85,7 @@ namespace TaskManagerUnitTest
         public void TestEditTaskCorrect()
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             UserTaskView task = new UserTaskView();
 
@@ -96,7 +96,7 @@ namespace TaskManagerUnitTest
         public void TestEditNullTask()
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             UserTaskView task = null;
 
@@ -107,7 +107,7 @@ namespace TaskManagerUnitTest
         public void TestRemoveTaskCorrect()
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             UserTaskView task = new UserTaskView();
 
@@ -118,7 +118,7 @@ namespace TaskManagerUnitTest
         public void TestRemoveNullTask()
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             UserTaskView task = null;
 
@@ -130,7 +130,7 @@ namespace TaskManagerUnitTest
         {
             var tasks = GenerateCorrectUserTasksList();
             var dataModelFake = new DataModelFake(tasks);
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             Assert.AreEqual(tasks.Count, presenter.LoadAllTasks().Count);
         }
@@ -140,7 +140,7 @@ namespace TaskManagerUnitTest
         {
             var tasks = GenerateCorrectUserTasksList();
             var dataModelFake = new DataModelFake(tasks);
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             var date = new DateTime(2018, 1, 1);
 
@@ -153,13 +153,15 @@ namespace TaskManagerUnitTest
         {
             var tasks = GenerateCorrectUserTasksList();
             var dataModelFake = new DataModelFake(tasks);
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             var dateInterval = new DateInterval(new DateTime(2018, 1, 1), new DateTime(2018, 1, 2));
 
             Assert.AreEqual(tasks.Count(t => t.TaskDate >= dateInterval.BeginDate && t.TaskDate <= dateInterval.EndDate), 
                             presenter.LoadTasksOfDays(dateInterval).Count);
         }
+
+        //Можно добавить тесты на маппинг (с Moq)
 
         private List<UserTask> GenerateCorrectUserTasksList()
         {
