@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using TaskManagerCommon.Components;
+using TaskManagerModel;
 using TaskManagerPresenter;
 using TaskManagerPresenter.Components;
 using TaskManagerUnitTest.Fakes;
@@ -16,7 +20,7 @@ namespace TaskManagerUnitTest
         public void TestSortTypeChangeCorrect(SortType sort)
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter()); //STUB!!!!!!!
 
             Assert.DoesNotThrow(() => presenter.SortTypeChange(sort));
         }
@@ -56,6 +60,17 @@ namespace TaskManagerUnitTest
         }
 
         [Test]
+        public void TestAddTaskCorrect()
+        {
+            var dataModelFake = new DataModelFake();
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+
+            UserTaskView task = new UserTaskView();
+
+            Assert.DoesNotThrow(() => presenter.AddTask(task));
+        }
+
+        [Test]
         public void TestAddNullTask()
         {
             var dataModelFake = new DataModelFake();
@@ -67,35 +82,12 @@ namespace TaskManagerUnitTest
         }
 
         [Test]
-        public void TestAddCorrectTask()
+        public void TestEditTaskCorrect()
         {
             var dataModelFake = new DataModelFake();
             var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
 
-            UserTaskView task = new UserTaskView
-            {
-                Description = "TaskDescription",
-                Name = "TaskName",
-                IsNotified = true,
-                Priority = TaskPriority.Undefined
-            };
-
-            Assert.DoesNotThrow(() => presenter.AddTask(task));
-        }
-
-        [Test]
-        public void TestEditCorrectTask()
-        {
-            var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
-
-            UserTaskView task = new UserTaskView
-            {
-                Description = "TaskDescription",
-                Name = "TaskName",
-                IsNotified = true,
-                Priority = TaskPriority.Undefined
-            };
+            UserTaskView task = new UserTaskView();
 
             Assert.DoesNotThrow(() => presenter.EditTask(task));
         }
@@ -112,15 +104,12 @@ namespace TaskManagerUnitTest
         }
 
         [Test]
-        public void TestRemoveCorrectTask()
+        public void TestRemoveTaskCorrect()
         {
             var dataModelFake = new DataModelFake();
             var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
 
-            UserTaskView task = new UserTaskView
-            {
-                Id = 1
-            };
+            UserTaskView task = new UserTaskView();
 
             Assert.DoesNotThrow(() => presenter.RemoveTask(task));
         }
@@ -136,6 +125,90 @@ namespace TaskManagerUnitTest
             Assert.Throws<NullTaskException>(() => presenter.RemoveTask(task));
         }
 
+        [Test]
+        public void TestLoadAllTasksCorrect()
+        {
+            var tasks = GenerateCorrectUserTasksList();
+            var dataModelFake = new DataModelFake(tasks);
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
 
+            Assert.AreEqual(tasks.Count, presenter.LoadAllTasks().Count);
+        }
+
+        [Test]
+        public void TestLoadTasksOfDayCorrect()
+        {
+            var tasks = GenerateCorrectUserTasksList();
+            var dataModelFake = new DataModelFake(tasks);
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+
+            var date = new DateTime(2018, 1, 1);
+
+            Assert.AreEqual(tasks.Count(t => t.TaskDate == date), presenter.LoadTasksOfDay(date).Count);
+        }
+
+
+        [Test]
+        public void TestLoadTasksOfDaysCorrect()
+        {
+            var tasks = GenerateCorrectUserTasksList();
+            var dataModelFake = new DataModelFake(tasks);
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverter());
+
+            var dateInterval = new DateInterval(new DateTime(2018, 1, 1), new DateTime(2018, 1, 2));
+
+            Assert.AreEqual(tasks.Count(t => t.TaskDate >= dateInterval.BeginDate && t.TaskDate <= dateInterval.EndDate), 
+                            presenter.LoadTasksOfDays(dateInterval).Count);
+        }
+
+        private List<UserTask> GenerateCorrectUserTasksList()
+        {
+            return new List<UserTask>
+            {
+                new UserTask
+                {
+                    Id = 1,
+                    Name = "TaskName1",
+                    Description = "TaskDescription1",
+                    IsNotified = true,
+                    Priority = 1,
+                    TaskDate = new DateTime(2018, 1, 1),
+                    NotifyDate = new DateTime(2018, 1, 1)
+                },
+                new UserTask
+                {
+                    Id = 2,
+                    Name = "TaskName2",
+                    Description = "TaskDescription2",
+                    IsNotified = false,
+                    Priority = 2,
+                    TaskDate = new DateTime(2018, 1, 2),
+                    NotifyDate = new DateTime(2018, 1, 1)
+                },
+                new UserTask
+                {
+                    Id = 3,
+                    Name = "TaskName3",
+                    Description = "TaskDescription3",
+                    IsNotified = true,
+                    Priority = 3,
+                    TaskDate = new DateTime(2018, 1, 3),
+                    NotifyDate = new DateTime(2018, 1, 1)
+                },
+            };
+        }
+
+        private class DatesForTest
+        {
+            public static IEnumerable TestCase
+            {
+                get
+                {
+                    yield return new TestCaseData(new DateTime(2018, 1, 1));
+                    yield return new TestCaseData(new DateTime(2018, 1, 2));
+                    yield return new TestCaseData(new DateTime(2018, 1, 3));
+                }
+            }
+        }
     }
 }

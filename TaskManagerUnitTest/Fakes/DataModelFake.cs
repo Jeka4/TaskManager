@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TaskManagerCommon.Components;
 using TaskManagerModel;
 
@@ -13,7 +14,21 @@ namespace TaskManagerUnitTest.Fakes
 
         public event EventHandler TasksDbUpdated;
 
+        private readonly List<UserTask> _data;
+
+        public DataModelFake() : this(new List<UserTask>()) { }
+
+        public DataModelFake(List<UserTask> data)
+        {
+            _data = data;
+        }
+
         public void AddTask(UserTask task)
+        {
+
+        }
+
+        public void UpdateTask(UserTask task)
         {
 
         }
@@ -45,22 +60,17 @@ namespace TaskManagerUnitTest.Fakes
 
         public List<UserTask> GetAllTasks()
         {
-            return new List<UserTask>();
+            return _data;
         }
 
         public List<UserTask> GetTasksOfDay(DateTime date)
         {
-            return new List<UserTask>();
+            return _data.Where(t => t.TaskDate == date).ToList();
         }
 
         public List<UserTask> GetTasksOfDays(DateTime beginDate, DateTime endDate)
         {
-            return new List<UserTask>();
-        }
-
-        public void UpdateTask(UserTask task)
-        {
-
+            return _data.Where(t => t.TaskDate >= beginDate && t.TaskDate <= endDate).ToList();
         }
     }
 }
