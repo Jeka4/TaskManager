@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManagerView"
         mc:Ignorable="d"
-        Title="ThirdWindow" Height="300" Width="400">
-    <Grid ShowGridLines="True">
+        Title="Задачи" Height="300" Width="400" MinHeight="300" MinWidth="400" MaxHeight="300" MaxWidth="400">
+    <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="0.5*"></ColumnDefinition>

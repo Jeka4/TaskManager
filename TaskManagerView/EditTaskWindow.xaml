@@ -7,7 +7,7 @@
         xmlns:shared="clr-namespace:TaskManagerCommon.Components;assembly=TaskManagerCommon"
         xmlns:components="clr-namespace:TaskManagerView.Components"
         mc:Ignorable="d"
-        Title="SecondWindow" Height="300" Width="400">
+        Title="Добавить/Редактировать" Height="300" Width="400" MinHeight="300" MinWidth="400" MaxHeight="300" MaxWidth="400">
     <Window.Resources>
         <components:EnumConverter x:Key="EnumConverter"/>
     </Window.Resources>
@@ -23,14 +23,16 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Label x:Name="labelName" Grid.Column="0" Grid.Row="0" Content="Название:" HorizontalContentAlignment="Left"></Label>
         <Label x:Name="labelDescription" Grid.Column="0" Grid.Row="1" Content="Описание:" HorizontalContentAlignment="Left"></Label>
         <Label x:Name="labelPriority" Grid.Column="0" Grid.Row="2" Content="Приоритет:" HorizontalContentAlignment="Left"></Label>
         <Label x:Name="labelDate" Grid.Column="0" Grid.Row="3" Content="Дата задачи:" HorizontalContentAlignment="Left"></Label>
         <Label x:Name="labelNoticeDate" Grid.Column="0" Grid.Row="4" Content="Дата напоминания:" HorizontalContentAlignment="Left"></Label>
-        <Button x:Name="buttonAdd2" Click="buttonAdd2_Click" Grid.Column="0" Grid.Row="5" Content="Добавить/Редактировать" Grid.ColumnSpan="2"></Button>
-        <TextBox
+        <Label x:Name="labelNoticeYesNo" Grid.Column="0" Grid.Row="5" Content="Напоминать?" HorizontalContentAlignment="Left"></Label>
+        <Button x:Name="buttonAdd2" Click="buttonAdd2_Click" Grid.Column="0" Grid.Row="6" Content="Добавить/Редактировать" Grid.ColumnSpan="2"></Button>
+        <TextBox TextWrapping="Wrap"
             x:Name="textboxName"
             MaxLength="50" 
             Grid.Column="1" 
@@ -43,7 +45,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox 
+        <TextBox TextWrapping="Wrap"
             x:Name="textboxDescription" 
             MaxLength="250"  
             Grid.Column="1" 
@@ -94,5 +96,14 @@
                 </Binding>
             </DatePicker.SelectedDate>
         </DatePicker>
+        <ComboBox
+            x:Name="comboboxNoticeYesNo" 
+            Grid.Column="1" 
+            Grid.Row="5" 
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Left">
+            <TextBlock>Да</TextBlock>
+            <TextBlock>Нет</TextBlock>
+        </ComboBox>
     </Grid>
 </Window>
