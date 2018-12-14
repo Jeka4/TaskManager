@@ -20,7 +20,7 @@ namespace TaskManagerUnitTest
         public void TestSortTypeChangeCorrect(SortType sort)
         {
             var dataModelFake = new DataModelFake();
-            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub()); //STUB!!!!!!!
+            var presenter = new Presenter(new MainWindowFake(), dataModelFake, new PriorityConverterStub());
 
             Assert.DoesNotThrow(() => presenter.SortTypeChange(sort));
         }
