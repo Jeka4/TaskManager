@@ -3,6 +3,7 @@ using System.Windows;
 using TaskManagerCommon.Components;
 using TaskManagerModel;
 using TaskManagerModel.Components;
+using TaskManagerNotifier;
 using TaskManagerPresenter;
 using TaskManagerPresenter.Components;
 using TaskManagerView;
@@ -22,27 +23,29 @@ namespace TaskManager
 
             IMainWindow mainWindow = new MainWindow();
             IDataModel dataModel = new DataModel(new UserTasksDbFactory(), taskFilter);
+            INotifier notifier = new Notifier(dataModel);
             IPresenter taskManagerPresenter = new Presenter(mainWindow, dataModel, priorityConverter);
             ITasksControlPresenter tasksControlPresenter = new TasksControlPresenter(new TaskManagerWindowFactory(), dataModel, priorityConverter);
 
-            new PresenterSubscriber(taskManagerPresenter, tasksControlPresenter, dataModel, mainWindow);
+            new PresenterSubscriber(taskManagerPresenter, tasksControlPresenter, dataModel, mainWindow, notifier);
+
+            Exit += delegate { ((IDisposable) notifier).Dispose(); };
 
             taskManagerPresenter.Initialize();
 
-            
-/*            Random rnd = new Random();
-            for (int i = 0; i < 100; i++)
-            {
-                taskManagerPresenter.AddTask(new UserTaskView
-                {
-                    Name = rnd.Next(0, 1000).ToString(),
-                    Description = rnd.Next(0, 1000).ToString(),
-                    IsNotified = false,
-                    Priority = (TaskPriority)Enum.Parse(typeof(TaskPriority), rnd.Next(1, 3).ToString()),
-                    TaskDate = DateTime.Today,
-                    NotifyDate = DateTime.Today
-                });
-            }*/
+            /*          Random rnd = new Random();
+                        for (int i = 0; i < 100; i++)
+                        {
+                            taskManagerPresenter.AddTask(new UserTaskView
+                            {
+                                Name = rnd.Next(0, 1000).ToString(),
+                                Description = rnd.Next(0, 1000).ToString(),
+                                IsNotified = false,
+                                Priority = (TaskPriority)Enum.Parse(typeof(TaskPriority), rnd.Next(1, 3).ToString()),
+                                TaskDate = DateTime.Today,
+                                NotifyDate = DateTime.Today
+                            });
+                        }*/
         }
 
         class PresenterSubscriber
@@ -50,12 +53,14 @@ namespace TaskManager
             private readonly IPresenter _presenter;
             private readonly IMainWindow _mainWindow;
             private readonly ITasksControlPresenter _tasksControlPresenter;
+            private readonly INotifier _notifier;
 
-            public PresenterSubscriber(IPresenter presenter, ITasksControlPresenter tasksControlPresenter, IDataModel dataModel, IMainWindow mainWindow)
+            public PresenterSubscriber(IPresenter presenter, ITasksControlPresenter tasksControlPresenter, IDataModel dataModel, IMainWindow mainWindow, INotifier notifier)
             {
                 _presenter = presenter;
                 _mainWindow = mainWindow;
                 _tasksControlPresenter = tasksControlPresenter;
+                _notifier = notifier;
 
                 dataModel.TasksDbUpdated += DataModel_TasksDBUpdated;
 
@@ -71,6 +76,13 @@ namespace TaskManager
                 _mainWindow.TasksControlButtonPressed += MainWindowOnTasksControlButtonPressed;
 
                 _tasksControlPresenter.UserTaskUpdated += TasksControlPresenterOnUserTaskUpdated;
+
+                _notifier.ShowMainWindow += NotifierOnShowMainWindow;
+            }
+
+            private void NotifierOnShowMainWindow()
+            {
+                _presenter.ShowWindow();
             }
 
             private void TasksControlPresenterOnUserTaskUpdated(object sender, UserTaskEventArgs e)

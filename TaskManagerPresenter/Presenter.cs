@@ -44,6 +44,19 @@ namespace TaskManagerPresenter
             _dataModel.Filter = filter;
         }
 
+        public void ShowWindow()
+        {
+            try
+            {
+                _mainWindow.Show();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
         public void SelectionListUpdated()
         {
             _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);

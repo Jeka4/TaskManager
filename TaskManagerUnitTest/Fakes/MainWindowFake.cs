@@ -13,6 +13,11 @@ namespace TaskManagerUnitTest.Fakes
             throw new NotImplementedException();
         }
 
+        public void Show()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool TaskSelected { get; }
         public DateInterval DateIntervalSelected { get; }
         public ITaskListSettings TaskListSettings { get; }
