@@ -9,11 +9,21 @@ namespace TaskManagerView
     /// </summary>
     public partial class EditTaskWindow : Window, IEditTaskWindow
     {
-        public EditTaskWindow(UserTaskView task)
+        internal EditTaskWindow(UserTaskView task, EditWindowMode mode)
         {
             DataContext = task;
 
             InitializeComponent();
+
+            switch (mode)
+            {
+                case EditWindowMode.Adding:
+                    buttonAdd2.Content = "Добавить";
+                    break;
+                case EditWindowMode.Editing:
+                    buttonAdd2.Content = "Редактировать";
+                    break;
+            }
         }
 
         private void buttonAdd2_Click(object sender, RoutedEventArgs e)

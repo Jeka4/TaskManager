@@ -150,7 +150,7 @@ namespace TaskManagerView
                 NotifyDate = DateTime.Now
             };
 
-            IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
+            IEditTaskWindow editTaskWindow = new EditTaskWindow(task, EditWindowMode.Adding);
             bool? dialogResult = editTaskWindow.ShowDialog();
 
             if (dialogResult == true)
@@ -170,7 +170,7 @@ namespace TaskManagerView
             if (task == null)
                 return;
 
-            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task);
+            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task, EditWindowMode.Editing);
 
             if (dialogResult == true)
             {

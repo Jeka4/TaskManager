@@ -29,7 +29,7 @@ namespace TaskManagerView
 
         private readonly EditTaskWindowFactory _editTaskWindowFactory;
 
-        public TasksManagerWindow()
+        internal TasksManagerWindow()
         {
             _editTaskWindowFactory = new EditTaskWindowFactory();
 
@@ -73,7 +73,7 @@ namespace TaskManagerView
             if (task == null)
                 return;
 
-            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task);
+            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task, EditWindowMode.Editing);
 
             if (dialogResult == true)
             {

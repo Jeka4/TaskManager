@@ -31,7 +31,7 @@
         <Label x:Name="labelDate" Grid.Column="0" Grid.Row="3" Content="Дата задачи:" HorizontalContentAlignment="Left"></Label>
         <Label x:Name="labelNoticeDate" Grid.Column="0" Grid.Row="4" Content="Дата напоминания:" HorizontalContentAlignment="Left"></Label>
         <Label x:Name="labelNoticeYesNo" Grid.Column="0" Grid.Row="5" Content="Напоминать?" HorizontalContentAlignment="Left"></Label>
-        <Button x:Name="buttonAdd2" Click="buttonAdd2_Click" Grid.Column="0" Grid.Row="6" Content="Добавить/Редактировать" Grid.ColumnSpan="2"></Button>
+        <Button x:Name="buttonAdd2" Click="buttonAdd2_Click" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"></Button>
         <TextBox TextWrapping="Wrap"
             x:Name="textboxName"
             MaxLength="50" 

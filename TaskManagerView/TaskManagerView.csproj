@@ -60,6 +60,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Components\EditTaskWindowFactory.cs" />
+    <Compile Include="Components\EditWindowMode.cs" />
     <Compile Include="Components\EnumConverter.cs" />
     <Compile Include="Components\EnumToListSource.cs" />
     <Compile Include="Components\EnumValueDescription.cs" />
