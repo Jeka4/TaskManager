@@ -60,7 +60,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Components\BoolConverter.cs" />
-    <Compile Include="Components\BoolToListSource.cs" />
     <Compile Include="Components\EditTaskWindowFactory.cs" />
     <Compile Include="Components\EditWindowMode.cs" />
     <Compile Include="Components\EnumConverter.cs" />

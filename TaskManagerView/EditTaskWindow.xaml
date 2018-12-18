@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:TaskManagerView"
         xmlns:shared="clr-namespace:TaskManagerCommon.Components;assembly=TaskManagerCommon"
         xmlns:components="clr-namespace:TaskManagerView.Components"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Добавить/Редактировать" Height="300" Width="400" MinHeight="300" MinWidth="400" MaxHeight="300" MaxWidth="400">
     <Window.Resources>
@@ -99,7 +100,6 @@
         </DatePicker>
         <ComboBox
             x:Name="comboboxNoticeYesNo" 
-            ItemsSource="{Binding Source={components:BoolToListSource }}"
             Grid.Column="1" 
             Grid.Row="5" 
             VerticalContentAlignment="Center"
@@ -107,6 +107,12 @@
             <ComboBox.SelectedItem>
                 <Binding Path="IsNotified" Converter="{StaticResource BoolConverter}" ConverterParameter="Нет;Да"/>
             </ComboBox.SelectedItem>
+            <ComboBox.ItemsSource>
+                <x:Array Type="{x:Type sys:String}">
+                    <sys:String>Нет</sys:String>
+                    <sys:String>Да</sys:String>
+                </x:Array>
+            </ComboBox.ItemsSource>
         </ComboBox>
     </Grid>
 </Window>

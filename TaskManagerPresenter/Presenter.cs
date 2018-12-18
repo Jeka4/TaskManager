@@ -53,7 +53,6 @@ namespace TaskManagerPresenter
             catch (Exception)
             {
                 
-                throw;
             }
         }
 
