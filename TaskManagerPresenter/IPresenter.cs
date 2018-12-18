@@ -8,6 +8,7 @@ namespace TaskManagerPresenter
     public interface IPresenter
     {
         void Initialize();
+        void ShowWindow();
         void SortTypeChange(SortType sort);
         void FilterTypeChange(FilterType filter);
         void SelectionListUpdated();

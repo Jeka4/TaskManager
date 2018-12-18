@@ -8,6 +8,7 @@ namespace TaskManagerView
     public interface IMainWindow
     {
         void Initialize();
+        void Show();
         bool TaskSelected { get; }
         DateInterval DateIntervalSelected { get; }
         ITaskListSettings TaskListSettings { get; }

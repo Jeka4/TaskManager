@@ -194,5 +194,13 @@ namespace TaskManagerModel
                 return context.GetUserTasksTable().Select(t => t.TaskDate).ToList();
             }
         }
+
+        public List<DateTime> GetTaskNotifyDates(DateTime day)
+        {
+            using (var context = _contextFactory.BuildContex())
+            {
+                return context.GetUserTasksTable().Where(t => t.NotifyDate == day).Select(t => t.NotifyDate).ToList();
+            }
+        }
     }
 }

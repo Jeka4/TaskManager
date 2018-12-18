@@ -72,5 +72,10 @@ namespace TaskManagerUnitTest.Fakes
         {
             return _data.Where(t => t.TaskDate >= beginDate && t.TaskDate <= endDate).ToList();
         }
+
+        public List<DateTime> GetTaskNotifyDates(DateTime day)
+        {
+            return new List<DateTime>();
+        }
     }
 }
