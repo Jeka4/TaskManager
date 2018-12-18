@@ -199,7 +199,7 @@ namespace TaskManagerModel
         {
             using (var context = _contextFactory.BuildContex())
             {
-                return context.GetUserTasksTable().Where(t => t.NotifyDate == day).Select(t => t.NotifyDate).ToList();
+                return context.GetUserTasksTable().Where(t => t.NotifyDate == day && t.IsNotified).Select(t => t.NotifyDate).ToList();
             }
         }
     }
