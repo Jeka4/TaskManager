@@ -75,7 +75,7 @@ namespace TaskManagerPresenter
                     Name = task.Name,
                     Description = task.Description,
                     Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                    IsNotified = false,
+                    IsNotified = task.IsNotified,
                     TaskDate = task.TaskDate,
                     NotifyDate = task.NotifyDate
                 };
@@ -102,7 +102,7 @@ namespace TaskManagerPresenter
                     Name = task.Name,
                     Description = task.Description,
                     Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                    IsNotified = false,
+                    IsNotified = task.IsNotified,
                     TaskDate = task.TaskDate,
                     NotifyDate = task.NotifyDate
                 };

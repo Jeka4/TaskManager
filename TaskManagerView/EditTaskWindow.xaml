@@ -10,6 +10,7 @@
         Title="Добавить/Редактировать" Height="300" Width="400" MinHeight="300" MinWidth="400" MaxHeight="300" MaxWidth="400">
     <Window.Resources>
         <components:EnumConverter x:Key="EnumConverter"/>
+        <components:BoolConverter x:Key="BoolConverter"/>
     </Window.Resources>
     <Grid x:Name="grid" ShowGridLines="False">
         <Grid.ColumnDefinitions>
@@ -98,12 +99,14 @@
         </DatePicker>
         <ComboBox
             x:Name="comboboxNoticeYesNo" 
+            ItemsSource="{Binding Source={components:BoolToListSource }}"
             Grid.Column="1" 
             Grid.Row="5" 
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Left">
-            <TextBlock>Да</TextBlock>
-            <TextBlock>Нет</TextBlock>
+            <ComboBox.SelectedItem>
+                <Binding Path="IsNotified" Converter="{StaticResource BoolConverter}" ConverterParameter="Нет;Да"/>
+            </ComboBox.SelectedItem>
         </ComboBox>
     </Grid>
 </Window>
