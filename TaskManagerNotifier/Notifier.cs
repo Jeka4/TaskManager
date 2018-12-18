@@ -17,7 +17,7 @@ namespace TaskManagerNotifier
 
         private DateTime appCurrentTime;
 
-        private const int TICK_INTERVAL = 1000;
+        private const int TICK_INTERVAL = 5000;
 
         private const int BALLOONTIP_SHOW_TIME = 3000;
 
@@ -25,10 +25,12 @@ namespace TaskManagerNotifier
         {
             _dataModel = dataModel;
 
-            _notifyIcon = new NotifyIcon();
-            _notifyIcon.Text = "TaskManager";
-            _notifyIcon.Icon = new System.Drawing.Icon("appicon.ico");
-            _notifyIcon.Visible = true;
+            _notifyIcon = new NotifyIcon
+            {
+                Text = "TaskManager",
+                Icon = new System.Drawing.Icon("appicon.ico"),
+                Visible = true
+            };
             _notifyIcon.DoubleClick += NotifyIconOnDoubleClick;
 
             _notifyIcon.BalloonTipTitle = "TaskManager";
@@ -46,7 +48,7 @@ namespace TaskManagerNotifier
         {
             try
             {
-                var notifyDates = _dataModel.GetTaskNotifyDates(appCurrentTime);
+                var notifyDates = _dataModel.GetTaskNotifyDates(appCurrentTime); //lock?
 
                 if(notifyDates.Count() == 0)
                     return;
