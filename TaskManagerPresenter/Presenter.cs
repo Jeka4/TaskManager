@@ -44,6 +44,18 @@ namespace TaskManagerPresenter
             _dataModel.Filter = filter;
         }
 
+        public void ShowWindow()
+        {
+            try
+            {
+                _mainWindow.Show();
+            }
+            catch (Exception)
+            {
+                
+            }
+        }
+
         public void SelectionListUpdated()
         {
             _mainWindow.EnableEditRemoveControls(_mainWindow.TaskSelected);
@@ -62,7 +74,7 @@ namespace TaskManagerPresenter
                     Name = task.Name,
                     Description = task.Description,
                     Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                    IsNotified = false,
+                    IsNotified = task.IsNotified,
                     TaskDate = task.TaskDate,
                     NotifyDate = task.NotifyDate
                 };
@@ -89,7 +101,7 @@ namespace TaskManagerPresenter
                     Name = task.Name,
                     Description = task.Description,
                     Priority = _priorityConverter.ConvertToModelPriority(task.Priority),
-                    IsNotified = false,
+                    IsNotified = task.IsNotified,
                     TaskDate = task.TaskDate,
                     NotifyDate = task.NotifyDate
                 };

@@ -29,7 +29,7 @@ namespace TaskManagerView
 
         private readonly EditTaskWindowFactory _editTaskWindowFactory;
 
-        public TasksManagerWindow()
+        internal TasksManagerWindow()
         {
             _editTaskWindowFactory = new EditTaskWindowFactory();
 
@@ -73,7 +73,7 @@ namespace TaskManagerView
             if (task == null)
                 return;
 
-            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task);
+            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task, EditWindowMode.Editing);
 
             if (dialogResult == true)
             {
@@ -99,6 +99,11 @@ namespace TaskManagerView
         private void ButtonDeleteCompleted_OnClick(object sender, RoutedEventArgs e)
         {
             UserTasksCompletedDeleted(sender, EventArgs.Empty);
+        }
+
+        public void ShowMessage(string text)
+        {
+            MessageBox.Show(text, "TaskManager", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

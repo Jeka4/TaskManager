@@ -45,8 +45,17 @@ namespace TaskManagerView
         public MainWindow()
         {
             _editTaskWindowFactory = new EditTaskWindowFactory();
+            this.StateChanged += OnStateChanged;
 
             InitializeComponent();
+        }
+
+        private void OnStateChanged(object sender, EventArgs eventArgs)
+        {
+            if (this.WindowState == WindowState.Minimized)
+            {
+                this.Hide();
+            }
         }
 
         public void Initialize()
@@ -61,6 +70,12 @@ namespace TaskManagerView
             HighlightListNeedUpdate(this, EventArgs.Empty);
 
             Show();
+        }
+
+        public new void Show()
+        {
+            base.Show();
+            this.WindowState = WindowState.Normal;
         }
 
         public void ShowMessageBox(string message)
@@ -135,7 +150,7 @@ namespace TaskManagerView
                 NotifyDate = DateTime.Now
             };
 
-            IEditTaskWindow editTaskWindow = new EditTaskWindow(task);
+            IEditTaskWindow editTaskWindow = new EditTaskWindow(task, EditWindowMode.Adding);
             bool? dialogResult = editTaskWindow.ShowDialog();
 
             if (dialogResult == true)
@@ -155,7 +170,7 @@ namespace TaskManagerView
             if (task == null)
                 return;
 
-            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task);
+            var dialogResult = _editTaskWindowFactory.ShowEditTaskDialogWindow(task, EditWindowMode.Editing);
 
             if (dialogResult == true)
             {

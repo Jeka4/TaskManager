@@ -19,6 +19,7 @@ namespace TaskManagerModel
         List<UserTask> GetTasksOfDay(DateTime date);
         List<UserTask> GetTasksOfDays(DateTime beginDate, DateTime endDate);
         List<DateTime> GetAllTaskDates();
+        List<DateTime> GetTaskNotifyDates(DateTime day); 
         event EventHandler TasksDbUpdated;
     }
 }

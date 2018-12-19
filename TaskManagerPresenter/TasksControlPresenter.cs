@@ -64,12 +64,19 @@ namespace TaskManagerPresenter
 
         public void RefreshTasksList()
         {
-            var tasks = LoadAllTasks();
-
-            if (_tasksManagerWindow != null)
+            try
             {
-                _tasksManagerWindow.SetUserTasksToTasksList(tasks);
-                _tasksManagerWindow.EnableDeleteCompletedAndAllButton(tasks.Count != 0);
+                var tasks = LoadAllTasks();
+
+                if (_tasksManagerWindow != null)
+                {
+                    _tasksManagerWindow.SetUserTasksToTasksList(tasks);
+                    _tasksManagerWindow.EnableDeleteCompletedAndAllButton(tasks.Count != 0);
+                }
+            }
+            catch (Exception)
+            {
+                _tasksManagerWindow.ShowMessage("Ошибка при обновлении списка задач");
             }
         }
 
@@ -131,7 +138,7 @@ namespace TaskManagerPresenter
             }
             catch (Exception)
             {
-                throw;
+                _tasksManagerWindow.ShowMessage("Ошибка при удалении задач");
             }
         }
 
@@ -143,7 +150,7 @@ namespace TaskManagerPresenter
             }
             catch
             {
-                throw;
+                _tasksManagerWindow.ShowMessage("Ошибка при удалении задач");
             }
         }
 
@@ -155,7 +162,7 @@ namespace TaskManagerPresenter
             }
             catch
             {
-                throw;
+                _tasksManagerWindow.ShowMessage("Ошибка при удалении задач");
             }
         }
     }

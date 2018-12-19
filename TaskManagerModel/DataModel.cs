@@ -130,7 +130,7 @@ namespace TaskManagerModel
 
         public void DeleteCompletedTasks(DateTime today)
         {
-            _validatorsFactory.GetTodayDateValidator().Validate(today); //не работает
+            _validatorsFactory.GetTodayDateValidator().ValidateAndThrow(today);
 
             using (var context = _contextFactory.BuildContex())
             {
@@ -192,6 +192,14 @@ namespace TaskManagerModel
             using (var context = _contextFactory.BuildContex())
             {
                 return context.GetUserTasksTable().Select(t => t.TaskDate).ToList();
+            }
+        }
+
+        public List<DateTime> GetTaskNotifyDates(DateTime day)
+        {
+            using (var context = _contextFactory.BuildContex())
+            {
+                return context.GetUserTasksTable().Where(t => t.NotifyDate == day && t.IsNotified).Select(t => t.NotifyDate).ToList();
             }
         }
     }
